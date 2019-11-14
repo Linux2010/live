@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.live.mapper.LiveRoomMapper">
+  <!--  <cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="LiveRoom" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="onlineusercount" property="onlineusercount" jdbcType="INTEGER" />
+        <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+        <result column="room_name" property="roomName" jdbcType="VARCHAR" />
+        <result column="cid" property="cid" jdbcType="VARCHAR" />
+        <result column="ctime" property="ctime" jdbcType="BIGINT" />
+        <result column="pushurl" property="pushurl" jdbcType="VARCHAR" />
+        <result column="httppullurl" property="httppullurl" jdbcType="VARCHAR" />
+        <result column="hlspullurl" property="hlspullurl" jdbcType="VARCHAR" />
+        <result column="rtmppullurl" property="rtmppullurl" jdbcType="VARCHAR" />
+        <result column="live_name" property="liveName" jdbcType="VARCHAR" />
+        <result column="live_type" property="liveType" jdbcType="SMALLINT" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="imCreator" property="imCreator" jdbcType="VARCHAR" />
+        <result column="imRoomId" property="imRoomId" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getList"  resultMap="resultMap">
+        select id,status,create_time,version,room_id,room_name,pushurl,httppullurl,hlspullurl,rtmppullurl type,from live_room
+    </select>
+    <insert id="insert" parameterType="LiveRoom">
+      insert into live_room(room_id,room_name,live_name,create_time,version,status,user_id,onlineusercount,creater,type)
+      values
+      (#{roomId},#{roomName},#{roomName},#{createTime},#{version},#{status},#{userId},#{onlineusercount},#{creater},-1)
+    </insert>
+    <update id="update" parameterType="LiveRoom">
+        update live_room
+        <set>
+            <if test="cid != null and cid !=''">
+                cid=#{cid},
+            </if>
+            <if test="ctime != null and ctime !=''">
+                ctime=#{ctime},
+            </if>
+            <if test="pushurl != null and pushurl !=''">
+                pushurl=#{pushurl},
+            </if>
+            <if test="httppullurl != null and httppullurl !=''">
+                httppullurl=#{httppullurl},
+            </if>
+            <if test="hlspullurl != null and hlspullurl !=''">
+                hlspullurl=#{hlspullurl},
+            </if>
+            <if test="rtmppullurl != null and rtmppullurl !=''">
+                rtmppullurl=#{rtmppullurl},
+            </if>
+            <if test="roomName != null and roomName !=''">
+                room_name=#{roomName},
+            </if>
+            <if test="roomName != null and roomName !=''">
+                live_name=#{roomName},
+            </if>
+            <if test="liveType != null and liveType !=''">
+                live_type=#{liveType},
+            </if>
+            <if test="onlineusercount != null">
+                onlineusercount = #{onlineusercount},
+            </if>
+        </set>
+        where 1=1
+        <if test="userId != null and userId !=''">
+           and  user_id = #{userId}
+        </if>
+    </update>
+
+    <select id="getLiveRoomsPage" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT room.id,
+                room.`cid`,
+                room.`creater`,
+                room.`ctime`,
+                room.`hlspullurl`,
+                room.`httppullurl`,
+                room.`live_name`,
+                room.`onlineusercount`,
+                room.`pushurl`,
+                room.`room_id`,
+                room.room_name,
+                room.`rtmppullurl`,
+                room.`status`,
+                room.`user_id`,
+                room.`version`,
+                room.type,
+                u.`accid`,
+                u.`accid_token`,
+                u.`login_name`,
+                u.`user_name`,
+                u.`nick_name`,
+                u.`user_type_id`,
+                u.`phone`,
+                chat.`room_id` chat_room_id,
+                chat.`room_name` chat_room_name,
+                chat.`im_roomid` imRoomId
+                FROM live_room room
+                    LEFT JOIN user u ON u.`user_id` = room.`user_id`
+                    LEFT JOIN chat_room chat  ON chat.`user_id` = room.`user_id`
+        where 1=1
+        <if test="map.keyword != null and map.keyword!=''">
+            and(
+            room.room_name like CONCAT('%',#{map.keyword},'%')
+            or u.login_name like CONCAT('%',#{map.keyword},'%')
+            or u.user_name like CONCAT('%',#{map.keyword},'%')
+            or u.nick_name like  CONCAT('%',#{map.keyword},'%')
+            or chat.`room_name` like  CONCAT('%',#{map.keyword},'%')
+            or u.phone like CONCAT('%',#{map.phone},'%')
+            )
+        </if>
+        <if test="map.phone != null and map.phone!=''"> and
+            (
+            u.phone like CONCAT('%',#{map.phone},'%')
+            )
+        </if>
+        <if test="map.status != null">
+            and  room.status = #{map.status}
+        </if>
+        order by room.create_time desc
+    </select>
+
+    <update id="updateLiveRoom" parameterType="java.util.Map" >
+        update live_room
+        <set>
+            <if test="map.roomName != null and map.roomName !=''">
+                room_name =#{map.roomName},
+            </if>
+            <if test="map.roomName != null and map.roomName !=''">
+                live_name= #{map.roomName},
+            </if>
+            <if test="map.onlineusercount != null and map.onlineusercount !=''">
+                onlineusercount= #{map.onlineusercount},
+            </if>
+
+            <if test="map.status != null and map.status !=''">
+                status= #{map.status},
+            </if>
+
+            <if test="map.type != null">
+                type= #{map.type},
+            </if>
+        </set>
+               where room_id=#{map.roomId}
+    </update>
+
+    <select id="selectLiveRoomByRoomId" parameterType="java.lang.String" resultType="java.util.Map">
+      SELECT room.* FROM  live_room room
+                    LEFT JOIN chat_room chat  ON chat.`user_id` = room.`user_id`
+                    WHERE  room.room_id  =#{roomId}
+                <!-- chat.im_roomid =#{roomId}-->
+    </select>
+
+    <select id="selectTeacherLiveRoom" parameterType="LiveRoom" resultType="LiveRoom">
+        select * from live_room where 1=1
+        <if test="roomId != null and roomId !=''">
+           and  room_id=#{roomId}
+        </if>
+        <if test="userId != null and userId !=''">
+          and user_id = #{userId}
+        </if>
+    </select>
+
+    <select id="hostEntrance" parameterType="java.lang.String" resultType="LiveRoom">
+          SELECT room.id,
+                room.`cid`,
+                room.`creater`,
+                room.`ctime`,
+                room.`hlspullurl`,
+                room.`httppullurl`,
+                room.`live_name`,
+                room.`onlineusercount`,
+                room.`pushurl`,
+                room.`room_id`,
+                room.room_name,
+                room.`rtmppullurl`,
+                room.`status`,
+                room.`user_id`,
+                room.`version`,
+                room.type,
+                chat.`im_creator` imCreator,
+                chat.`im_roomid` imRoomId
+                FROM live_room room
+                    LEFT JOIN chat_room chat  ON chat.`user_id` = room.`user_id`
+                    where  room.`user_id` =#{userId}
+    </select>
+
+    <select id="spectatorByRoomId" parameterType="java.lang.String" resultType="LiveRoom">
+        SELECT room.id,
+        room.`cid`,
+        room.`creater`,
+        room.`ctime`,
+        room.`hlspullurl`,
+        room.`httppullurl`,
+        room.`live_name`,
+        room.`onlineusercount`,
+        room.`pushurl`,
+        room.`room_id`,
+        room.room_name,
+        room.`rtmppullurl`,
+        room.`status`,
+        room.`user_id`,
+        room.`version`,
+        room.type,
+        chat.`im_creator` imCreator,
+        chat.`im_roomid` imRoomId
+        FROM  live_room room
+        LEFT JOIN chat_room chat  ON chat.`user_id` = room.`user_id`
+        WHERE chat.im_roomid =#{roomId}
+    </select>
+</mapper>

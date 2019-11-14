@@ -1,0 +1,16 @@
+html,body{width:100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{background-color: #ccc;font-size: 0.34rem;line-height: 0.45rem;position: fixed;top:0.85rem;width:100%;z-index: 1;}
+.con2 .con2Select{margin:0 auto;display: flex;justify-content: space-around;width:100%;}
+.con2 .con2Select span{border-bottom:0.03rem solid transparent;text-align: center;padding: 0.2rem 0;color:#333;width:50%;}
+.con2 .con2Select span.active{background-color:#ffa42f;}
+
+.con3Box{width:100%;margin-top:1.1rem;}
+.con3{padding: 0.1rem 0.2rem;background-color: white;height: 2rem;box-sizing: border-box;border: 0.01rem solid #ccc;border-left: 0;border-right: 0;margin: 0.1rem 0;}
+.con3 .con33Img{width: 1.1rem;height: 1.1rem;margin-top: 0.1rem;vertical-align: top;border-radius: 50%;}
+.con3 .con33Con{display:inline-block;width:5.9rem;padding-left: 0.1rem;box-sizing: border-box;}
+.con3 .con33Con .usrName{display:inline-block;font-size: 0.3rem;color: #333333;padding-bottom: 0.2rem;padding-top: 0.1rem;}
+.con3 .con33Con .usrWrite{display:inline-block;font-size: 0.26rem;color: #8e8e8e;}

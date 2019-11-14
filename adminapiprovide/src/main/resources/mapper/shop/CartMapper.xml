@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.shop.mapper.CartMapper">
+
+    <resultMap type="Cart" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="cart_id" property="cartId" jdbcType="VARCHAR" />
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+        <result column="goods_spec_id" property="goodsSpecId" jdbcType="VARCHAR" />
+        <result column="goods_spec_val" property="goodsSpecVal" jdbcType="VARCHAR" />
+        <result column="goods_money" property="goodsMoney" jdbcType="DOUBLE" />
+        <result column="goods_type" property="goodsType" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="cvMap" type="cn.com.myproject.shop.entity.VO.CartVO">
+        <result column="cartId" property="cartId" jdbcType="VARCHAR"/>
+        <result column="goodsId" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="mastImg" property="mastImg" jdbcType="VARCHAR"/>
+        <result column="goodsNum" property="goodsNum" jdbcType="INTEGER"/>
+        <result column="goodsSpecId" property="goodsSpecId" jdbcType="VARCHAR"/>
+        <result column="goodsSpecVal" property="goodsSpecVal" jdbcType="VARCHAR"/>
+        <result column="mktPrice" property="mktPrice" jdbcType="DOUBLE" />
+        <result column="checked" property="checked" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="searchCgList" resultMap="cvMap">
+        select c.cart_id as cartId,c.goods_id as goodsId,
+        g.goods_name as goodsName,gi.url as mastImg,c.goods_num as goodsNum,
+        c.goods_spec_id as goodsSpecId,c.goods_spec_val as goodsSpecVal,
+        c.goods_money as mktPrice,c.checked from s_cart c
+        left join s_goods g on g.goods_id = c.goods_id
+        left join s_goods_img gi on gi.goods_id = c.goods_id and gi.first = 1
+        where c.user_id = #{userId}
+    </select>
+
+    <select id="searchCgIdListByUserId" resultType="java.lang.String">
+        select c.cart_id as cartId from s_cart c where c.user_id = #{userId}
+    </select>
+
+    <insert id="insertCg" parameterType="Cart">
+        insert into s_cart(cart_id,goods_id,goods_num,goods_spec_id,goods_spec_val,goods_money,goods_type,user_id,create_time,checked)
+        values(#{cartId},#{goodsId},#{goodsNum},#{goodsSpecId},#{goodsSpecVal},#{goodsMoney},#{goodsType},#{userId},#{createTime},#{checked})
+    </insert>
+
+    <delete id="deleteCgByCId" parameterType="java.lang.String">
+        delete from s_cart where cart_id = #{cartId}
+    </delete>
+
+    <update id="updateCgNumByCId" parameterType="Cart">
+        update s_cart set goods_num = #{goodsNum} where cart_id = #{cartId}
+    </update>
+
+    <update id="updateCgCk" parameterType="Cart">
+        update s_cart set checked = #{checked} where user_id = #{userId}
+        <if test="cartId != null and cartId != ''">
+            and cart_id = #{cartId}
+        </if>
+    </update>
+    
+    <select id="searchCartById" resultType="Cart">
+        select c.* from s_cart c where c.cart_id = #{cartId}
+    </select>
+
+    <select id="searchCgTmByUserId" resultType="java.lang.String">
+        select sum(c.goods_money*c.goods_num) as totalMoney
+        from s_cart c
+        where c.checked = 1 and c.user_id = #{userId}
+        group by c.user_id
+    </select>
+    
+    <select id="searchCgInfoByUGSId" resultType="Cart">
+        select c.* from s_cart c
+        where c.user_id = #{userId}
+        and c.goods_id = #{goodsId}
+        and c.goods_spec_id = #{goodsSpecId}
+        limit 1
+    </select>
+
+</mapper>

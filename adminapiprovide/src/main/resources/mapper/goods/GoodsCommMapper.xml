@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.GoodsCommMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap id="resultMap" type="GoodsComment">
+     <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_comment_id" property="goodsCommentId" jdbcType="VARCHAR"/>
+        <result column="goods_comment" property="goodsComment"  jdbcType="VARCHAR"/>
+       <result column="reviewer_type" property="reviewerType" jdbcType="INTEGER" />
+        <result column="reviewer_id" property="reviewerId"  jdbcType="VARCHAR" />
+       <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="photo1" property="photo1" jdbcType="VARCHAR" />
+        <result column="photo2" property="photo2" jdbcType="VARCHAR" />
+        <result column="photo3" property="photo3" jdbcType="VARCHAR" />
+        <result column="photo4" property="photo4" jdbcType="VARCHAR" />
+        <result column="goods_stars" property="goodsStars" jdbcType="INTEGER" />
+        <result column="logi_stars" property="logiStars" jdbcType="INTEGER" />
+        <result column="service_stars" property="serviceStars" jdbcType="INTEGER" />
+        <result  column="all_comm" property="allComm" jdbcType="INTEGER" />
+        <result column="create_time " property="createTime" jdbcType="BIGINT" />
+        <result column="status " property="status" jdbcType="INTEGER" />
+        <result column="version " property="version" jdbcType="INTEGER" />
+        <result column="reviewer_name" property="reviewerName"  jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName"  jdbcType="VARCHAR" />
+        <result column="user_photo" property="userPhoto" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <!-- 添加评论-->
+    <insert id="addComm" parameterType="GoodsComment">
+        insert  INTO    s_goods_comment (goods_id,goods_name,goods_comment_id,goods_comment,reviewer_type,reviewer_id,
+   photo,photo1,photo2,photo3,photo4,goods_stars,logi_stars,service_stars,all_comm,create_time,status,version,user_photo)
+    VALUES
+    (#{goodsId},#{goodsName},#{goodsCommentId},#{goodsComment},#{reviewerType},#{reviewerId},#{photo},#{photo1},#{photo2},#{photo3},#{photo4},#{goodsStars},#{logiStars},#{serviceStars},#{allComm}, #{createTime},#{status},#{version},#{userPhoto}  )
+        </insert>
+
+    <select id="searchGCList" resultMap="resultMap">
+        select * from  s_goods_comment where goods_id= #{goodsId}
+    </select>
+
+
+    <delete id="removeGoodsComment" parameterType="java.lang.String">
+        delete from s_goods_comment
+        where goods_comment_id =#{goodsCommentId}
+    </delete>
+    <select id="searchGoodsCommentList" resultType="GoodsComment">
+        select c.*,
+        (select ifnull(real_name,login_name) from user where user_id = c.reviewer_id) reviewer_name,
+        (select goods_name from s_goods where goods_id = c.goods_id) goods_name
+        from  s_goods_comment c
+    </select>
+    <select id="searchGoodsCommentById" parameterType="java.lang.String"  resultType="GoodsComment">
+        select c.*,
+        (select ifnull(real_name,login_name) from user where user_id = c.reviewer_id) reviewer_name,
+        (select goods_name from s_goods where goods_id = c.goods_id) goods_name
+        from  s_goods_comment c  where c.goods_comment_id =#{goodsCommentId}
+    </select>
+</mapper>

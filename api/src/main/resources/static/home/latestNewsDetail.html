@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/latestNewsDetail.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiper-3.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/iscroll.js" type="text/javascript"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+    <div class="body">
+        <div class="zixun">
+            <div class="title">时间都去哪了</div>
+            <div class="time"><span class="span1">发布者：发条魔灵</span><span class="span1" style="text-align: right;">3月5日 20:10</span></div>
+            <div class="con">
+                <div class="p">时间滴答滴答就消失了</div>
+                <div class="p">时间滴答滴答就消失了</div>
+                <div class="p">时间滴答滴答就消失了</div>
+            </div>
+        </div>
+        <div class="con3">
+            <div class="con3Tit"><span>评论（2）</span></div>
+            <div class="user">
+                <img class="con3Img" src="image/miss1.png">
+                <div class="con3Con">
+                    <div class="usrName">大胡子</div>
+                    <div class="usrWrite">3.22 14:30</div>
+                </div>
+                <div class="say">
+                    <p>我是韩梅梅，我为教头学院代言。</p>
+                </div>
+            </div>
+            <div class="user">
+                <img class="con3Img" src="image/miss1.png">
+                <div class="con3Con">
+                    <div class="usrName">大胡子</div>
+                    <div class="usrWrite">3.22 14:30</div>
+                </div>
+                <div class="say">
+                    <p>我是韩梅梅，我为教头学院代言。</p>
+                </div>
+            </div>
+        </div>
+        <div class="pencle">
+            <div class="inputBox"><input type="text" class="input"/></div>
+            <div style="display: inline-block;">
+                <div class="collectBox" v-if="collection"><img v-on:click="collectioning()" src="image/collection.png"/> </div>
+                <div class="collectBox" v-else><img v-on:click="collectioning()" src="image/collection-norm.png"/> </div>
+            </div>
+            <div class="agreeBox"><img src="image/agree.png"/><span class="agreeNum">20</span></div>
+            <div class="againstBox"><img src="image/against.png"/><span class="againstNum">100</span></div>
+        </div>
+    </div>
+</body>
+<script>
+    var body = new Vue({
+        el:".body",
+        data:{
+            collection:true,
+        },
+        methods:{
+            collectioning:function () {
+                this.collection = !this.collection;
+            }
+        }
+    })
+</script>
+</html>

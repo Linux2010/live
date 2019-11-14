@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.user.mapper.UserTeacherIntroImgMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="UserTeacherIntroImg" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="teacher_intro_img_id" property="teacherIntroImgId" jdbcType="VARCHAR"/>
+        <result column="teacher_id" property="teacherId" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="searchUserTeacherIntroImgById" resultType="UserTeacherIntroImg">
+        select * from user_teacher_intro_img where teacher_intro_img_id =#{teacherIntroImgId}
+    </select>
+
+    <insert id="insertUserTeacherIntroImg" parameterType="UserTeacherIntroImg">
+        insert into
+        user_teacher_intro_img(teacher_intro_img_id,
+                                teacher_id,
+                                url,
+                                seqno
+                               )
+            values(#{teacherIntroImgId},
+                    #{teacherId},
+                    #{url},
+                    #{seqno})
+    </insert>
+
+    <delete id="deleteUserTeacherIntroImg" parameterType="java.lang.String">
+        delete from user_teacher_intro_img where teacher_intro_img_id = #{teacherIntroImgId}
+    </delete>
+
+    <update id="updateUserTeacherIntroImg" parameterType="UserTeacherIntroImg">
+        update user_teacher_intro_img
+        <set>
+            <if test="url != null and url !=''">
+                url = #{url},
+            </if>
+            <if test="seqno != null and seqno !=''">
+                seqno = #{seqno},
+            </if>
+        </set>
+        where 1=1
+        <if test="teacherIntroImgId != null and teacherIntroImgId !=''">
+            and teacher_intro_img_id = #{teacherIntroImgId}
+        </if>
+    </update>
+
+    <select id="searchUserTeacherIntroImgList" resultMap="resultMap">
+        select * from user_teacher_intro_img where 1=1
+        <if test="teacherId != null and teacherId != ''">
+            and teacher_id = #{teacherId}
+        </if>
+        order by seqno asc
+    </select>
+
+    <select id="searchTeacherIntroImgs" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT url FROM user_teacher_intro_img  where  teacher_id = #{teacherId}   order by seqno asc
+    </select>
+
+
+</mapper>

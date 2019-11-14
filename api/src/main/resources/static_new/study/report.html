@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/report.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+<div class="con1">
+    <div class="con1Select">
+        <span ><a href="study/study.html"> 今日</a></span>
+        <span><a href="study/tuijian.html"> 推荐</a></span>
+        <span class="active">报告</span>
+    </div>
+</div>
+<div style="width: 100%;height: 0.85rem;"></div>
+<div class="con2">
+    <img class="con2Img" src="image/miss1.png">
+    <div class="con2Con">
+        <div class="usrName">大胡子</div>
+        <div class="usrWrite">天将降大任于斯人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，增益其所不能。</div>
+    </div>
+    <div class="medal">
+        <span>勋章：</span>
+        <div class="medalLevel" style=" width: 5.8rem;height: 1rem;overflow: hidden;white-space: nowrap;">
+            <img class="level4" src="image/l1.png">
+            <img class="level4" src="image/l2.png">
+            <img class="level4" src="image/l3.png">
+            <img class="level4" src="image/l4.png">
+            <img class="level4" src="image/l5.png">
+            <img class="level4" src="image/l6.png">
+        </div><a href="#">></a>
+    </div>
+</div>
+<div class="con4">
+    <div class="con4Box">
+        <div style="padding-bottom:0.3rem;font-size:0.3rem;text-align: right"><a href="#" style="color:#ffa42f">积分规则</a></div>
+        <div class="line1"><span>{{min}}积分</span><span>{{now}}/{{max}}积分</span></div>
+        <div class="line2">
+            <img src="image/jindutiao1_1.png" style="margin-left: 0.05rem;"><img id="jindu" v-bind:style="{width:Vlen}" src="image/jindutiao1_3.png"><img src="image/jindutiao1_2.png">
+        </div>
+        <div class="line1"><span>{{minLevel}}级</span><span>{{maxLevel}}级</span></div>
+    </div>
+</div>
+<div class="con5">
+    <div class="con5Box">
+        <div class="line1"><span id="s1" v-bind:style="{height:eve*Vue1+'rem'}"><p>{{Vue1}}</p></span><span id="s2" v-bind:style="{height:eve*Vue2+'rem'}"><p>{{Vue2}}</p></span><span id="s3" v-bind:style="{height:eve*Vue3+'rem'}"><p>{{Vue3}}</p></span><span id="s4" v-bind:style="{height:eve*Vue4+'rem'}"><p>{{Vue4}}</p></span></div>
+        <div class="line2"></div>
+        <div class="line3"><span id="ss1">已学<br>课程数</span><span id="ss2">已学<br>教师人数</span><span id="ss3">分享<br>课程次数</span><span id="ss4">邀请<br>好友人数</span></div>
+        <div class="line4">学习总时长：<span>{{Vue5}}</span>分钟</div>
+        <div class="line5">2017年6月课程完成数据分析柱状图</div>
+    </div>
+</div>
+<div class="con3">
+    <div class="con3Item">
+        <img class="con3ItemLeft" src="image/kechenging1.png">
+        <div class="con3ItemRight">
+            <span class="con3ItemTitle">时间不在于你拥有多少，而在于你怎于你怎于你怎样使用</span>
+            <div class="con3ItemBody">
+                <div class="con3ItemTime">
+                    <p>主讲老师：艾克</p>
+                    <p>3月24日 开始</p>
+                </div>
+                <div class="con3ItemTime" style="text-align:right;">
+                    <span>继续学习</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="con3Item">
+        <img class="con3ItemLeft" src="image/kechenging1.png">
+        <div class="con3ItemRight">
+            <span class="con3ItemTitle">时间不在于你拥有多少，而在于你怎样使用</span>
+            <div class="con3ItemBody">
+                <div class="con3ItemTime">
+                    <p>主讲老师：艾克</p>
+                    <p>3月24日 开始</p>
+                </div>
+                <div class="con3ItemTime" style="text-align:right;">
+                    <span>继续学习</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+<script>
+    var Vmin = 0;
+    var Vmax = 100;
+    var Vnow =80;
+    var VminLevel = 1;
+    var VmaxLevel = 2;
+    var con4 = new Vue({
+        el:'.con4',
+        data:{
+            min:Vmin,
+            max:Vmax,
+            now:Vnow,
+            minLevel:VminLevel,
+            maxLevel:VmaxLevel
+        },
+        computed:{
+            Vlen:function () {
+                return [6/(this.max-this.min).toFixed(3)]*this.now+"rem";
+            }
+        }
+    })
+
+    var Vue1 = 10;
+    var Vue2 = 20;
+    var Vue3 =5;
+    var Vue4 = 12;
+    var Vue5 = 2.12;
+    var con5 = new Vue({
+        el:'.con5',
+        data:{
+            Vue1:Vue1,
+            Vue2:Vue2,
+            Vue3:Vue3,
+            Vue4:Vue4,
+            Vue5:Vue5
+        },
+        computed:{
+            eve:function () {
+                var max = Math.max.apply(null,[this.Vue1,this.Vue2,this.Vue3,this.Vue4]);
+                return (2/max).toFixed(3);
+            }
+        }
+    })
+</script>
+</html>

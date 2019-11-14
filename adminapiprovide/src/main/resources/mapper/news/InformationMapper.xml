@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.news.mapper.InformationMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Information" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="news_id" property="newsId" jdbcType="VARCHAR"/>
+        <result column="informationId" property="informationId" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="CLOB" />
+        <result column="agree_num" property="agreeNum" jdbcType="INTEGER"/>
+        <result column="disagree_num" property="disagreeNum" jdbcType="INTEGER" />
+        <result column="informationCollectNum" property="informationCollectNum" jdbcType="INTEGER" />
+        <result column="isCollect" property="isCollect" jdbcType="INTEGER" />
+        <result column="introduce" property="introduce" jdbcType="CLOB"/>
+        <result column="comment_num" property="commentNum" jdbcType="INTEGER"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        select * from information where informationId =#{informationId}
+    </select>
+    <select id="selectByInformationId" resultMap="resultMap">
+        SELECT
+            (
+                SELECT
+                    isCollect
+                FROM
+                    news_collect
+                WHERE
+                    news_id = #{informationId}
+                AND user_id =#{userId} limit 1
+            ) AS isCollect,
+            info.*
+        FROM
+            information info
+        WHERE
+            info.informationId =#{informationId}
+    </select>
+    <select id="selectByUserId" resultMap="resultMap" parameterType="java.lang.String">
+        select * from information where user_id = #{userId};
+    </select>
+
+    <select id="getPage"  resultMap="resultMap" useCache="false" parameterType="java.lang.String">
+        select id,informationId,title,create_time,content from information where 1=1
+        <if test="keyword != null">
+            AND (
+            title LIKE CONCAT('%',#{keyword},'%') OR
+            content LIKE CONCAT('%',#{keyword},'%')
+            )
+        </if>
+    </select>
+
+    <update id="updateAgreeNum" parameterType="Information">
+      update information set agree_num = #{agreeNum}, disagree_num = #{disagreeNum} where informationId = #{informationId}
+    </update>
+    <select id="getAll"  resultMap="resultMap">
+        select id,informationId,title,content,create_time ,version, status ,photo from information
+    </select>
+
+    <insert id="addInformation" parameterType="Information">
+        insert into information(informationId, title, create_time, version, status,username,photo )
+        values(#{informationId}, #{title}, #{createTime}, #{version} ,#{status},#{userName},#{photo})
+    </insert>
+
+    <delete id="delInformation" parameterType="java.lang.String">
+        delete from information where informationId = #{informationId}
+    </delete>
+
+    <select id="findAll" resultType="information">
+        select informationId, id,title, contemt ,create_time
+        from information
+    </select>
+
+    <update id="updateInformation" parameterType="information">
+        update information
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">phone = #{content},</if>
+            <if test="informationId != null">nick_name = #{informationId},</if>
+            <if test="create_time != null">createTime = #{createTime},</if>
+        </trim>
+        where  informationId = #{informationId}
+    </update>
+
+    <update id="updateInformationAgree" parameterType="Information">
+        update information set agree_num = #{agreeNum}, disagree_num = #{disagreeNum} where informationId = #{informationId}
+    </update>
+
+    <select id="searchInfoList" resultMap="resultMap">
+        select id,informationId,title,create_time,content ,version,status,news_id,agree_num ,disagree_num,
+        user_id ,introduce ,photo from information where 1=1
+        <if test="title != null">
+            and title LIKE CONCAT('%',#{title},'%')
+        </if>
+        order by create_time desc
+    </select>
+
+
+<select id="selectByInfoId" resultMap="resultMap" parameterType="java.lang.String">
+        select id,informationId,title,create_time,content ,version,status,news_id,agree_num ,disagree_num,
+        user_id ,photo  from information where informationId=#{informationId}  order by create_time DESC
+</select>
+
+    <update id="updateContent" parameterType="Information">
+        update information set content = #{content} where informationId = #{informationId}
+    </update>
+    <select id="searchInfoCountById" parameterType="java.lang.String" resultType="Integer">
+        select count(*) from news_comment nc where nc.news_id = #{informationId}
+    </select>
+
+    <update id="updateTitle" parameterType="Information">
+        update information SET title=#{title} ,photo=#{photo} where  informationId = #{informationId}
+
+    </update>
+</mapper>

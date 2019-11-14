@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.live.mapper.RobotMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Robot" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="robot_id" property="robotId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="accid" property="accid" jdbcType="VARCHAR" />
+        <result column="accid_token" property="accidToken" jdbcType="VARCHAR" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <insert id="insert" parameterType="Robot">
+        insert into robot(robot_id,name,create_time,version,status)
+        VALUES
+        (#{robotId},#{name},#{createTime},#{version},#{status})
+    </insert>
+    <update id="update" parameterType="Robot">
+        update  robot set accid = #{accid},accid_token = #{accidToken}
+        where robot_id = #{robotId}
+    </update>
+    <select id="getList" resultMap="resultMap">
+      select robot_id,name,accid,accid_token,icon,create_time,version,status from robot where status = 1
+    </select>
+</mapper>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.GoodsSpecMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="GoodsSpec" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="goods_spec_id" property="goodsSpecId" jdbcType="VARCHAR"/>
+        <result column="spec_id" property="specId" jdbcType="VARCHAR"/>
+        <result column="spec_name" property="specName" jdbcType="VARCHAR"/>
+        <result column="spec_id1" property="specId1" jdbcType="VARCHAR"/>
+        <result column="spec_name1" property="specName1" jdbcType="VARCHAR"/>
+        <result column="spec_id2" property="specId2" jdbcType="VARCHAR"/>
+        <result column="spec_name2" property="specName2" jdbcType="VARCHAR"/>
+        <result column="spec_id3" property="specId3" jdbcType="VARCHAR"/>
+        <result column="spec_name3" property="specName3" jdbcType="VARCHAR"/>
+        <result column="spec_id4" property="specId4" jdbcType="VARCHAR"/>
+        <result column="spec_name4" property="specName4" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id" property="goodsSpecValuesId" jdbcType="VARCHAR"/>
+        <result column="values_name" property="valuesName" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id1" property="goodsSpecValuesId1" jdbcType="VARCHAR"/>
+        <result column="values_name1" property="valuesName1" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id2" property="goodsSpecValuesId2" jdbcType="VARCHAR"/>
+        <result column="values_name2" property="valuesName2" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id3" property="goodsSpecValuesId3" jdbcType="VARCHAR"/>
+        <result column="values_name3" property="valuesName3" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id4" property="goodsSpecValuesId4" jdbcType="VARCHAR"/>
+        <result column="values_name4" property="valuesName4" jdbcType="VARCHAR"/>
+        <result column="cost_price" property="costPrice" jdbcType="DECIMAL"/>
+        <result column="user_price" property="userPrice" jdbcType="DECIMAL"/>
+        <result column="vip_price" property="vipPrice" jdbcType="DECIMAL"/>
+        <result column="weight" property="weight" jdbcType="DOUBLE"/>
+        <result column="stock_num" property="stockNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="getGoodsSpecDetail" parameterType="GoodsSpec" resultType="GoodsSpec">
+        select spec.* ,
+        (SELECT num FROM s_stock WHERE goods_id = #{goodsId}
+        AND IF(spec.goods_spec_values_id IS NULL, '1=1', `goods_spec_values_id`  =spec.`goods_spec_values_id`)
+        AND IF(spec.goods_spec_values_id1 IS NULL, '1=1', `goods_spec_values_id1` =spec.`goods_spec_values_id1`)
+        AND IF(spec.goods_spec_values_id2 IS NULL, '1=1', `goods_spec_values_id2` =spec.`goods_spec_values_id2`)
+        AND IF(spec.goods_spec_values_id3 IS NULL, '1=1', `goods_spec_values_id3` =spec.`goods_spec_values_id3`)
+        AND IF(spec.goods_spec_values_id4 IS NULL, '1=1', `goods_spec_values_id4` =spec.`goods_spec_values_id4`)
+        ) AS stock_num
+        from s_goods_spec spec where 1=1
+        <if test="goodsId != null and goodsId !=''">
+           AND  spec.goods_id = #{goodsId}
+        </if>
+        <if test="specId != null and specId !=''">
+            AND  spec.spec_id = #{specId}
+        </if>
+        <if test="specId1 != null and specId1 != ''">
+            AND  spec.spec_id1 = #{specId1}
+        </if>
+        <if test="specId2 != null and specId2 != ''">
+            AND spec.spec_id2 = #{specId2}
+        </if>
+        <if test="specId3 != null and specId3 != ''">
+            AND spec.spec_id3 = #{specId3}
+        </if>
+        <if test="specId4 != null and specId4 != ''">
+            AND spec.spec_id4 = #{specId4}
+        </if>
+        <if test="goodsSpecValuesId != null and goodsSpecValuesId !=''">
+            AND spec.goods_spec_values_id = #{goodsSpecValuesId}
+        </if>
+        <if test="goodsSpecValuesId1 != null and goodsSpecValuesId1 != ''">
+            AND spec.goods_spec_values_id1 = #{goodsSpecValuesId1}
+        </if>
+        <if test="goodsSpecValuesId2 != null and goodsSpecValuesId2 != ''">
+            AND spec.goods_spec_values_id2 = #{goodsSpecValuesId2}
+        </if>
+        <if test="goodsSpecValuesId3 != null and goodsSpecValuesId3 != ''">
+            AND  spec.goods_spec_values_id3 = #{goodsSpecValuesId3}
+        </if>
+        <if test="goodsSpecValuesId4 != null and goodsSpecValuesId4 != ''">
+            AND  spec.goods_spec_values_id4 = #{goodsSpecValuesId4}
+        </if>
+    </select>
+    <select id="selectGoodsSpecsByGoodsId" resultType="GoodsSpec">
+        SELECT s.id,
+               s.goods_spec_id,
+               s.spec_id,
+               (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id)spec_name,
+               s.goods_id,
+               s.goods_spec_values_id,
+               (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id)values_name,
+               s.spec_id1,
+               (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id1)spec_name1,
+               s.goods_spec_values_id1,
+               (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id1)values_name1,
+               s.spec_id2,
+               (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id2)spec_name2,
+               s.goods_spec_values_id2,
+               (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id2)values_name2,
+               s.spec_id3,
+               (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id3)spec_name3,
+               s.goods_spec_values_id3,
+               (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id3)values_name3,
+               s.spec_id4,
+               (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id4)spec_name4,
+               s.goods_spec_values_id4,
+               (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id4)values_name4,
+               s.cost_price,
+               s.user_price,
+               s.vip_price,
+               s.weight,
+              (SELECT num FROM s_stock WHERE goods_id = #{goodsId}
+                AND  IF(s.goods_spec_values_id IS NULL, '1=1', `goods_spec_values_id` =s.`goods_spec_values_id`)
+                AND IF(s.goods_spec_values_id1 IS NULL, '1=1', `goods_spec_values_id1` =s.`goods_spec_values_id1`)
+                AND IF(s.goods_spec_values_id2 IS NULL, '1=1', `goods_spec_values_id2` =s.`goods_spec_values_id2`)
+                AND IF(s.goods_spec_values_id3 IS NULL, '1=1', `goods_spec_values_id3` =s.`goods_spec_values_id3`)
+                AND IF(s.goods_spec_values_id4 IS NULL, '1=1', `goods_spec_values_id4` =s.`goods_spec_values_id4`)
+                ) AS stock_num
+               FROM s_goods_spec s
+            WHERE s.goods_id =#{goodsId}
+    </select>
+
+    <select id="searchGoodsSpecById" resultType="GoodsSpec">
+        select * from s_goods_spec where goods_spec_id =#{goodsSpecId}
+    </select>
+
+    <insert id="insertGoodsSpec" parameterType="GoodsSpec">
+        insert into s_goods_spec
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsSpecId != null and goodsSpecId != ''">
+                goods_spec_id,
+            </if>
+            <if test="specId != null and specId != ''">
+                spec_id,
+            </if>
+            <if test="specId1 != null and specId1 != ''">
+                spec_id1,
+            </if>
+            <if test="specId2 != null and specId2 != ''">
+                spec_id2,
+            </if>
+            <if test="specId3 != null and specId3 != ''">
+                spec_id3,
+            </if>
+            <if test="specId4 != null and specId4 != ''">
+                spec_id4,
+            </if>
+            <if test="goodsId != null and goodsId != ''">
+                goods_id,
+            </if>
+            <if test="goodsSpecValuesId != null and goodsSpecValuesId != ''">
+                goods_spec_values_id,
+            </if>
+            <if test="goodsSpecValuesId1 != null and goodsSpecValuesId1 != ''">
+                goods_spec_values_id1,
+            </if>
+            <if test="goodsSpecValuesId2 != null and goodsSpecValuesId2 != ''">
+                goods_spec_values_id2,
+            </if>
+            <if test="goodsSpecValuesId3 != null and goodsSpecValuesId3 != ''">
+                goods_spec_values_id3,
+            </if>
+            <if test="goodsSpecValuesId4 != null and goodsSpecValuesId4 != ''">
+                goods_spec_values_id4,
+            </if>
+            <if test="costPrice != null">
+                cost_price,
+            </if>
+            <if test="userPrice != null">
+                user_price,
+            </if>
+            <if test="vipPrice != null">
+                vip_price,
+            </if>
+            <if test="weight != null ">
+                weight,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsSpecId != null and goodsSpecId != ''">
+                #{goodsSpecId},
+            </if>
+            <if test="specId != null and specId != ''">
+                #{specId},
+            </if>
+            <if test="specId1 != null and specId1 != ''">
+                #{specId1},
+            </if>
+            <if test="specId2 != null and specId2 != ''">
+                #{specId2},
+            </if>
+            <if test="specId3 != null and specId3 != ''">
+                #{specId3},
+            </if>
+            <if test="specId4 != null and specId4 != ''">
+                #{specId4},
+            </if>
+            <if test="goodsId != null and goodsId != ''">
+                #{goodsId},
+            </if>
+            <if test="goodsSpecValuesId != null and goodsSpecValuesId != ''">
+                #{goodsSpecValuesId},
+            </if>
+            <if test="goodsSpecValuesId1 != null and goodsSpecValuesId1 != ''">
+                #{goodsSpecValuesId1},
+            </if>
+            <if test="goodsSpecValuesId2 != null and goodsSpecValuesId2 != ''">
+                #{goodsSpecValuesId2},
+            </if>
+            <if test="goodsSpecValuesId3 != null and goodsSpecValuesId3 != ''">
+                #{goodsSpecValuesId3},
+            </if>
+            <if test="goodsSpecValuesId4 != null and goodsSpecValuesId4 != ''">
+                #{goodsSpecValuesId4},
+            </if>
+            <if test="costPrice != null">
+                #{costPrice},
+            </if>
+            <if test="userPrice != null">
+                #{userPrice},
+            </if>
+            <if test="vipPrice != null">
+                 #{vipPrice},
+            </if>
+            <if test="weight != null">
+                #{weight},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteGoodsSpec" parameterType="java.lang.String">
+        delete from s_goods_spec where goods_spec_id = #{goodsSpecId}
+    </delete>
+
+    <update id="updateGoodsSpec" parameterType="GoodsSpec">
+        update s_goods_spec
+        <set>
+            <if test="specId != null and specId !=''">
+                spec_id = #{specId},
+            </if>
+            <if test="specId1 != null and specId1 != ''">
+                spec_id1 = #{specId1},
+            </if>
+            <if test="specId2 != null and specId2 != ''">
+                spec_id2 = #{specId2},
+            </if>
+            <if test="specId3 != null and specId3 != ''">
+                spec_id3 = #{specId3},
+            </if>
+            <if test="specId4 != null and specId4 != ''">
+                spec_id4 = #{specId4},
+            </if>
+            <if test="goodsSpecValuesId != null and goodsSpecValuesId !=''">
+                goods_spec_values_id = #{goodsSpecValuesId},
+            </if>
+            <if test="goodsSpecValuesId1 != null and goodsSpecValuesId1 != ''">
+                goods_spec_values_id1 = #{goodsSpecValuesId1},
+            </if>
+            <if test="goodsSpecValuesId2 != null and goodsSpecValuesId2 != ''">
+                goods_spec_values_id2 = #{goodsSpecValuesId2},
+            </if>
+            <if test="goodsSpecValuesId3 != null and goodsSpecValuesId3 != ''">
+                goods_spec_values_id3 = #{goodsSpecValuesId3},
+            </if>
+            <if test="goodsSpecValuesId4 != null and goodsSpecValuesId4 != ''">
+                goods_spec_values_id4 = #{goodsSpecValuesId4},
+            </if>
+            <if test="costPrice != null">
+                cost_price = #{costPrice},
+            </if>
+            <if test="userPrice != null">
+                user_price = #{userPrice},
+            </if>
+            <if test="vipPrice != null">
+                vip_price = #{vipPrice},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+        </set>
+        where 1=1
+        <if test="goodsSpecId != null and goodsSpecId !=''">
+            and goods_spec_id = #{goodsSpecId}
+        </if>
+        <if test="goodsId != null and goodsId !=''">
+            and  goods_id = #{goodsId}
+        </if>
+    </update>
+
+    <select id="searchSpecList" resultMap="resultMap">
+        select * from s_goods_spec where 1=1
+        <if test="specId != null and specId != ''">
+            and spec_id = #{specId}
+        </if>
+        <if test="goodsId != null and goodsId != ''">
+            and goods_id = #{goodsId}
+        </if>
+    </select>
+
+    <select id="searchGoodsSpecInfo" resultMap="resultMap">
+        SELECT s.id,
+        s.goods_spec_id,
+        s.spec_id,
+        (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id)spec_name,
+        s.goods_id,
+        s.goods_spec_values_id,
+        (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id)values_name,
+        s.spec_id1,
+        (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id1)spec_name1,
+        s.goods_spec_values_id1,
+        (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id1)values_name1,
+        s.spec_id2,
+        (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id2)spec_name2,
+        s.goods_spec_values_id2,
+        (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id2)values_name2,
+        s.spec_id3,
+        (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id3)spec_name3,
+        s.goods_spec_values_id3,
+        (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id3)values_name3,
+        s.spec_id4,
+        (SELECT spec_name FROM s_spec  WHERE spec_id = s.spec_id4)spec_name4,
+        s.goods_spec_values_id4,
+        (SELECT values_name FROM s_spec_values  WHERE goods_spec_values_id = s.goods_spec_values_id4)values_name4,
+        s.user_price,
+        s.vip_price,
+        s.weight,
+        (SELECT num FROM s_stock WHERE goods_id = #{goodsId}
+        AND  IF(s.goods_spec_values_id IS NULL, '1=1', `goods_spec_values_id` =s.`goods_spec_values_id`)
+        AND IF(s.goods_spec_values_id1 IS NULL, '1=1', `goods_spec_values_id1` =s.`goods_spec_values_id1`)
+        AND IF(s.goods_spec_values_id2 IS NULL, '1=1', `goods_spec_values_id2` =s.`goods_spec_values_id2`)
+        AND IF(s.goods_spec_values_id3 IS NULL, '1=1', `goods_spec_values_id3` =s.`goods_spec_values_id3`)
+        AND IF(s.goods_spec_values_id4 IS NULL, '1=1', `goods_spec_values_id4` =s.`goods_spec_values_id4`)
+        ) AS stock_num
+        from s_goods_spec s where s.goods_id = #{goodsId} and s.goods_spec_id = #{goodsSpecId}
+    </select>
+</mapper>

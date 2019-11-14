@@ -1,0 +1,35 @@
+
+html,body{width:100%;padding: 0;margin: 0;background-color: #f5f5f5;}
+html{position: relative;height: 100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{padding: 0.1rem 0.2rem;background-color: white;height: 2rem;box-sizing: border-box;border: 0.01rem solid #ccc;border-left: 0;border-right: 0;margin: 0.35rem 0;}
+.con2 .con2Img{width: 1.1rem;height: 1.1rem;margin-top: 0.1rem;vertical-align: top;border-radius: 50%;box-sizing: border-box;border: 0.02rem solid #999}
+.con2 .con2Con{display:inline-block;width:5.7rem;padding-left: 0.1rem;box-sizing: border-box;}
+.con2 .con2Con .usrName{display:inline-block;font-size: 0.3rem;color: #333333;padding-bottom: 0.2rem;padding-top: 0.1rem;}
+.con2 .con2Con .usrWrite{display:inline-block;font-size: 0.26rem;color: #8e8e8e;}
+
+.con22{padding: 0.1rem 0.2rem;background-color: white;box-sizing: border-box;border: 0.01rem solid #ccc;border-left: 0;border-right: 0;margin: 0.35rem 0;padding-bottom: 0.5rem;}
+.con22 .con22Tit{line-height: 0.64rem;color: #ffa42f;}
+.con22 .con22Img{width: 1.1rem;height: 1.1rem;margin-top: 0.1rem;vertical-align: top;margin-left: 0.4rem;border-radius: 50%;}
+.con22 .con22Con{display:inline-block;width:5.3rem;padding-left: 0.1rem;box-sizing: border-box;}
+.con22 .con22Con .usrName{display:inline-block;font-size: 0.3rem;color: #333333;padding-bottom: 0.2rem;padding-top: 0.1rem;}
+.con22 .con22Con .usrWrite{display:inline-block;font-size: 0.26rem;color: #8e8e8e;}
+
+
+.con3{padding: 0.1rem 0.2rem;background-color: white;padding-bottom: 0.4rem;border: 0.01rem solid #ccc;border-left: 0;border-right: 0;}
+.con3 .con3Tit{line-height: 0.64rem;color: #ffa42f;}
+.con3 .con3Con{display: flex;}
+.con3 .con3Con div{text-align: center;width:33.33%;}
+.con3 .con3Con div img{width: 1.3rem;height: 1.3rem;border-radius: 50%}
+.con3 .con3Con div p{padding: 0 0.2rem;}
+
+.con4{padding: 0.1rem 0.2rem;background-color: white;padding-bottom: 0.4rem;margin: 0.35rem 0;border: 0.01rem solid #ccc;border-left: 0;border-right: 0;}
+.con4 .con4Tit{line-height: 0.64rem;color: #ffa42f;}
+.con4 .con4Con{display: flex;justify-content: space-around}
+.con4 .con4Con div{text-align: center;width:33.33%;}
+.con4 .con4Con div img{width: 1.3rem;height: 1.3rem;border-radius: 50%;}
+.con4 .con4Con div p{padding: 0 0.2rem;}
+

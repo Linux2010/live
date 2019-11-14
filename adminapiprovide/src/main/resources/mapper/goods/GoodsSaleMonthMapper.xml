@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.GoodsSaleMonthMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="GoodsSaleMonth" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="goods_sale_month_id" property="goodsSaleMonthId" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goods_spec_id" property="goodsSpecId" jdbcType="SMALLINT"/>
+        <result column="sale_num" property="saleNum" jdbcType="INTEGER"/>
+        <result column="sale_money" property="saleMoney" jdbcType="DECIMAL"/>
+        <result column="state_time" property="stateTime" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+    </resultMap>
+    <!-- 根据ID查询商品月销统计记录-->
+    <select id="searchGoodsSaleMonthById"   parameterType="java.lang.String"   resultMap="resultMap">
+          SELECT * FROM s_goods_sale_month  where s.goods_id =#{goodsId}
+    </select>
+
+    <!--  查询商品月销统计详情-->
+    <select id="searchGoodsSaleMonthDetail"   parameterType="GoodsSaleMonth"   resultMap="resultMap">
+        SELECT * FROM s_goods_sale_month  where 1=1
+        <if test="goodsId != null and goodsId !=''">
+            and goods_id = #{goodsId}
+        </if>
+        <if test="goodsSpecId != null and goodsSpecId !=''">
+            and goods_spec_id = #{goodsSpecId}
+        </if>
+        <if test="stateTime != null and stateTime !=''">
+            and state_time = #{stateTime}
+        </if>
+    </select>
+
+    <insert id="insertGoodsSaleMonth" parameterType="GoodsSaleMonth">
+        insert into
+        s_goods_sale_month
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsSaleMonthId != null and goodsSaleMonthId != ''">
+                goods_sale_month_id,
+            </if>
+            <if test="goodsId != null and goodsId != ''">
+                goods_id,
+            </if>
+            <if test="goodsSpecId != null and goodsSpecId != ''">
+                goods_spec_id,
+            </if>
+            <if test="saleNum != null">
+                sale_num,
+            </if>
+            <if test="saleMoney != null">
+                sale_money ,
+            </if>
+            <if test="stateTime !=null">
+                state_time,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="version != null and version !=''" >
+                version,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsSaleMonthId != null and goodsSaleMonthId != ''">
+                #{goodsSaleMonthId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null and goodsId != ''">
+               #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSpecId != null and goodsSpecId != ''">
+                #{goodsSpecId,jdbcType=VARCHAR},
+            </if>
+            <if test="saleNum != null">
+               #{saleNum,jdbcType=INTEGER},
+            </if>
+            <if test="saleMoney != null">
+                #{saleMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="stateTime !=null ">
+                #{stateTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="version != null and version !=''" >
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateGoodsSaleMonth" parameterType="GoodsSaleMonth">
+        update s_goods_sale_month
+        <set>
+            <if test="saleNum != null ">
+                sale_num = #{saleNum},
+            </if>
+            <if test="saleMoney != null">
+                sale_money = #{saleMoney},
+            </if>
+        </set>
+        where 1=1
+        <if test="goodsId != null and goodsId !=''">
+            and goods_id = #{goodsId}
+        </if>
+        <if test="goodsSpecId != null and goodsSpecId !=''">
+            and goods_spec_id = #{goodsSpecId}
+        </if>
+        <if test="stateTime != null and stateTime !=''">
+            and state_time = #{stateTime}
+        </if>
+    </update>
+
+</mapper>

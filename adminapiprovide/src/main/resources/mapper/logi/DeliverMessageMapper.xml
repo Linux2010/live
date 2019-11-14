@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.logi.mapper.DeliverMessageMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="cn.com.myproject.logi.entity.PO.DeliverMessage" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="deli_id" property="deliId" jdbcType="VARCHAR" />
+        <result column="deli_no" property="deliNo" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="logi_id" property="logiId" jdbcType="VARCHAR" />
+        <result column="address_id" property="addressId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap type="cn.com.myproject.logi.entity.VO.DeliverMessageVO" id="findLogiMessage">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="deli_id" property="deliId" jdbcType="VARCHAR" />
+        <result column="deli_no" property="deliNo" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="logi_id" property="logiId" jdbcType="VARCHAR" />
+        <result column="address_id" property="addressId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result property="name" column="name" jdbcType="VARCHAR"></result>
+        <result property="code" column="code" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <resultMap type="cn.com.myproject.logi.entity.VO.OrderDeliverVO" id="OrderDeliver">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="deli_id" property="deliId" jdbcType="VARCHAR" />
+        <result column="deli_no" property="deliNo" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="order_money" property="orderMoney" jdbcType="DOUBLE" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR"></result>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"></result>
+    </resultMap>
+
+    
+    <select id="selectByDeliNo" parameterType="String" resultType="cn.com.myproject.logi.entity.PO.DeliverMessage">
+        select deli_id,deli_no,order_no,logi_id,create_time from deliver_message where deli_no = #{deliNo}
+    </select>
+
+    <insert id="insertDeli" parameterType="cn.com.myproject.logi.entity.PO.DeliverMessage">
+        insert into deliver_message(deli_id,deli_no,order_no,address_id,logi_id,create_time) values(#{deliId},#{deliNo},#{orderNo},#{addressId},#{logiId},#{createTime})
+    </insert>
+
+    <select id="selectLogiMessage" parameterType="String" resultMap="findLogiMessage">
+       select e.deli_id,e.deli_no,e.order_no,e.address_id,e.logi_id,c.`name`,c.`code` from deliver_message e inner join logi_company c on e.logi_id = c.logi_id where e.order_no = #{orderNo}
+    </select>
+
+    <select id="updateDeliNo" parameterType="String">
+        update deliver_message set deli_no = #{deliNo} where deli_id = #{deliId}
+    </select>
+
+    <select id="selectOrderDeliverMessage" resultMap="OrderDeliver">
+                   SELECT
+                    o.order_no,
+                    o.order_type,
+                    o.order_money,
+                    u.user_name,
+                    o.create_time,
+                    d.deli_id,
+                    d.deli_no,
+                    l.`name`
+                FROM
+                    s_order o
+                INNER JOIN `user` u ON u.user_id = o.user_id
+                INNER JOIN deliver_message d ON o.order_no = d.order_no
+                INNER JOIN logi_company l ON d.logi_id = l.logi_id
+                ORDER BY
+                    o.create_time DESC
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.logi.mapper.LogiPlatformMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="cn.com.myproject.logi.entity.PO.LogiPlatform" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="plat_id" property="platId" jdbcType="VARCHAR" />
+        <result column="platform_name" property="platformName" jdbcType="VARCHAR" />
+        <result column="config" property="config" jdbcType="VARCHAR" />
+        <result column="is_open" property="isOpen" jdbcType="INTEGER" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getPlatList" resultMap="resultMap">
+        select id,plat_id,platform_name,is_open,config,`code` from logi_platform
+    </select>
+
+    <select id="selectById" parameterType="String" resultType="cn.com.myproject.logi.entity.PO.LogiPlatform">
+       select id,plat_id,platform_name,is_open,config,`code` from logi_platform where plat_id = #{platId}
+    </select>
+
+    <insert id="addplat" parameterType="cn.com.myproject.logi.entity.PO.LogiPlatform">
+        insert into logi_platform(plat_id,platform_name,is_open,config,`code`) values(#{platId},#{platformName},#{isOpen},#{config},#{code})
+    </insert>
+
+    <update id="updateplat" parameterType="cn.com.myproject.logi.entity.PO.LogiPlatform">
+        update logi_platform set `platform_name` = #{platformName},`code`= #{code},is_open=#{isOpen},config=#{config} where plat_id = #{platId}
+    </update>
+
+    <delete id="delplat" parameterType="String">
+        delete from logi_platform where plat_id = #{platId}
+    </delete>
+
+    <select id="selectOpenPlat" resultType="cn.com.myproject.logi.entity.PO.LogiPlatform">
+        select id,plat_id,platform_name,is_open,config,`code` from logi_platform where is_open = 1
+    </select>
+</mapper>

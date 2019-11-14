@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/sign.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/swiper-3.3.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="signBox">
+    <div class="title1">每日签到送积分</div>
+    <div class="title2">签到换积分 签到换奖品</div>
+    <img class="date" src="image/sign_date.png"/>
+    <img class="button" onclick="success()" src="image/sign_btn.png"/>
+    <div class="line1">签到积分细则：</div>
+    <div class="line2">每签到一次送200积分，签到完成积分直接冲到个人账户。</div>
+</div>
+<div class="success" style="display: none;">
+    <img src="image/signSuccess.png" alt="">
+    <div class="word">获得200积分</div>
+</div>
+
+</body>
+<script>
+    var mask = $(".success");
+    function success() {
+        mask.show();
+    }
+
+    mask.click(function () {
+        $(this).hide();
+    })
+</script>
+</html>

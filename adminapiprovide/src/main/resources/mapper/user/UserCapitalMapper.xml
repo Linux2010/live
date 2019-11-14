@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.user.mapper.UserCapitalMapper">
+  <resultMap id="BaseResultMap" type="cn.com.myproject.user.entity.PO.UserCapital">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="capital_id" jdbcType="VARCHAR" property="capitalId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="tael" jdbcType="DECIMAL" property="tael" />
+    <result column="integral" jdbcType="DECIMAL" property="integral" />
+    <result column="freezeTael" jdbcType="DECIMAL" property="freezetael" />
+    <result column="freezeIntegral" jdbcType="DECIMAL" property="freezeintegral" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, capital_id, user_id, tael, integral, freezeTael, freezeIntegral, create_time, 
+    status, version
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_capital
+    where capital_id = #{capitalId}
+  </select>
+
+
+  <select id="selectByUserId" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_capital
+    where user_id = #{userId}
+  </select>
+
+
+  <select id="getUserCapitalList" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_capital
+    where 1=1
+    <if test="userIds != null">AND user_id in #{userId}</if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="String">
+    delete from user_capital
+    where capital_id = #{capitalId}
+  </delete>
+
+  <insert id="insert" parameterType="UserCapital">
+    insert into user_capital (id, capital_id, user_id, 
+      tael, integral, freezeTael, 
+      freezeIntegral, create_time, status, 
+      version)
+    values (#{id,jdbcType=INTEGER}, #{capitalId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{tael,jdbcType=DECIMAL}, #{integral,jdbcType=DECIMAL}, #{freezetael,jdbcType=DECIMAL}, 
+      #{freezeintegral,jdbcType=DECIMAL}, #{createTime,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertSelective" parameterType="UserCapital">
+    insert into user_capital
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="capitalId != null">
+        capital_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="tael != null">
+        tael,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="freezetael != null">
+        freezeTael,
+      </if>
+      <if test="freezeintegral != null">
+        freezeIntegral,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="capitalId != null">
+        #{capitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="tael != null">
+        #{tael,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=DECIMAL},
+      </if>
+      <if test="freezetael != null">
+        #{freezetael,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeintegral != null">
+        #{freezeintegral,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="UserCapital">
+    update user_capital
+    <set>
+      <if test="tael != null">
+        tael = tael + #{tael,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null">
+        integral = integral + #{integral,jdbcType=DECIMAL},
+      </if>
+      <if test="freezetael != null">
+        freezeTael = freezetael + #{freezetael,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeintegral != null">
+        freezeIntegral = freezeIntegral + #{freezeintegral,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where 1=1 and capital_id = #{capitalId}
+    <if test="userId != null and userId !=''">
+        and  user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="UserCapital">
+    update user_capital
+    set capital_id = #{capitalId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      tael = #{tael,jdbcType=DECIMAL},
+      integral = #{integral,jdbcType=DECIMAL},
+      freezeTael = #{freezetael,jdbcType=DECIMAL},
+      freezeIntegral = #{freezeintegral,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT},
+      version = #{version,jdbcType=INTEGER}
+    where capital_id = #{capitalId,jdbcType=VARCHAR}
+  </update>
+</mapper>

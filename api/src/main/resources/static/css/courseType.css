@@ -1,0 +1,11 @@
+body{overflow: auto}
+.yijiclassify{width:100%;display: flex;flex-wrap:wrap;text-align: center;margin-top: 50px;}
+.yijiclassify .yijicell{width:2.48rem;background-color: white;border-bottom: 0.03rem solid #f5f5f5;padding:0.2rem 0;border-right: 0.03rem solid #f5f5f5;}
+.yijiclassify .yijicell:nth-child(3n){border-right: 0;}
+.yijiclassify .yijicell .img{width:1rem;height: 1rem;border-radius: 50%;display: block;margin:0 auto;}
+.yijiclassify .yijicell .p{width:80%;padding:0 10%;line-height:0.3rem;font-size: 0.26rem;padding-top:0.1rem;}
+.top{position:fixed;top:0;left: 0;z-index: 50;width: 100%;background-color: #22272a;padding:0.1rem;}
+.top .logoTop{width:0.6rem;height: 0.6rem;margin:0 0.1rem;vertical-align: middle;border-radius: 50%;}
+.top .searchTop{display: inline-block;width: 5.5rem;background-color:#d3d4d4;border-radius: 0.25rem;padding: 0 0.1rem;line-height: 0.6rem;vertical-align: middle;}
+.top .searchTop .searchTopImg{width: 0.3rem;margin-right: 0.16rem;vertical-align: middle;margin-top: -0.05rem;}
+.top .searchTop .searchTopLable{font-size: 0.26rem;color: #666;}

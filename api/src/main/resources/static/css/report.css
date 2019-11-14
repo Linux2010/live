@@ -1,0 +1,161 @@
+
+html,body{width:100%;padding: 0;margin: 0;background-color: #f5f5f5;}
+html{position: relative;height: 100%;}
+
+.con1{background-color: #22272a;padding:0 0.2rem;font-size: 0.34rem;line-height: 0.45rem;position: fixed;top:0;width:100%;z-index: 1;}
+.con1 .con1Select{width:60%;margin:0 auto;display: flex;}
+.con1 .con1Select span{width:33.3%;border-bottom:0.03rem solid transparent;text-align: center;padding: 0.2rem 0;color:white;}
+.con1 .con1Select span a{color:white}
+.con1 .con1Select span.active{border-color:#ffa42f;color:#ffa42f}
+
+.con2{padding: 0.2rem 0.2rem;background-color: white;box-sizing: border-box;}
+.con2 .con2Img{width: 1.1rem;height: 1.1rem;margin-top: 0.1rem;vertical-align: top;border-radius: 50%;}
+.con2 .con2Con{display:inline-block;width:4.9rem;padding-left: 0.1rem;box-sizing: border-box;}
+.con2 .con2Con .usrName{display:inline-block;font-size: 0.3rem;color: #333333;padding-bottom: 0.2rem;padding-top: 0.1rem;}
+.con2 .con2Con .usrWrite{display:inline-block;font-size: 0.26rem;color: #8e8e8e;}
+.con2 .medal{width: 100%;padding: 0.3rem 0;}
+.con2 .medal span{display: inline-block;vertical-align: middle;font-size: 0.26rem;padding-left: 0.2rem;}
+.con2 .medal .medalLevel{display: inline-block;vertical-align: middle;width: 6rem;}
+.con2 .medal .medalLevel img{vertical-align: middle;padding:0 0.2rem}
+.con2 .medal .medalLevel a{float: right;margin:0.4rem 0;}
+.con2 .medal .medalLevel .level4{width:1rem;}
+.con2 .medal .medalLevel .level3{width: 0.8rem;}
+.con2 .medal .medalLevel .level2{width: 0.6rem;}
+.con2 .medal .medalLevel .level1{width: 0.5rem;}
+
+.con3{padding: 0.1rem 0;background-color: white;box-sizing: border-box;margin:0.2rem 0;}
+.con3 .con3Tit{font-size: 0.32rem;line-height: 0.8rem;text-align: center;color:#111;}
+.con3 .con3Item{width: 100%;padding: 0.2rem 0;border-bottom: 0.01rem solid #ccc;}
+.con3 .con3ItemLeft{width: 3rem;height: 2rem;vertical-align:middle;padding: 0 0.1rem 0 0.2rem;}
+.con3 .con3ItemRight{display: inline-block;width:4.7rem;vertical-align: middle;}
+.con3 .con3ItemTitle{height: 1rem;display: inline-block;}
+.con3 .con3ItemBody{width:100%;}
+.con3 .con3ItemTime{width:48%;line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;overflow: hidden;}
+.con3 .con3ItemTime a{color:#ffa42f;}
+.con3 .con3ItemTime a b{font-size: 0.32rem;color:#ffa42f;}
+.con3 .con3ItemBody span{display: inline-block;background-color: #ffa42f;color:#fefefe;font-size: 0.3rem;padding: 0.1rem 0.24rem;border-radius: 0.2rem;margin: 0.08rem;}
+.con3 .con3Con{padding: 0 0.2rem;display: flex;justify-content: space-between;padding-bottom: 0.2rem;}
+.con3 .con3Con .flexCell{width: 2.3rem;}
+.con3 .con3Con .flexCell img{width: 100%;max-height: 2rem;}
+.con3 .con3Con .flexCell div{line-height: 0.5rem;}
+
+.con4{width:100%;padding: 0.5rem 0;  background-color: white;  margin: 0.2rem 0;}
+.con4 .con4Box{width:6.4rem;margin:0 auto;}
+.con4 .con4Box .line1{width:100%;display: flex;justify-content: space-between;}
+.con4 .con4Box .line1 span{}
+.con4 .con4Box .line2{width:100%;height:0.4rem;background: url("../image/jindutiao2.png") no-repeat;background-size: 100% 100%;}
+.con4 .con4Box .line2 img{height: 0.32rem;  margin-top: 0.05rem;}
+
+.con5{width:100%;margin:0.2rem 0;background-color: #e0cebd}
+.con5 .con5Box{width:6.4rem;margin:0 auto;}
+.con5 .con5Box .line1{width:100%;display: flex;height: 2.5rem;box-sizing: border-box;padding: 0 0.5rem;justify-content: space-around;align-items:flex-end;}
+.con5 .con5Box .line1 span{position: relative;}
+.con5 .con5Box .line1 span p{position: absolute;top:-0.35rem;left: 0;width:100%;text-align: center}
+.con5 .con5Box .line1 #s1{width:0.26rem;height: 0;background-color: #d8952e;}
+.con5 .con5Box .line1 #s2{width:0.26rem;height: 0;background-color: #d85a2e;}
+.con5 .con5Box .line1 #s3{width:0.26rem;height: 0;background-color: #5ad82e;}
+.con5 .con5Box .line1 #s4{width:0.26rem;height: 0;background-color: #2ea2d8;}
+.con5 .con5Box .line2{width:100%;height: 0.03rem;background-color: #5c5c5c;}
+.con5 .con5Box .line3{width:100%;display: flex;justify-content: space-around;padding: 0 0.5rem;padding-top:0.1rem;box-sizing: border-box;}
+.con5 .con5Box .line3 span{text-align: center;font-size: 0.24rem;}
+.con5 .con5Box .line4{line-height: 1rem;}
+.con5 .con5Box .line5{font-size: 0.3rem;color: #333;text-align: center}
+.bottom{width:100%;height: 1rem;border-top: 0.02rem solid #d2d1d1;position: fixed;bottom: 0;display: flex;justify-content: space-around;background-color: white;}
+.bottom .b{width: 1.85rem;text-align: center}
+.bottom .b img{width: 0.58rem;height: 0.58rem;margin-top:0.05rem;}
+.bottom .b span{display: block;font-size: 0.28rem;line-height: 0.2rem;}
+
+.more{
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+.fresh{
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+.more .pull_icon{
+    width: 25px;
+    height: 25px;
+    background-image: url('../image/pull.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
+    transition: all .5s;
+}
+.fresh .pull_icon{
+    width: 25px;
+    height: 25px;
+    background-image: url('../image/nopull.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
+    transition: all .5s;
+}
+.more span{
+    padding-left: .5rem;
+}
+.fresh span{
+    padding-left: .5rem;
+}
+
+.scroller{
+    background-color: #f5f5f5;
+}
+
+
+.more .flip{
+    transform: rotate(180deg);
+}
+.fresh .flip{
+    transform: rotate(180deg);
+}
+.more .loading{
+    background-image: url('../image/loading.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
+}
+.more .loading{
+    -webkit-transform: rotate(0deg) translateZ(0);
+    -webkit-transition-duration: 0;
+    -webkit-animation-name: loading;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+.fresh .loading{
+    background-image: url('../image/loading.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
+}
+.fresh .loading{
+    -webkit-transform: rotate(0deg) translateZ(0);
+    -webkit-transition-duration: 0;
+    -webkit-animation-name: loading;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes loading {
+    from {
+        -webkit-transform: rotate(0deg) translateZ(0);
+    }
+    to {
+        -webkit-transform: rotate(360deg) translateZ(0);
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+html,body{width:100%;height: 100%;background-color: #f5f5f5;}
+body{overflow: hidden;}
+
+.con3{padding: 0.1rem 0;background-color: white;box-sizing: border-box;margin-bottom:0.2rem;}
+.con3 .con3Tit{font-size: 0.32rem;line-height: 0.8rem;text-align: center;color:#111;}
+.con3 .con3Item{width: 100%;padding: 0.2rem 0;border-bottom: 0.01rem solid #ccc;}
+.con3 .con3ItemLeft{width: 3rem;height: 2rem;vertical-align:middle;padding: 0 0.1rem 0 0.2rem;}
+.con3 .con3ItemRight{display: inline-block;width:4rem;height:2rem;vertical-align: middle;}
+.con3 .con3ItemRight .coachName{display: inline-block;width:3.9rem;font-size: 0.28rem;color:#333;}
+.con3 .con3ItemTitle{height: 1.6rem;display: inline-block;overflow: hidden;font-size: 0.26rem;}
+.con3 .con3ItemName{display: inline-block;line-height: 0.6rem;}
+.con3 .con3ItemBody{width:100%;}
+.con3 .con3ItemTime{width:48%;line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;overflow: hidden;}
+.con3 .con3ItemTime.con3ItemTimeMoney{width:100%;line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;overflow: hidden;}
+.con3 .con3ItemTime a{color:#ffa42f;}
+.con3 .con3ItemTime a b{font-size: 0.32rem;color:#ffa42f;}
+.con3 .con3ItemBody span{display: inline-block;background-color: #ffa42f;color:#fefefe;font-size: 0.3rem;padding: 0.05rem 0.24rem;border-radius: 0.2rem;margin: 0.08rem;}
+.con3 .con3Con{padding: 0 0.2rem;display: flex;justify-content: space-between;padding-bottom: 0.2rem;}
+
+.body{width:100%;text-align: center;height: 100%;background-color: white;}
+.body .img1{width:1.6rem;padding:0.3rem;}
+.body .p1{font-size: 0.32rem;color:#000;line-height: 0.5rem;}
+.body .p2{font-size: 0.32rem;color:#333;line-height:1rem;}
+.body .button{width:100%;display: flex;justify-content: space-around;padding:1.2rem 0;}
+.body .button span{display: inline-block;width:1.6rem;border:0.01rem solid #ffa42f;border-radius: 0.2rem;padding:0.1rem 0.2rem;color:#ffa42f;font-size: 0.3rem;}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.news.mapper.PointRecordMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="PointRecord" id="resultMap">
+
+        <result column="id" property="id"  jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+
+        <result column="pointRecord_id" property="pointRecordId" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="information_id" property="informationId" jdbcType="VARCHAR"/>
+        <result column="is_operation" property="isOperation" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <select id="selectByUserId" resultMap="resultMap" parameterType="java.lang.String">
+       select id, pointRecord_id, information_id , user_id, `type`, create_time, status, version, is_operation from point_record where user_id = #{userId}
+       and information_id = #{informationId}
+    </select>
+    <insert id="addPointRecord" parameterType="PointRecord">
+        insert into point_record(pointRecord_id, information_id, is_operation , user_id, `type`, create_time, status, version) values(
+        #{pointRecordId}, #{informationId}, #{isOperation}, #{userId}, #{type}, #{createTime}, #{status}, #{version}
+        )
+    </insert>
+</mapper>

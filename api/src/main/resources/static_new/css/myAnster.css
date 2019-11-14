@@ -1,0 +1,19 @@
+
+html,body{width:100%;padding: 0;margin: 0;background-color: #f5f5f5;}
+html{position: relative;height: 100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{width:100%;display: flex;background-color: white;margin:0.2rem 0;}
+.con2 .con2Item{width: 100%;padding: 0.2rem 0;}
+.con2 .con2ItemLeft{width: 3rem;height: 2rem;vertical-align:middle;padding: 0 0.2rem;}
+.con2 .con2ItemRight{display: inline-block;width:3.9rem;vertical-align: middle;}
+.con2 .con2ItemTitle{height: 1rem;display: inline-block;}
+.con2 .con2ItemBody{width:100%;}
+.con2 .con2ItemTime{line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;}
+.con2 .con2ItemBody span{display: inline-block;float: right;background-color: #ffa42f;color:#fefefe;font-size: 0.3rem;padding: 0.05rem 0.24rem;border-radius: 0.2rem;margin: 0.08rem;}
+
+
+
+

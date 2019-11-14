@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.user.mapper.UserCapitalLogMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.com.myproject.user.entity.PO.UserCapitalLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="capital_log_id" property="capitalLogId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="SMALLINT" />
+    <result column="operate_type" property="operateType" jdbcType="SMALLINT" />
+    <result column="account" property="account" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+      <result column="des_message" property="des_message" jdbcType="VARCHAR" />
+    <result column="relation_id" property="relationId" jdbcType="VARCHAR" />
+    <result column="relation_obj" property="relationObj" jdbcType="VARCHAR" />
+    <result column="relation_type" property="relationType" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, capital_log_id, user_id, account_type, operate_type, account, balance, description, 
+    relation_id, relation_obj,relation_type, create_time, status, version
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_capital_log
+    where capital_log_id = #{capitalLogId}
+  </select>
+
+
+  <select id="getUserCapitalAccount" resultType="Map" parameterType="UserCapitalLog" >
+    select user_id AS userId, SUM(account) AS account
+    from user_capital_log
+    where status = 1
+    <if test="userIds">AND user_id IN (#{userIds})</if>
+    <if test="relationType"> AND relation_type = ${relationType}</if>
+    GROUP BY user_id
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from user_capital_log
+    where capital_log_id = #{capitalLogId}
+  </delete>
+
+  <insert id="insert" parameterType="UserCapitalLog" >
+    insert into user_capital_log (id, capital_log_id, user_id, 
+      account_type, operate_type, account, 
+      balance, description, relation_id, 
+      relation_obj,relation_type,create_time, status,
+      version)
+    values (#{id,jdbcType=INTEGER}, #{capitalLogId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=SMALLINT}, #{operateType,jdbcType=SMALLINT}, #{account,jdbcType=DECIMAL}, 
+      #{balance,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR}, #{relationId,jdbcType=VARCHAR}, 
+      #{relationObj,jdbcType=VARCHAR}, #{relationType,jdbcType=SMALLINT}, #{createTime,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT},
+      #{version,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertSelective" parameterType="UserCapitalLog" >
+    insert into user_capital_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="capitalLogId != null" >
+        capital_log_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="accountType != null" >
+        account_type,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="relationId != null" >
+        relation_id,
+      </if>
+      <if test="relationObj != null" >
+        relation_obj,
+      </if>
+      <if test="relationType != null" >
+        relation_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="capitalLogId != null" >
+        #{capitalLogId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=SMALLINT},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="relationId != null" >
+        #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationObj != null" >
+        #{relationObj,jdbcType=VARCHAR},
+      </if>
+      <if test="relationType != null" >
+        #{relationType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="UserCapitalLog" >
+    update user_capital_log
+    <set >
+      <if test="accountType != null" >
+        account_type = #{accountType,jdbcType=SMALLINT},
+      </if>
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="relationId != null" >
+        relation_id = #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationObj != null" >
+        relation_obj = #{relationObj,jdbcType=VARCHAR},
+      </if>
+      <if test="relationType != null" >
+        relation_type = #{relationType,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where 1=1
+    <if test="userId != null and userId !=''">
+        and   user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+    <if test="capitalLogId != null and capitalLogId !=''">
+        and  capital_log_id = #{capitalLogId,jdbcType=INTEGER}
+    </if>
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="UserCapitalLog" >
+    update user_capital_log
+    set capital_log_id = #{capitalLogId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=SMALLINT},
+      operate_type = #{operateType,jdbcType=SMALLINT},
+      account = #{account,jdbcType=DECIMAL},
+      balance = #{balance,jdbcType=DECIMAL},
+      description = #{description,jdbcType=VARCHAR},
+      relation_id = #{relationId,jdbcType=VARCHAR},
+      relation_obj = #{relationObj,jdbcType=VARCHAR},
+      relation_type = #{relationType,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT},
+      version = #{version,jdbcType=INTEGER}
+    where capital_log_id = #{capitalLogId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectTopUpList" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+	  user_capital_log ucl
+    WHERE
+	ucl.user_id = #{userId}
+    AND ucl.relation_type = 1
+    ORDER BY
+	id DESC
+  </select>
+
+  <select id="selectWithList" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+      user_capital_log ucl
+    WHERE
+    ucl.user_id = #{userId}
+    AND ucl.relation_type = 2
+    ORDER BY
+	id DESC
+  </select>
+
+  <select id="selectAllList" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    ucl.id, ucl.capital_log_id, ucl.user_id, ucl.account_type, ucl.operate_type, ucl.account, ucl.balance, ucl.description as des_message,
+    ucl.relation_id, ucl.relation_obj,ucl.relation_type,ucl.create_time, ucl.status, ucl.version
+    FROM
+    user_capital_log ucl
+    WHERE
+    ucl.user_id = #{userId}
+    AND ucl.account > 0
+    AND ucl.account_type = 1
+    ORDER BY
+    id DESC
+  </select>
+</mapper>

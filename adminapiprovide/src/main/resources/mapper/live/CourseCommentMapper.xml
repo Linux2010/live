@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.live.mapper.CourseCommentMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CourseComment" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="course_comment_id" property="courseCommentId" jdbcType="VARCHAR"/>
+        <result column="course_id" property="courseId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="comment_content" property="commentContent" jdbcType="VARCHAR"/>
+        <result column="comment_time" property="commentTime" jdbcType="BIGINT"/>
+        <result column="accname" property="accname" jdbcType="VARCHAR"/>
+        <result column="teaname" property="teaname" jdbcType="VARCHAR"/>
+        <result column="cctitle" property="cctitle" jdbcType="VARCHAR"/>
+        <result column="hcontent" property="hcontent" jdbcType="VARCHAR"/>
+        <result column="htime" property="htime" jdbcType="BIGINT"/>
+        <result column="htime" property="htime" jdbcType="BIGINT"/>
+        <result column="comment_level" property="commentLevel" jdbcType="INTEGER"/>
+        <association property="user" javaType="User" column="user_id">
+            <id property="id" column="ID" jdbcType="INTEGER"></id>
+            <id column="user_id" property="userId" jdbcType="VARCHAR"></id>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"></result>
+        </association>
+        <association property="course" javaType="Course" column="course_id">
+            <id property="id" column="ID" jdbcType="INTEGER"></id>
+            <result column="course_id" property="courseId" jdbcType="VARCHAR"></result>
+            <result column="course_title" property="courseTitle" jdbcType="VARCHAR"></result>
+            <result column="teacher_id" property="teacherId" jdbcType="VARCHAR"></result>
+        </association>
+    </resultMap>
+
+    <resultMap id="ccMap" type="cn.com.myproject.live.entity.VO.CourseCommentVO">
+        <result column="courseCommentId" property="courseCommentId" jdbcType="VARCHAR"/>
+        <result column="courseId" property="courseId" jdbcType="VARCHAR"/>
+        <result column="commentContent" property="commentContent" jdbcType="VARCHAR"/>
+        <result column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="commentTime" property="commentTime" jdbcType="BIGINT"/>
+        <result column="accname" property="accname" jdbcType="VARCHAR"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+        <result column="signature" property="signature" jdbcType="VARCHAR"/>
+        <result column="userIdentity" property="userIdentity" jdbcType="VARCHAR"/>
+        <result column="commentLevel" property="commentLevel" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <resultMap id="crMap" type="cn.com.myproject.live.entity.VO.CourseReplyVO">
+        <result column="replayUserId" property="replayUserId" jdbcType="VARCHAR"/>
+        <result column="replayUserName" property="replayUserName" jdbcType="VARCHAR"/>
+        <result column="replayContent" property="replayContent" jdbcType="VARCHAR"/>
+        <result column="replayTime" property="replayTime" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <select id="getPage" resultMap="resultMap">
+          select t1.id,t1.course_comment_id,t1.course_id,t1.comment_content,t1.user_id,t1.comment_time,t2.course_title cctitle,t3.user_name accname,t4.user_name teaname
+          from course_comment t1 inner join course t2 on t1.course_id = t2.course_id inner join `user` t3 on t1.user_id = t3.user_id
+          inner join `user` t4 on t2.teacher_id = t4.user_id order by t1.comment_time desc
+    </select>
+    <select id="getById" resultMap="resultMap" parameterType="String">
+           select t3.replay_content hcontent,replay_time htime,t1.id,t1.course_comment_id,t1.course_id,t1.comment_content,t1.user_id,t1.comment_time,t2.user_name accname
+          from course_comment t1
+          left join `user` t2 on t1.user_id = t2.user_id left join course_reply t3 on t1.course_comment_id = t3.course_comment_id
+          where t1.course_comment_id = #{commid}
+    </select>
+    <delete id="delcomm" parameterType="String">
+        delete from course_comment where course_comment_id = #{commid}
+    </delete>
+    <insert id="addcomm" parameterType="CourseComment">
+        insert into course_comment(course_comment_id,course_id,comment_content,user_id,comment_time) values(#{courseCommentId},#{courseId},#{commentContent},#{userId},#{commentTime})
+    </insert>
+    <insert id="insertComm" parameterType="CourseComment">
+        insert into course_comment(course_comment_id,course_id,comment_content,user_id,comment_time,comment_level)
+        values(#{courseCommentId},#{courseId},#{commentContent},#{userId},#{commentTime},#{commentLevel})
+    </insert>
+    <select id="checkcomment" resultType="Integer" parameterType="CourseComment">
+        select count(t1.course_comment_id) from course_comment t1 where t1.user_id = #{userId} and t1.course_id =#{courseId}
+    </select>
+
+    <select id="searchCcList" resultMap="ccMap">
+        select
+        cc.course_comment_id as courseCommentId,
+        cc.course_id as courseId,
+        cc.comment_content as commentContent,
+        cc.user_id as userId,
+        cc.comment_time as commentTime,
+        cc.comment_level as commentLevel,
+        u.user_name as accname,
+        u.photo as photo,
+        u.signature as signature,
+        u.user_identity as userIdentity
+        from course_comment cc
+        left join user u on u.user_id = cc.user_id
+        where cc.course_id = #{courseId} order by cc.comment_time desc
+    </select>
+    
+    <select id="searchCrList" resultMap="crMap">
+        select
+        cr.replay_user_id as replayUserId,
+        u.user_name as replayUserName,
+        cr.replay_content as replayContent,
+        cr.replay_time as replayTime
+        from course_reply cr
+        left join sys_user u on u.user_id = cr.replay_user_id
+        where cr.course_comment_id = #{ccId}
+    </select>
+
+    <select id="searchCcCount" resultType="Integer">
+        select count(*) from course_comment cc where cc.course_id = #{courseId}
+    </select>
+
+</mapper>

@@ -1,0 +1,56 @@
+html,body{width:100%;padding: 0;margin: 0;background-color: #f5f5f5;}
+html{position: relative;height: 100%;}
+
+.con1{background-color: #22272a;padding:0 0.2rem;font-size: 0.34rem;line-height: 0.45rem;position: fixed;top:0;width:100%;z-index: 1;}
+.con1 .con1Select{margin:0 auto;display: flex;}
+.con1 .con1Select span{border-bottom:0.03rem solid transparent;text-align: center;padding: 0.2rem 0;color:white;}
+.con1 .con1Select span.active{border-color:#ffa42f;color:#ffa42f}
+
+.con2{padding: 0.2rem 0.2rem;background-color: white;box-sizing: border-box;}
+.con2 .user .con2Img{width: 1.1rem;height: 1.1rem;margin-top: 0.1rem;vertical-align: top;border-radius: 50%;}
+.con2 .user .con2Con{display:inline-block;width:3.9rem;padding-left: 0.1rem;box-sizing: border-box;vertical-align: middle}
+.con2 .user .con2Con .usrName{font-size: 0.3rem;color: #333333;padding-bottom: 0.2rem;padding-top: 0.1rem;}
+.con2 .user .con2Con .usrWrite{display:inline-block;font-size: 0.26rem;color: #8e8e8e;}
+.con2 .user .guanzhu{display: inline-block;background-color: #ffa42f;color:white;padding:0.1rem 0.2rem;border-radius: 0.2rem;margin-left:0.5rem;vertical-align: middle;font-size: 0.3rem;}
+.con2 .con2Title{font-size: 0.34rem;color:#222;line-height: 0.8rem;}
+
+.radio{width:100%;}
+.radio .vadioImg{width:100%;}
+
+.con3{padding: 0.2rem 0;background-color: white;box-sizing: border-box;}
+.con3 .con3Tit{width:100%;padding:0 0.2rem;line-height: 0.5rem;box-sizing: border-box;}
+.con3 .user{width:100%;border-top:0.01rem solid #ccc;padding:0.2rem;box-sizing: border-box;}
+.con3 .user .con3Img{width: 1.1rem;height: 1.1rem;margin-top: 0.1rem;vertical-align: top;border-radius: 50%;}
+.con3 .user .con3Con{display:inline-block;width:5.9rem;padding-left: 0.1rem;box-sizing: border-box;}
+.con3 .user .con3Con .usrName{display:block;font-size: 0.3rem;color: #333333;padding-bottom: 0.2rem;padding-top: 0.1rem;}
+.con3 .user .con3Con .usrWrite{display:inline-block;font-size: 0.26rem;color: #8e8e8e;}
+.con3 .user .say{margin:0.2rem 0.2rem 0.2rem 1rem;box-sizing: border-box;border-bottom: 0.01rem solid #ccc;}
+.con3 .user .say p{line-height: 0.5rem;}
+
+
+.con4{width:100%;margin-bottom: 0.2rem;}
+.con4 .con4Title{padding:0 0.1rem;line-height: 0.75rem;font-size: 0.34rem;font-weight: bold;}
+.con4 .con4Title img{height: 0.34rem;padding:0 0.1rem;vertical-align: middle;}
+.con4 .con4Body{width:100%;padding:0.4rem;box-sizing: border-box;background-color: white;}
+.con4 .con4Body .line1{width:100%;line-height: 0.9rem;border-bottom:0.01rem solid #ccc;}
+.con4 .con4Body .line1 img{width:0.4rem;vertical-align: middle}
+.con4 .con4Body .line1 span{padding:0 0.1rem;vertical-align: middle;color:#ffa42f;font-size: 0.28rem;}
+.con4 .con4Body .line1 span.payVip{float: right;background-color: #ffa42f;color:white;padding:0.1rem 0.2rem;text-align: center;line-height: 0.35rem;margin:0.19rem 0;border-radius: 0.2rem;font-size: 0.28rem;}
+.con4 .con4Con{padding:0.2rem 0.4rem;background-color: white;}
+.con4 .con4Con p{line-height: 0.5rem;font-size: 0.28rem;color:#666;}
+
+.write{width:100%;padding:0.2rem;position: fixed;bottom:0;background-color: white;box-sizing: border-box;box-shadow: 0 -1px 1px 0 #ccc}
+.write .writeBox1{width:4rem;display: inline-block;line-height: 0.6rem;text-align: center;background: url("../image/writepl.png") no-repeat;background-size: auto 100%;vertical-align: middle;margin-right: 0.2rem;}
+.write .writeBox2{width:0.75rem;display: inline-block;height: 0.65rem;padding: 0 0.2rem;vertical-align: middle;margin-right: 0.2rem;}
+.write .writeBox2 img{width:100%;}
+.write .writeBox3{width:0.65rem;display: inline-block;height: 0.65rem;padding: 0 0.2rem;vertical-align: middle}
+.write .writeBox3 img{width:100%;}
+.write .writeBox4{width:5.9rem;display: inline-block;font-size:0.3rem;line-height: 0.3rem;vertical-align: middle;margin-right: 0.1rem;border:0.01rem solid #ccc;border-radius: 0.1rem;padding:0.1rem 0.2rem;box-sizing: border-box}
+.write .b span{padding:0 0.2rem;line-height: 0.6rem;border-radius: 0.1rem;background-color: #ffa42f;display: inline-block;vertical-align: middle;font-size: 0.28rem;}
+
+
+
+
+
+
+

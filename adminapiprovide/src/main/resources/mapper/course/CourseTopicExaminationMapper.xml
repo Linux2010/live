@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.course.mapper.CourseTopicExaminationMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CourseTopicExamination" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="course_topic_examination_id" property="courseTopicExaminationId" jdbcType="VARCHAR" />
+        <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+        <result column="examination_name" property="examinationName" jdbcType="VARCHAR" />
+        <result column="is_register_topic" property="isRegisterTopic" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap type="cn.com.myproject.live.entity.VO.CourseTopicExaminationVO" id="examinationPageresultMap">
+        <result column="course_topic_examination_id" property="courseTopicExaminationId" jdbcType="VARCHAR" />
+        <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+        <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+        <result column="examination_name" property="examinationName" jdbcType="VARCHAR" />
+        <result column="is_register_topic" property="isRegisterTopic" jdbcType="TINYINT" />
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap type="cn.com.myproject.live.entity.VO.CourseTopicExaminationVO" id="examinationAndTopicsPageresultMap">
+        <result column="course_topic_examination_id" property="courseTopicExaminationId" jdbcType="VARCHAR" />
+        <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+        <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+        <result column="course_type_id" property="courseTypeId" jdbcType="VARCHAR" />
+        <result column="examination_name" property="examinationName" jdbcType="VARCHAR" />
+        <result column="is_register_topic" property="isRegisterTopic" jdbcType="TINYINT" />
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+        <result column="course_type_name" property="courseTypeName" jdbcType="VARCHAR"/>
+       <collection property="topicMaps"  ofType="java.util.Map"
+                    select="selectTopicsByCourseTopicExaminationId" column="{courseTopicExaminationId = course_topic_examination_id}"   >
+           <!--<id column="courseTopicExaminationId" property="courseTopicExaminationId"></id>-->
+        </collection>
+    </resultMap>
+    <select id="getPageCourseTopicExaminations" resultMap="examinationPageresultMap" parameterType="cn.com.myproject.live.entity.VO.CourseTopicExaminationVO">
+        SELECT
+        exam.course_topic_examination_id,
+        exam.course_id,
+        c.course_title as course_name,
+        exam.examination_name,
+        exam.is_register_topic,
+        (SELECT user_name FROM sys_user WHERE user_id=exam.`creater`)AS creater,
+        exam.create_time,
+        exam.update_time,
+        (SELECT user_name FROM sys_user WHERE user_id=exam.`updater`)AS updater
+        FROM
+        course_topic_examination exam
+        LEFT JOIN course c
+        ON c.course_id = exam.`course_id`
+        where 1=1
+        and exam.status=1
+        <if test="vo.keyword != null and vo.keyword !=''">
+            and (  c.course_title LIKE CONCAT('%',#{vo.keyword},'%')
+            or  exam.examination_name LIKE CONCAT('%',#{vo.keyword},'%') )
+        </if>
+        <if test="vo.isRegisterTopic != null">
+            AND exam.is_register_topic = #{vo.isRegisterTopic}
+        </if>
+        order by exam.create_time desc
+
+    </select>
+    <select id="getExamAndTopicsInfoByCourseTopicExamId" resultMap="examinationAndTopicsPageresultMap" parameterType="java.lang.String">
+       SELECT
+        exam.course_topic_examination_id,
+        exam.course_id,
+        c.course_title AS course_name,
+        c.`course_type_id`,
+        exam.examination_name,
+        exam.is_register_topic,
+        (SELECT user_name FROM sys_user WHERE user_id=exam.`creater`)AS creater,
+        exam.create_time,
+        exam.update_time,
+        (SELECT user_name FROM sys_user WHERE user_id=exam.`updater`)AS updater,
+        ty.`type_name` as course_type_name
+        FROM
+         course_topic_examination exam
+        LEFT JOIN course c
+              ON c.course_id = exam.`course_id`
+        LEFT JOIN course_type ty
+             ON ty.`course_type_id` = c.`course_type_id`
+             where   exam.course_topic_examination_id =#{courseTopicExaminationId} and exam.status=1
+    </select>
+
+    <select id="selectTopicsByCourseTopicExaminationId" parameterType="java.util.Map" resultType="java.util.Map">
+         select * from course_topic where course_topic_examination_id =#{courseTopicExaminationId} order by topic_no asc
+    </select>
+
+    <select id="selectTopicsByCourseTopicCourseId" parameterType="java.lang.String" resultMap="resultMap">
+        select * from course_topic_examination where course_id =#{courseId}
+    </select>
+
+
+    <select id="selectRegisterCourseTopicExamination"  resultType="java.util.Map">
+        select * from course_topic_examination where is_register_topic = 0 and status=1
+    </select>
+
+    <select id="getStudyLabels" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM study_label
+        where 1= 1
+        order by create_time desc
+    </select>
+
+    <insert id="insertTopicExamination" parameterType="java.util.Map" >
+         insert into
+                course_topic_examination(course_topic_examination_id,
+                                         course_id,examination_name,
+                                         is_register_topic,
+                                         create_time,
+                                         creater,
+                                         update_time,
+                                         updater,
+                                         status)
+         VALUES
+          (#{map.course_topic_examination_id},
+          #{map.course_id},
+          #{map.examination_name},
+          #{map.is_register_topic},
+          #{map.create_time},
+          #{map.creater},
+          #{map.update_time},
+          #{map.updater},
+          #{map.status})
+    </insert>
+    <insert id="updateTopicExamination" parameterType="java.util.Map" >
+         update course_topic_examination set
+            course_topic_examination_id=#{map.course_topic_examination_id},
+            course_id=#{map.course_id},
+            examination_name= #{map.examination_name},
+            is_register_topic= #{map.is_register_topic},
+            update_time=#{map.update_time},
+            updater =#{map.updater}
+            where course_topic_examination_id = #{map.course_topic_examination_id}
+    </insert>
+
+    <select id="getCourseListByCourseTypeId" parameterType="java.lang.String" resultType="java.util.Map">
+        select * from course
+        WHERE course_type_id=#{courseTypeId}
+    </select>
+
+    <delete id="delCourseTopicExam" parameterType="java.lang.String">
+         delete from course_topic_examination
+             where course_topic_examination_id = #{course_topic_examination_id,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="getRegisterById" resultType="cn.com.myproject.live.entity.VO.CourseRegisterExamVO" parameterType="java.lang.String">
+        SELECT
+        exam.course_topic_examination_id,
+        exam.course_id,
+        c.course_title AS course_name,
+        c.`course_type_id`,
+        exam.examination_name,
+        exam.is_register_topic,
+        (SELECT user_name FROM sys_user WHERE user_id=exam.`creater`)AS creater,
+        exam.create_time,
+        exam.update_time,
+        (SELECT user_name FROM sys_user WHERE user_id=exam.`updater`)AS updater,
+        ty.`type_name` as course_type_name
+        FROM
+        course_topic_examination exam
+        LEFT JOIN course c
+        ON c.course_id = exam.`course_id`
+        LEFT JOIN course_type ty
+        ON ty.`course_type_id` = c.`course_type_id`
+        where   exam.course_topic_examination_id =#{courseTopicExaminationId} and exam.status=1
+    </select>
+    <select id="getRegisterExamMessage" resultType="CourseTopicExamination">
+        select course_topic_examination_id from course_topic_examination where is_register_topic = 0 and status = 1
+    </select>
+    <select id="selectKjIdByCId" parameterType="java.lang.String" resultType="java.lang.String">
+        select cte.course_topic_examination_id from course_topic_examination cte where cte.course_id = #{courseId}
+    </select>
+</mapper>

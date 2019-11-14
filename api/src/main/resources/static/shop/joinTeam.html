@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>今日学习</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/openTeam.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiper-3.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/swiper-3.3.1.min.js" type="text/javascript"></script>
+    <script src="js/vue.min.js"></script>
+    <style>
+        html, body {
+            position: relative;
+        }
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 5.8rem;
+            z-index: 0;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div class="con1">
+    <div class="con1Select">
+        <span style="width:1rem;text-align: left;"><</span><span>商品</span><span style="width: 1rem;"></span>
+    </div>
+</div>
+<div style="width: 100%;height: 0.85rem;"></div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="image/banner1.png" style="width: 100%;"></div>
+        <div class="swiper-slide"><img src="image/banner1.png" style="width: 100%;"></div>
+        <div class="swiper-slide"><img src="image/banner1.png" style="width: 100%;"></div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+</div>
+<div class="con2">
+    <div class="line1">林老师陪伴的365天</div>
+    <div class="line2"><span>参团价：<a>￥19.00</a></span><span>快递：免运费</span><span>月销量：2232</span></div>
+</div>
+<div class="con3">
+    <div><p>会员价</p><span>￥100.0</span></div>
+    <div><p>市场价</p><span>￥150.0</span></div>
+    <div><p>原价</p><del>￥200.0</del></div>
+</div>
+<div class="con5">
+    <div class="line3">
+        <div class="imgBox"><img src="image/miss1.png"><img src="image/miss1.png"> </div>
+    </div>
+    <div class="line4">仅剩<a style="color:#ffa42f">1</a>个名额，23:00:00结束拼团</div>
+    <div class="join">一键参团</div>
+</div>
+
+</body>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        loop: true,
+        autoplay:1500
+    });
+</script>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="../bootstrap-select-1.12.4/dist/css/bootstrap-select.css">
+
+
+    <script src="../js/jquery.min.js" ></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="../bootstrap-select-1.12.4/js/bootstrap-select.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>-->
+</head>
+<body>
+
+        <select id="usertype" class="selectpicker show-tick form-control" onchange="change()">
+            <option value="0">苹果</option>
+            <option value="1">菠萝</option>
+            <option value="2">香蕉</option>
+            <option value="3">火龙果</option>
+            <option value="4">梨子</option>
+            <option value="5">草莓</option>
+            <option value="6">哈密瓜</option>
+            <option value="7">椰子</option>
+            <option value="8">猕猴桃</option>
+            <option value="9">桃子</option>
+        </select>
+<div onclick="load()">loadload</div>
+<div onclick="re()">rererere</div>
+</body>
+<script>
+            var option = [0,1,2,3,4,5];
+            function getschoolList(option) {
+                for(var i=0;i<option.length;i++){
+                    $('#usertype.selectpicker').append("<option value=" + option[i] + ">" + option[i] + "</option>");
+                }
+//                    $('#usertype').selectpicker('refresh');
+            }
+            getschoolList(option)
+            function load() {
+                option = [0,11,22,33];
+                getschoolList(option);
+            }
+
+            $('.dropdown-menu').click(function (e) {
+                $('#usertype').selectpicker('refresh');
+
+            })
+//            $(".dropdown-menu.inner").on("click","li",function () {
+//                console.log("aaa")
+//            })
+            function re() {
+                $('#usertype').selectpicker('refresh');
+            }
+    function change() {
+        $('#usertype').selectpicker('refresh');
+        console.log($("#usertype").val());
+    }
+
+</script>
+</html>

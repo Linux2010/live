@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.live.mapper.CourseOrderMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CourseOrder" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="course_order_id" property="courseOrderId" jdbcType="VARCHAR"/>
+        <result column="order_create_time" property="orderCreateTime" jdbcType="BIGINT"/>
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER"/>
+        <result column="pay_status" property="payStatus" jdbcType="INTEGER"/>
+        <result column="pay_type" property="payType" jdbcType="INTEGER"/>
+        <result column="total_money" property="totalMoney" jdbcType="DOUBLE"/>
+        <result column="course_id" property="courseId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <association property="user" javaType="User" column="user_id">
+            <id property="id" column="ID" jdbcType="INTEGER"></id>
+            <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"></result>
+            <result column="user_identity" property="userIdentity" jdbcType="VARCHAR"></result>
+        </association>
+        <association property="course" javaType="Course" column="course_id">
+            <id column="ID" property="id" jdbcType="INTEGER"/>
+            <result column="course_id" property="courseId" jdbcType="VARCHAR"/>
+            <result column="course_title" property="courseTitle" jdbcType="VARCHAR"/>
+            <result column="course_type_id" property="courseTypeId" jdbcType="VARCHAR"/>
+            <result column="course_cover" property="courseCover" jdbcType="VARCHAR"/>
+            <result column="course_content" property="courseContent" jdbcType="VARCHAR"/>
+            <result column="course_begin_time" property="courseBeginTime" jdbcType="BIGINT"/>
+            <result column="course_end_time" property="courseEndTime" jdbcType="BIGINT"/>
+            <result column="cost_price" property="costPrice" jdbcType="DOUBLE"/>
+            <result column="vip_price" property="vipPrice" jdbcType="DOUBLE"/>
+            <result column="course_intro" property="courseIntro" jdbcType="VARCHAR"/>
+            <result column="course_integral" property="courseIntegral" jdbcType="DOUBLE"/>
+            <result column="course_address" property="courseAddress" jdbcType="VARCHAR"/>
+            <result column="tname" property="tname" jdbcType="VARCHAR"/>
+        </association>
+        <association property="courseType" javaType="CourseType" column="course_type_id">
+            <id column="ID" property="id" jdbcType="INTEGER"/>
+            <result column="course_type_id" property="courseTypeId" jdbcType="VARCHAR"/>
+            <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+            <result column="type_level" property="typeLevel" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+
+    <resultMap type="Course" id="apiresult">
+            <id column="ID" property="id" jdbcType="INTEGER"/>
+            <result column="course_id" property="courseId" jdbcType="VARCHAR"/>
+            <result column="course_title" property="courseTitle" jdbcType="VARCHAR"/>
+            <result column="course_type_id" property="courseTypeId" jdbcType="VARCHAR"/>
+            <result column="course_cover" property="courseCover" jdbcType="VARCHAR"/>
+            <result column="course_content" property="courseContent" jdbcType="VARCHAR"/>
+            <result column="course_begin_time" property="courseBeginTime" jdbcType="BIGINT"/>
+            <result column="course_end_time" property="courseEndTime" jdbcType="BIGINT"/>
+            <result column="cost_price" property="costPrice" jdbcType="DOUBLE"/>
+            <result column="vip_price" property="vipPrice" jdbcType="DOUBLE"/>
+            <result column="course_intro" property="courseIntro" jdbcType="VARCHAR"/>
+            <result column="course_integral" property="courseIntegral" jdbcType="DOUBLE"/>
+            <result column="course_address" property="courseAddress" jdbcType="VARCHAR"/>
+            <result column="tname" property="tname" jdbcType="VARCHAR"/>
+            <result column="tyval" property="tyval" jdbcType="VARCHAR"/>
+            <result column="orderNumber" property="orderNumber" jdbcType="INTEGER"/>
+            <result column="zbType" property="zbType" jdbcType="VARCHAR"/>
+            <result column="course_img" property="courseImg" jdbcType="VARCHAR"/>
+            <result column="course_intro" property="courseIntro" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getPageForQuery" resultMap="resultMap">
+        select
+        t1.id,t1.course_order_id,t1.order_create_time,t1.order_status,t1.pay_status,t1.pay_type,t1.total_money,t1.course_id,t1.user_id,t2.course_title,t2.teacher_id,t2.course_type_id,t3.user_name,t3.user_identity,t4.type_name
+        from course_order t1
+        inner join course t2 on t1.course_id = t2.course_id inner join `user` t3 on t1.user_id = t3.user_id inner join
+        course_type t4 on t2.course_type_id = t4.course_type_id
+        where 1=1
+        <if test="map.keyword != null and map.keyword != ''">
+            and t1.course_order_id like CONCAT('%',#{map.keyword},'%')
+        </if>
+        <if test="map.orders != null">
+            and t1.order_status = #{map.orders}
+        </if>
+        <if test="map.userId != null">
+            and t1.user_id = #{map.userId}
+        </if>
+        order by t1.order_create_time desc
+    </select>
+    <select id="getById" resultMap="resultMap" parameterType="String">
+        select
+        t1.id,t1.course_order_id,t1.order_create_time,t1.order_status,t1.pay_status,t1.pay_type,t1.total_money,t1.course_id,t1.user_id,t2.course_title,t2.teacher_id,t2.course_type_id,t2.course_cover,
+        t2.course_content,t2.course_begin_time,t2.course_begin_time,t2.course_end_time,t2.cost_price,t2.vip_price,t2.course_intro,course_integral,t2.course_address,t3.user_name,t3.user_identity,t4.type_name
+        from course_order t1
+        inner join course t2 on t1.course_id = t2.course_id inner join `user` t3 on t2.teacher_id = t3.user_id inner
+        join course_type t4 on t2.course_type_id = t4.course_type_id
+        where t1.course_order_id = #{courseOrderId}
+    </select>
+    <insert id="addcorder" parameterType="CourseOrder">
+          insert into course_order(course_order_id,order_create_time,order_status,pay_status,pay_type,total_money,course_id,user_id) values(#{courseOrderId},#{orderCreateTime},#{orderStatus},#{payStatus},#{payType},#{totalMoney},#{courseId},#{userId})
+    </insert>
+    <update id="updatecorder" parameterType="CourseOrder">
+          update course_order set order_status = 1,pay_status = 1,pay_type = #{payType} where course_order_id = #{courseOrderId}
+    </update>
+    <select id="ckeckPurchase" resultType="Integer" parameterType="CourseOrder">
+        select count(t1.course_order_id) from course_order t1 where t1.user_id = #{userId} and t1.course_id =#{courseId}
+    </select>
+    <insert id="insertOrder" parameterType="CourseOrder">
+        insert into course_order(course_order_id,order_create_time,order_status,pay_status,pay_type,total_money,course_id,user_id,course_order_no) values(#{courseOrderId},#{orderCreateTime},#{orderStatus},#{payStatus},#{payType},#{totalMoney},#{courseId},#{userId},#{courseOrderNo})
+    </insert>
+    <update id="updateOrderStatus" parameterType="CourseOrder">
+        update course_order set order_status = 1,pay_status = 1 where course_order_no = #{courseOrderNo} and user_id = #{userId}
+    </update>
+    <select id="searchUserPpCount" resultType="Integer">
+        select count(*) from user u where u.user_id = #{userId} and u.pay_password = #{payPass}
+    </select>
+    <select id="searchUserPayPass" resultType="java.lang.String">
+        select u.pay_password from user u where u.user_id = #{userId}
+    </select>
+    <update id="updatePayStatus" >
+        update course_order
+        <set >
+            <if test="transactionId != null and transactionId !=''">
+                transaction_id =#{transactionId},
+            </if>
+            order_status = 1,
+            pay_status = 1
+        </set>
+        where course_order_no = #{courseOrderNo} AND order_status != 1 and pay_status != 1
+    </update>
+    <select id="select_today_study" resultMap="apiresult" parameterType="String">
+      select  (select count(t1.course_order_id) from course_order t1 where  t2.course_id = t1.course_id and t3.user_id = t2.teacher_id and t1.pay_status = 1) orderNumber,
+				t1.user_id,t1.course_id,t1.order_create_time,t2.course_title,t2.course_cover,t2.cost_price,t2.course_begin_time,t2.teacher_id,t3.real_name tname,
+				t4.type_val tyval,t2.zb_type zbType,t2.course_img,t2.course_intro
+				from course_order t1 inner join course t2 on t1.course_id = t2.course_id inner join `user` t3 on t2.teacher_id = t3.user_id
+				inner join course_type t4 on t2.course_type_id = t4.course_type_id
+				where to_days(FROM_UNIXTIME(course_begin_time/1000,'%Y-%c-%d'))=to_days(CURDATE()) and t1.pay_status = 1 and t1.user_id = #{userId}
+    </select>
+    <select id="searchCoInfoByCno" resultMap="resultMap">
+        select co.* from course_order co where co.course_order_no = #{courseOrderNo}
+    </select>
+    <select id="searchCoMoneyByCno" resultMap="resultMap">
+        select co.* from course_order co where co.pay_status = 0 and co.order_status = 0 and co.course_order_no = #{courseOrderNo}
+    </select>
+    <select id="searchOrderByUIdAndCId" resultType="java.lang.String">
+        select co.course_order_no as courseOrderNo from course_order co where co.user_id = #{uId} and co.course_id = #{cId}
+    </select>
+</mapper>

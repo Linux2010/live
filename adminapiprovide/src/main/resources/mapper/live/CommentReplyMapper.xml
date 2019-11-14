@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.live.mapper.CommentReplyMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CommentReply" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="course_reply_id" property="courseReplyId" jdbcType="VARCHAR" />
+        <result column="course_comment_id" property="courseCommentId" jdbcType="VARCHAR" />
+        <result column="replay_content" property="replayContent" jdbcType="VARCHAR" />
+        <result column="replay_user_id" property="replayUserId" jdbcType="VARCHAR" />
+        <result column="replay_time" property="replayTime" jdbcType="BIGINT" />
+        <association property="user" javaType="User" column="replay_user_id">
+            <id property="id" column="ID"  jdbcType="INTEGER" ></id>
+            <id property="user_id" column="userId"  jdbcType="VARCHAR" ></id>
+            <result property="user_name" column="userName" jdbcType="VARCHAR"></result>
+        </association>
+        <association property="comm" javaType="CourseComment" column="course_id">
+            <id property="id" column="ID" jdbcType="INTEGER" />
+            <result column="course_comment_id" property="courseCommentId" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <select id="getById" resultMap="resultMap" parameterType="String">
+        select t1.id,t1.course_reply_id,t1.course_comment_id,t1.replay_content,t1.replay_user_id,t1.replay_time,t2.user_name
+       from course_reply t1 inner join `user` t2 on t1.replay_user_id = t2.user_id where t1.course_comment_id = #{comm}
+    </select>
+
+    <delete id="delreplay" parameterType="String">
+       delete from course_reply where course_reply.course_comment_id = #{commid}
+    </delete>
+
+    <insert id="addreply" parameterType="CommentReply">
+        insert into course_reply(course_reply_id,course_comment_id,replay_content,replay_user_id,replay_time) values(#{courseReplyId},#{courseCommentId},#{replayContent},#{replayUserId},#{replayTime})
+    </insert>
+</mapper>

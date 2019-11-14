@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.course.mapper.CourseTopicUserAnswerMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CourseTopicUserAnswer" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="course_topic_user_answer_id" property="courseTopicUserAnswerId" jdbcType="VARCHAR" />
+        <result column="course_topic_examination_id" property="courseTopicExaminationId" jdbcType="VARCHAR" />
+        <result column="course_topic_id" property="courseTopicId" jdbcType="VARCHAR" />
+        <result column="answer" property="answer" jdbcType="VARCHAR" />
+        <result column="is_right" property="isRight" jdbcType="TINYINT" />
+        <result column="righ_rate" property="righRate" jdbcType="DOUBLE" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <insert id="userAnswer" parameterType="CourseTopicUserAnswer">
+        insert into course_topic_user_answer(course_topic_user_answer_id,course_topic_examination_id,course_topic_id,answer,user_id,create_time)
+        values(#{courseTopicUserAnswerId},#{courseTopicExaminationId},#{courseTopicId},#{answer},#{userId},#{createTime})
+    </insert>
+
+    <insert id="insertUserAnswer" parameterType="CourseTopicUserAnswer">
+        insert into course_topic_user_answer(course_topic_user_answer_id,course_topic_examination_id,course_topic_id,answer,user_id,create_time)
+        values(#{courseTopicUserAnswerId},#{courseTopicExaminationId},#{courseTopicId},#{answer},#{userId},#{createTime})
+    </insert>
+    <select id="selectAnswerByUserId" resultMap="resultMap" parameterType="java.lang.String">
+      select * from course_topic_user_answer c where c.user_id = #{userId}
+    </select>
+    <resultMap id="userTopicCourseListResultMap" type="cn.com.myproject.live.entity.VO.CourseTopicCourseVO">
+        <id property="course_topic_user_answer_id" column="courseTopicUserAnswerId" jdbcType="VARCHAR" />
+        <result column="course_topic_examination_id" property="courseTopicExaminationId" jdbcType="VARCHAR" />
+        <result column="course_topic_id" property="courseTopicId" jdbcType="VARCHAR" />
+        <result column="answer_user_id" property="answerUserId" jdbcType="VARCHAR" />
+        <result column="course_title" property="courseTitle" jdbcType="VARCHAR" />
+        <result column="course_content" property="courseContent" jdbcType="VARCHAR" />
+        <result column="course_cover" property="courseCover" jdbcType="VARCHAR" />
+        <result column="course_img" property="courseImg" jdbcType="VARCHAR" />
+        <result column="course_intro" property="courseIntro" jdbcType="VARCHAR"/>
+        <result column="courseFbTime" property="courseFbTime" jdbcType="BIGINT"/>
+        <result column="course_begin_time" property="courseBeginTime" jdbcType="BIGINT"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--我做过考题的课程列表-->
+    <select id="getUserTopicCourseList"  resultMap="userTopicCourseListResultMap">
+        SELECT
+              answer.course_topic_user_answer_id,
+              answer.course_topic_examination_id,
+              answer.course_topic_id,
+              answer.`user_id` answer_user_id,
+              c.`course_id`,
+              c.`course_title`,
+              c.`course_content`,
+              c.`course_cover`,
+              c.`course_img`,
+              c.`course_intro`,
+	          c.`course_begin_time` ,
+              c.`create_time` AS courseFbTime,
+              c.teacher_id AS teacher_user_id ,
+              teacher.`real_name`
+        FROM
+          course_topic_user_answer answer
+          LEFT JOIN course_topic_examination exam
+            ON answer.course_topic_examination_id = exam.`course_topic_examination_id`
+          LEFT JOIN course c
+            ON c.`course_id` = exam.`course_id`
+          LEFT JOIN user teacher
+            ON teacher.user_id = c.`teacher_id`
+          WHERE answer.user_id = #{userId}
+          AND exam.is_register_topic='1'
+          GROUP BY course_topic_examination_id
+    </select>
+
+    <!-- 我买过的课程,这些课程的考题没有做-->
+    <select id="getUserTopicCourseNoAnswerTheTopicsList"  resultMap="userTopicCourseListResultMap">
+            SELECT
+                c.`course_id`,
+                c.`course_title`,
+                c.`course_content`,
+                c.`course_cover`,
+                c.`course_img`,
+                c.`course_intro`,
+                c.`create_time` AS courseFbTime,
+	            c.`course_begin_time` ,
+                c.teacher_id AS teacher_user_id ,
+                teacher.`real_name`,
+                    exam.`course_topic_examination_id`,
+                    o.`user_id`
+            FROM
+              course_order o
+              LEFT JOIN course_topic_examination exam
+                ON exam.`course_id` = o.`course_id`
+              LEFT JOIN course c
+                ON c.`course_id` = exam.`course_id`
+              LEFT JOIN user teacher
+                ON teacher.user_id = c.`teacher_id`
+            WHERE o.`pay_status` = '1'
+              AND o.`order_status` = '1'
+              AND o.user_id =  #{userId}
+              AND exam.`course_topic_examination_id` NOT IN(SELECT course_topic_examination_id FROM course_topic_user_answer where user_id = #{userId} GROUP BY course_topic_examination_id )
+              AND exam.`course_topic_examination_id` IS NOT NULL
+             AND exam.is_register_topic='1'
+    </select>
+    <select id="selectTopicNoAnswer" parameterType="CourseTopicUserAnswer" resultType="CourseTopicUserAnswer">
+        select answer from course_topic_user_answer c where c.user_id = #{userId} and c.course_topic_examination_id = #{courseTopicExaminationId} and c.course_topic_id = #{courseTopicId}
+    </select>
+</mapper>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>用户中心</title>
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js" type="text/javascript"></script>
+    <style>
+        html,body{width:100%;height: 100%}
+        img{width:100%;height: 100%;}
+        .content{background-color: #e6e6e6;position: relative;z-index: 10;padding-bottom: 2rem;}
+        .present{width: 100%;position: relative;padding-left: 0.2rem;padding-top:3.14rem;box-sizing: border-box;}
+        .present .p1_1_box{width:4.4rem;position: absolute;right: 0;bottom: 0;z-index: -8;}
+        .present .p1_box{width:2rem;position: absolute;left: 0.2rem;top: 0.54rem;z-index: -9;}
+        .present .art1{padding-top: 0.4rem;}
+        .present .line{display:block;border-bottom: 0.04rem solid #ffa42f;line-height: 0.66rem;font-size: 0.28rem;font-weight: bold;}
+        .present .line .label{display:inline-block;width:1.23rem;text-align: right;}
+        .present .line .text{display:inline-block;padding-left: 0.4rem;}
+        .present .line1{display: inline-block;}
+        .present .line4{display: inline-block;}
+        .present .line5{display: inline-block;}
+
+        .experience{width: 100%;position: relative;padding-left: 0.2rem;padding-top:2rem;box-sizing: border-box;}
+        .experience .p1_box{width:2.4rem;position: absolute;right:0;top: 0.54rem;z-index: -9;padding-right: 0.2rem;}
+        .experience .art1{padding-top:0;width: 5rem;padding-left: 0.2rem;font-size: 0.28rem;line-height: 0.5rem;font-weight: bold}
+        .experience .art1 p{text-indent: 2em}
+
+        .work{width: 100%;position: relative;padding-left: 0.2rem;padding-top:2.5rem;box-sizing: border-box;}
+        .work .p1_box{width:2rem;position: absolute;left:0.2rem;top: 0.54rem;z-index: -9;}
+        .work .art1{padding-top:0;width: 5rem;margin-left: 1.8rem;padding-left:0.2rem;font-size: 0.28rem;line-height: 0.5rem;font-weight: bold;border-left: 0.04rem solid #ffa42f}
+        .work .art1 p{text-indent: 2em;}
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <div class="present">
+        <div class="p1_1_box"><img id="shan" src="images/p1.png" /></div>
+        <div class="p1_box"><img src="images/1.png" /></div>
+        <div class="art1">
+            <div class="line line1"><span class="label">姓名</span><span class="text" v-html="name"></span></div><br>
+            <div class="line line1"><span class="label">出生日期</span><span class="text" v-html="birth"></span></div><br>
+            <div class="line line1"><span class="label">职业</span><span class="text" v-html="work"></span></div><br>
+            <div class="line line4"><span class="label">毕业院校</span><span class="text" v-html="school"></span></div><br>
+            <div class="line line5"><span class="label">现任职务</span><span class="text" v-html="job"></span></div>
+        </div>
+    </div>
+    <div class="experience">
+        <div class="p1_box"><img src="images/2.png" /></div>
+        <div class="art1">
+            <p v-for="value in experience">{{value}}</p>
+        </div>
+    </div>
+    <div class="work">
+        <div class="p1_box"><img src="images/3.png" /></div>
+        <div class="art1">
+            <p v-for="value in history">{{value}}</p>
+        </div>
+    </div>
+    <img src="images/bg.png" style="width: 100%;position: absolute;bottom: 0;z-index: -10;height: auto;">
+</div>
+</body>
+<script>
+    var art1_p = [
+        {
+            e1:"林伟贤最擅长以幽默风趣又发人深思，话家常又切中要害的课程，协助每个人建立自己的成功系统，实践自己的成功梦想。",
+            e2:"他是台湾最受尊敬的证严法师称赞他的思虑迅速敏锐又周密，誉之为“金头脑”。林老师学习吸收能力及转化速度非常惊人，即使早已成为亚洲顶尖名师，他的课程及演讲仍然都以超人的速度不断在进步。",
+            e3:"林伟贤最擅长以幽默风趣又发人深思，话家常又切中要害的课程，协助每个人建立自己的成功系统，实践自己的成功梦想。",
+        },
+        {
+            w1:"林伟贤在1998年事业发展遭遇严重打击并被伤害而至信心几乎全失之际，经过新加坡友人的推荐而至马来西亚学习Money＆You，并从此改变一生。他与妻子及亲友从60万台币起家。从无到有，短短的六年内即创建了十六家公司，业务遍及中国内地、新加坡、马来西亚、文来、香港及台湾。经营项目包含科技软件，文化出版，远程教育，知识培训等。为目前华人世界最受人尊敬的讲师及实战成功的企业家。伟贤老师自1999年起接受Money＆You全球总部委托，向全世界华人教授Money＆You重要的成功原则。至2005年底，已开设120个班，学生人数超过二万人，来自亚洲各国的卓越菁英人士纷纷走进Money＆You的课堂。创建出最非凡的商业与生活平台。",
+            w2:"林伟贤说决策错误比贪污更可怕。通过指出决策中的三大陷阱、四大盲点、五大诱惑和五大误区，提醒你如何避免决策失误。决策要民主，执行要独裁。权力越集中，决策风险越大，群策群力才能激发新思维，分享权力、智慧和金钱才能防范决策风险。教程深入探讨了企业管理者在决策过程中做人做事的方式方法，协助管理者破解企业决策过程中常见的难题，可以有效提升管理者的决策力，为企业科学地制定战略规划和经营策略奠定基础。",
+        }
+    ];
+    var v1 = new Vue({
+        el:".content",
+        data:{
+            name:"林伟贤",
+            birth:"1985年",
+            work:"作家 企业家",
+            school:"英国圣克兰们大学",
+            job:"实践家只是管理曲团懂事长",
+            experience:art1_p[0],
+            history:art1_p[1]
+        }
+    })
+
+    var pathname = location.pathname;
+    console.log(pathname);
+    var keyid = pathname.substring(pathname.lastIndexOf("-") + 1,pathname.lastIndexOf("."));
+</script>
+</html>

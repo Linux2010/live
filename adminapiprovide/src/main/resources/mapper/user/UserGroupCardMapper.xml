@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.user.mapper.UserGroupCardMapper">
+
+    <resultMap type="UserGroupCard" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+        <result column="card_password" property="cardPassword" jdbcType="VARCHAR" />
+        <result column="card_type" property="cardType" jdbcType="INTEGER" />
+        <result column="active_user_id" property="activeUserId" jdbcType="VARCHAR" />
+        <result column="active_time" property="activeTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="ugcvMap" type="cn.com.myproject.live.entity.VO.UserGroupCardVO">
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="cardNo" property="cardNo" jdbcType="VARCHAR"/>
+        <result column="cardType" property="cardType" jdbcType="INTEGER" />
+        <result column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="activeUserId" property="activeUserId" jdbcType="VARCHAR"/>
+        <result column="activeUserName" property="activeUserName" jdbcType="VARCHAR"/>
+        <result column="activePhone" property="activePhone" jdbcType="VARCHAR"/>
+        <result column="activeTime" property="activeTime" jdbcType="BIGINT" />
+        <result column="createTime" property="createTime" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getUserGroupCard" resultMap="ugcvMap" parameterType="UserGroupCard">
+        select ugc.id as id,ugc.card_no as cardNo,ugc.card_password as cardPassword,
+        ugc.card_type as cardType,ugc.active_time as activeTime,
+        ugc.create_time as createTime,ugc.status as status,
+        ugc.active_user_id as activeUserId,  ugc.user_id as userId,
+        (select u.user_name from user u where u.user_id = ugc.user_id) as userName,
+        (select u.user_name from user u where u.user_id = ugc.active_user_id) as activeUserName,
+        (select u.phone from user u where u.user_id = ugc.active_user_id) as activePhone
+        from user_group_card ugc
+        where 1=1
+        <if test="cardPassword != null and cardPassword != ''">
+            and ugc.card_password = #{cardPassword}
+        </if>
+        <if test="cardNo != null and cardNo != ''">
+            and ugc.card_no = #{cardNo}
+        </if>
+        <if test="activeUserId != null and activeUserId != ''">
+            and ugc.active_user_id = #{activeUserId}
+        </if>
+        <if test="status != null">
+            and ugc.status = #{status}
+        </if>
+    </select>
+
+    <insert id="insertUgc" parameterType="UserGroupCard">
+        insert into user_group_card(user_id,card_no,card_password,card_type,create_time,status)
+        values(#{userId},#{cardNo},#{cardPassword},#{cardType},#{createTime},#{status})
+    </insert>
+
+    <insert id="insertUgcn" parameterType="java.lang.Integer">
+        insert into user_group_card_num(card_num) values(#{cardNum})
+    </insert>
+
+    <delete id="deleteUgcById" parameterType="java.lang.Integer">
+        delete from user_group_card where id = #{id}
+    </delete>
+
+    <update id="updateUgcStatus" parameterType="UserGroupCard">
+        update user_group_card set status = #{status},active_user_id = #{activeUserId},active_time = #{activeTime}
+        where  card_no = #{cardNo} and card_password = #{cardPassword}
+    </update>
+
+    <update id="updateUgcn" parameterType="java.lang.Integer">
+        update user_group_card_num set card_num = #{cardNum}
+    </update>
+
+    <select id="selectUgcList" resultMap="ugcvMap" parameterType="UserGroupCard">
+        select ugc.id as id,ugc.card_no as cardNo,ugc.card_password as cardPassword,
+        ugc.card_type as cardType,ugc.active_time as activeTime,
+        ugc.create_time as createTime,ugc.status as status,
+        (select u.user_name from user u where u.user_id = ugc.active_user_id) as activeUserName,
+        (select u.phone from user u where u.user_id = ugc.active_user_id) as activePhone
+        from user_group_card ugc
+        where ugc.user_id = #{userId}
+        <if test="cardNo != null and cardNo != ''">
+            and ugc.card_no like CONCAT('%', #{cardNo},'%')
+        </if>
+        <if test="cardType != 0">
+            and ugc.card_type = #{cardType}
+        </if>
+        <if test="status != -1">
+            and ugc.status = #{status}
+        </if>
+        order by ugc.create_time desc
+    </select>
+
+    <select id="selectExportUgcList" resultMap="ugcvMap" parameterType="UserGroupCard">
+        select ugc.id as id,ugc.card_no as cardNo,ugc.card_password as cardPassword,
+        ugc.card_type as cardType,ugc.active_time as activeTime,
+        ugc.create_time as createTime,ugc.status as status,
+        (select u.user_name from user u where u.user_id = ugc.user_id) as userName,
+        (select u.phone from user u where u.user_id = ugc.user_id) as phone,
+        (select u.user_name from user u where u.user_id = ugc.active_user_id) as activeUserName,
+        (select u.phone from user u where u.user_id = ugc.active_user_id) as activePhone
+        from user_group_card ugc
+        where ugc.user_id = #{userId}
+        <if test="cardNo != null and cardNo != ''">
+            and ugc.card_no like CONCAT('%', #{cardNo},'%')
+        </if>
+        <if test="cardType != 0">
+            and ugc.card_type = #{cardType}
+        </if>
+        <if test="status != -1">
+            and ugc.status = #{status}
+        </if>
+        order by ugc.create_time desc
+    </select>
+
+    <select id="selectUgcn" resultType="java.lang.Integer">
+        select ugcn.card_num from user_group_card_num ugcn limit 1
+    </select>
+
+</mapper>

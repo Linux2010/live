@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/teacherHome.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body class="body">
+    <div class="v1">
+        <div class="con1">
+            <img  class="imgC" v-bind:src="pic"/>
+            <div class="username">{{name}}</div>
+            <p class="say">{{say}}</p>
+            <div class="level">
+                <span class="levelLabel">等级：</span>{{level}}<span></span>
+            </div>
+            <div class="button">
+                <div class="cli guanzhu"  v-html="interest?'已关注':'+关注'" v-on:click="interesting()" v-bind:class="{active:interest}">{{interest}}</div>
+                <div class="cli dashang" v-on:click="rewarding(0)">￥打赏</div>
+            </div>
+        </div>
+        <div class="mask1" v-if="reward">
+            <div class="mask1Box">
+                <div class="line1"><div class="label">打赏金额:</div><input type="number" v-model="shangjin"/><div class="label">元</div> </div>
+                <div class="line2"><div class="no" v-on:click="rewarding(0)">取消</div><div class="yes" style="float: right;text-align: center;background-color: #ffa42f;" v-on:click="rewarding(1)">确认</div> </div>
+            </div>
+        </div>
+        <div class="con4" style="margin:0;">
+            <div class="con4Title">
+                <img src="image/lingxing.png" alt=""><span>教头介绍</span><img src="image/lingxing.png" alt="">
+            </div>
+        </div>
+        <div class="con5">
+            <img class="img1" v-bind:src="pic">
+            <p class="name">{{name}}</p>
+            <div class="wordBox">
+                <p>{{present}}</p>
+            </div>
+            <span class="more"><a href="home/profile.html">点击查看详情</a></span>
+        </div>
+        <div class="con2">
+            <div class="con2Select">
+                <span  v-bind:class="{active:select1==0}" v-on:click="select1ing(0)">动态</span>
+                <span v-bind:class="{active:select1==1}"  v-on:click="select1ing(1)">作品</span>
+                <span v-bind:class="{active:select1==2}" v-on:click="select1ing(2)">问答</span>
+            </div>
+        </div>
+        <div class="selectCon" >
+            <div class="sele0" v-if="select1===0">
+                <div class="sele0TimeCon">
+                    <div class="sele0TimeLine"></div>
+                    <div class="sele0Con">
+                        <div class="usr"><img src="image/miss1.png"></div>
+                        <div class="usrR">
+                            <p class="line1"><span>翱翔的鹰</span>&ensp;<span>预发布课程</span>&ensp;<span style="color:#ffa42f">从宇宙诞生</span></p>
+                            <div class="line2">
+                                <div class="line2Con">从宇宙诞生到大爆炸</div>
+                                <div class="line2Time"><span>10:00 2月10日</span><span style="float: right">12人预约</span></div>
+                            </div>
+                            <div class="time">9小时前</div>
+                        </div>
+                    </div>
+                    <div class="sele0Con">
+                        <div class="usr"><img src="image/miss1.png"></div>
+                        <div class="usrR">
+                            <p class="line1"><span>翱翔的鹰</span>&ensp;<span>预发布课程</span>&ensp;<span style="color:#ffa42f">从宇宙诞生</span></p>
+                            <div class="line2">
+                                <div class="line2Con">从宇宙诞生到大爆炸</div>
+                                <div class="line2Time"><span>10:00 2月10日</span><span style="float: right">12人预约</span></div>
+                            </div>
+                            <div class="time">9小时前</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sele1" v-else-if="select1===1">
+                <div class="con3">
+                    <div class="con3Item">
+                        <img class="con3ItemLeft" src="image/kechenging1.png">
+                        <div class="con3ItemRight">
+                            <span class="con3ItemTitle">时间不在于你拥有多少，而在于你怎于你怎于你怎样使用</span>
+                            <div class="con3ItemBody">
+                                <div class="con3ItemTime">
+                                    <p>主讲老师：艾克</p>
+                                    <p>3月24日 开始</p>
+                                </div>
+                                <div class="con3ItemTime" style="text-align:right;">
+                                    <a><b>免费</b></a>
+                                    <!--<p>已预约人数：20</p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="con3Item">
+                        <img class="con3ItemLeft" src="image/kechenging1.png">
+                        <div class="con3ItemRight">
+                            <span class="con3ItemTitle">时间不在于你拥有多少，而在于你怎于你怎于你怎样使用</span>
+                            <div class="con3ItemBody">
+                                <div class="con3ItemTime">
+                                    <p>主讲老师：艾克</p>
+                                    <p>3月24日 开始</p>
+                                </div>
+                                <div class="con3ItemTime" style="text-align:right;">
+                                    <a><b>免费</b></a>
+                                    <!--<p>已预约人数：20</p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sele2" v-else>
+                <div class="button">
+                    <div class="cli guanzhu" v-bind:class="{active:select2==0}" v-on:click="select2ing(0)" >问答记录</div>
+                    <div class="cli dashang" v-bind:class="{active:select2==1}" v-on:click="select2ing(1)">我要提问</div>
+                </div>
+                <div class="jilu" v-if="select2 ==0">
+                    <div class="line1">
+                        <img class="line1Pic" src="image/miss1.png">
+                        <div class="line1Say">
+                            <span class="say">llalalalalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pngiss1</span>
+                            <div style="position:absolute;width:0.7rem;left:-1.1rem;top:0.15rem;border-right:0.2rem solid #d8952e;border-left:0.2rem solid transparent;border-top:0.2rem solid transparent;border-bottom:0.2rem solid transparent;height: 0;"></div>
+                        </div>
+                    </div>
+                    <div class="line2">
+                        <div class="line2Say">
+                            <span class="say">llallalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pngalamage/miss1.png</span>
+                            <div style="position:absolute;width:0.7rem;right:-1.1rem;top:0.15rem;border-left:0.2rem solid #d8952e;border-right:0.2rem solid transparent;border-top:0.2rem solid transparent;border-bottom:0.2rem solid transparent;height: 0;"></div>
+                        </div>
+                        <img class="line2Pic" src="image/miss2.png">
+                    </div>
+                </div>
+                <div class="question" v-else>
+                    <div class="line2">
+                        <div class="line2Say">
+                            <span class="say">llallalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pnglalamage/miss1.pngalamage/miss1.png</span>
+                            <div style="position:absolute;width:0.7rem;right:-1.1rem;top:0.15rem;border-left:0.2rem solid #d8952e;border-right:0.2rem solid transparent;border-top:0.2rem solid transparent;border-bottom:0.2rem solid transparent;height: 0;"></div>
+                        </div>
+                        <img class="line2Pic" src="image/miss2.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var v1 = new Vue({
+        el:'.v1',
+        data:{
+            pic:'image/miss1.png',
+            name:'翱翔的鹰',
+            say:'我是翱翔的鹰',
+            level:'最强王者',
+            present:'我是我是翱翔的鹰我是翱翔的鹰我是翱翔的鹰翱翔的鹰',
+            interest:0,
+            reward:0,
+            shangjin:'',
+            select1:2,
+            select2:0
+        },
+        methods:{
+            interesting:function () {
+                if(!this.interest){
+                    this.interest = 1;
+                }else {
+                    this.interest = 0;
+                }
+//                ajax 关注
+                alert("关注ajax")
+            },//关注
+            rewarding:function (a) {
+                if(!this.reward){
+                    this.reward = 1;
+                }else {
+                    this.reward = 0;
+                }
+                if(a){
+                    if(this.shangjin!==''){
+                        //                    ajax
+                        alert("打赏ajax"+this.shangjin)
+                    }else{
+                        alert("请输入打赏金额。")
+                        this.reward=1;
+                    }
+                }
+            },//打赏
+            select1ing:function (b) {
+                this.select1=b;
+            },
+            select2ing:function (c) {
+                this.select2=c;
+            }
+        }
+    })
+</script>
+</html>

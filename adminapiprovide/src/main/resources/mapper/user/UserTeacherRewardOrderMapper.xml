@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.user.mapper.UserTeacherRewardOrderMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="UserTeacherRewardOrder" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="user_teacher_reward_id" property="userTeacherRewardId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="teacher_id" property="teacherId" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DOUBLE"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="VARCHAR"/>
+        <result column="user_teacher_reward_order_id" property="userTeacherRewardOrderId" jdbcType="VARCHAR"/>
+        <result column="pay_status" property="payStatus" jdbcType="TINYINT"/>
+        <result column="pay_way" property="payWay" jdbcType="TINYINT"/>
+        <result column="order_status" property="orderStatus" jdbcType="TINYINT"/>
+    </resultMap>
+     <select id="getUserTeacherRewardOrderList" parameterType="UserTeacherRewardOrder" resultMap="resultMap">
+         select * from user_teacher_reward_order where 1=1
+         <if test="userId != null and userId !=''">
+            and  user_id = #{userId}
+         </if>
+         <if test="teacherId != null and teacherId !=''">
+             and  teacher_id = #{teacherId}
+         </if>
+         <if test="payWay != null and payWay !=''">
+             and  pay_way = #{payWay}
+         </if>
+     </select>
+
+    <select id="getUserTeacherRewardOrder" parameterType="UserTeacherRewardOrder" resultMap="resultMap">
+        select * from user_teacher_reward_order where 1=1
+        <if test="userId != null and userId !=''">
+            and  user_id = #{userId}
+        </if>
+        <if test="teacherId != null and teacherId !=''">
+            and  teacher_id = #{teacherId}
+        </if>
+        <if test="userTeacherRewardOrderId != null and userTeacherRewardOrderId !=''">
+            and  user_teacher_reward_order_id = #{userTeacherRewardOrderId}
+        </if>
+        <if test="userTeacherRewardId != null and userTeacherRewardId !=''">
+            and  user_teacher_reward_id = #{userTeacherRewardId}
+        </if>
+    </select>
+    <insert id="insertUserTeacherRewardOrder" parameterType="UserTeacherRewardOrder">
+      insert into  user_teacher_reward_order(
+                    user_teacher_reward_id,
+                    user_id,
+                    teacher_id,
+                    money,
+                    create_time,
+                    status,
+                    version,
+                    user_teacher_reward_order_id,
+                    pay_status,
+                    pay_way,
+                    order_status)
+        values(#{userTeacherRewardId},
+                #{userId},
+                #{teacherId},
+                #{money},
+                #{createTime},
+                #{status},
+                #{version},
+                #{userTeacherRewardOrderId},
+                #{payStatus},
+                #{payWay},
+                #{orderStatus})
+    </insert>
+    <update id="updateUserTeacherRewardOrder" parameterType="UserTeacherRewardOrder">
+        update user_teacher_reward_order
+        <set >
+            <if test="money != null and money != 0 and money != 0.0" >
+                money = #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="payStatus != null" >
+                pay_status = #{payStatus,jdbcType=TINYINT},
+            </if>
+            <if test="payStatus != null" >
+                pay_status = #{payStatus,jdbcType=TINYINT},
+            </if>
+            <if test="payWay != null" >
+                pay_way = #{payWay,jdbcType=TINYINT},
+            </if>
+            <if test="orderStatus != null" >
+                order_status = #{orderStatus,jdbcType=TINYINT},
+            </if>
+            <if test="transactionId != null and transactionId !=''" >
+                transaction_id = #{transactionId,jdbcType=VARCHAR}
+            </if>
+         </set>
+        where 1=1
+            <if test="userTeacherRewardId != null and userTeacherRewardId !=''">
+              and   user_teacher_reward_id =#{userTeacherRewardId}
+            </if>
+            <if test="userTeacherRewardOrderId != null and userTeacherRewardOrderId !=''">
+                and   user_teacher_reward_order_id =#{userTeacherRewardOrderId}
+            </if>
+            and pay_status !=1
+    </update>
+</mapper>

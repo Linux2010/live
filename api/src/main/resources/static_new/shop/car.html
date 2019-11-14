@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>优惠专区</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/car.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiper-3.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/swiper-3.3.1.min.js" type="text/javascript"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+    <div class="body">
+        <div class="con1">
+            <span style="width: 19%;display: inline-block;"><</span><span style="width: 60%;display: inline-block;margin: 0 auto;text-align: center;">购物车</span>
+            <span style="width: 19%;display:inline-block;text-align: center;" v-if="state1" v-on:click="state1=!state1">完成</span>
+            <span style="width: 19%;display:inline-block;text-align: center;" v-else="state1" v-on:click="state1=!state1">编辑</span>
+        </div>
+        <div style="width:100%;height: 0.9rem;"></div>
+        <div class="con2">
+            <div class="line" v-for="(good,index) in goods">
+                <img class="image1" v-bind:src="good.checked?'image/yes.png':'image/noYes.png'" @click="simpleCheckedF(good)"/>
+                <div class="image2"><div class="goodPic"><img v-bind:src="good.img"></div> <div class="setnum"><span class="inputnumber1" @click="changeNumber(good,-1)">-</span><input v-on:blur="inputnumberBlur(good)" type="number" v-model.number="good.number" class="inputnumber"/><span class="inputnumber2" @click="changeNumber(good,1)">+</span></div> </div>
+                <div class="goodCon">
+                    <p class="name" v-html="good.name">男士牛仔男士牛仔男士牛仔男士牛仔男士牛仔男士牛仔男士牛仔</p>
+                    <span class="RMB"><span >{{good.price | formatMoney}}</span></span>
+                    <span class="RMB">小计：<span>{{(good.price*good.number)|formatMoney}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="jiesuan" v-if="state1">
+            <div class="allmoney">
+                <img class="img" :src="allChecked?'image/yes.png':'image/noYes.png'" @click="allCheckedF()">
+                <label class="label">全选</label>
+                <label class="label">{{totalMoney | formatMoney}}</label>
+            </div>
+            <div class="allpay" @click="pay()">去结算</div>
+        </div>
+        <div class="addCollect" v-else="state1">
+            <div class="all">
+                <img class="img" :src="allChecked?'image/yes.png':'image/noYes.png'" @click="allCheckedF()">
+                <label class="label">全选</label><span style="">{{totalMoney}}{{checkedIndexs}}</span>
+            </div>
+            <div class="allAdd"><span class="s1">移入收藏</span><span class="s2" v-on:click="maskDel=true">删除</span></div>
+        </div>
+        <div class="maskDel" v-if="maskDel">
+            <div class="maskDelBox">
+                <p>确定删除选中的{{checkedIds.length}}件商品？</p>
+                <div class="butBox">
+                    <div class="no"  @click="maskDel=!maskDel">取消</div>
+                    <div class="yes" @click="doDel(),maskDel=!maskDel">确定</div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 1rem;width: 100%"></div>
+        <div class="bottom">
+            <a href="shop/shop.html"><div class="b">
+                <img src="image/shophome1.png">
+                <span>商城</span>
+            </div></a>
+            <a href="shop/homeClassify.html"><div class="b">
+                <img src="image/type1.png">
+                <span>分类</span>
+            </div></a>
+            <a href="shop/sale.html"><div class="b">
+                <img src="image/sale1.png">
+                <span>特惠</span>
+            </div></a>
+            <a href="shop/car.html"><div class="b">
+                <img src="image/shopping.png">
+                <span style="color:#ffa42f">购物车</span>
+            </div></a>
+        </div>
+    </div>
+</body>
+<script>
+    var goods=[
+        {"id":2,"img":"image/kechenging1.png","name":"qqqqqqqqq","price":19,"number":2,"stock":10},
+        {"id":3,"img":"image/kechenging2.png","name":"wwwwwwwww","price":20,"number":3,"stock":15},
+        {"id":4,"img":"image/kechenging3.png","name":"eeeeeeeee","price":21,"number":4,"stock":20},
+    ]
+var v1 = new Vue({
+    el:".body",
+    data:{
+        goods:[],
+        allChecked:false,
+        state1:true,
+        checkedIndexs:[],
+        checkedIds:[],
+        maskDel:false
+    },
+    filters:{
+        formatMoney:function (a) {
+            var v =Number(a);
+            return "￥"+v.toFixed(2);
+        }
+    },
+    mounted:function () {
+        this.$nextTick(function () {
+            this.goods=goods;
+        })  
+    },
+    computed: {
+        totalMoney:function () {
+            var _this=this;
+            var total=0;
+            this.checkedIds=[];
+            this.checkedIndexs=[];
+            this.goods.forEach(function (item,index,key) {
+                if(item.checked){
+                    total+=item.price*item.number;
+                    _this.checkedIds.push(item.id);
+                    _this.checkedIndexs.push(index);
+                }
+            })
+            return total;
+        }
+    },
+    methods:{
+        changeNumber:function (data,q) {
+            if(q===-1){
+                data.number--;
+                if(data.number<=1) data.number=1;
+                if(data.number>data.stock) data.number=data.stock;
+            }else{
+                data.number++;
+                if(data.number>data.stock) data.number=data.stock;
+            }
+        },
+        inputnumberBlur:function (data) {
+            if(data.number<=1){data.number=1;}
+            if(data.number>=data.stock){data.number=data.stock;}
+        },
+        simpleCheckedF:function (data) {
+            if(typeof data.checked==="undefined"){
+                this.$set(data,"checked",true);
+            }else{
+                data.checked=!data.checked;
+            }
+            var all=1;
+            this.goods.forEach(function (item,index) {
+                if(item.checked===undefined||item.checked===false){
+                    all=0;
+                }
+            });
+            if(all){
+                this.allChecked=true
+            }else{
+                this.allChecked=false
+            }
+        },
+        allCheckedF:function () {
+            this.allChecked=!this.allChecked;
+            var _this=this;
+            this.goods.forEach(function (item,index) {
+                if(typeof item.checked==="undefined"){
+                    _this.$set(item,"checked",_this.allChecked);
+                }else{
+                    item.checked=_this.allChecked;
+                }
+            })
+        },
+        doDel:function () {
+            var checkedIndexsLen=this.checkedIndexs.length;
+            for(var i=checkedIndexsLen-1;i>=0;i--){
+                console.log("ajax for delete");
+                this.goods.splice(this.checkedIndexs[i],1);
+            }
+        },
+        pay:function () {
+            alert("pay for"+this.totalMoney)
+        }
+    }
+})
+</script>
+</html>

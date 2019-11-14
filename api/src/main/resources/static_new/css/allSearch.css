@@ -1,0 +1,39 @@
+html,body{width:100%;height: 100%;background-color: #f5f5f5;}
+body{overflow: hidden;}
+
+.search{width:100%;}
+.search .searchBox{display:inline-block;width:6.1rem;padding:0.1rem 0 0.1rem 0.2rem;border-radius: 0.2rem;border:0.01rem solid #ccc;background-color: #d3d4d4;margin:0.2rem;}
+.search .searchType{position:relative;width:1rem;display: inline-block;}
+.search .searchType .searchTypeList{position:absolute;top:0.7rem;z-index:1;width:1.55rem;background-color: #666666;border-radius: 0.2rem;}
+.search .searchType .searchTypeList .returnsanjiao{ position:absolute;top: -0.29rem;width: 0.5rem;left: 0.2rem;}
+.search .searchType .searchTypeList li{border-top:0.01rem solid white}
+.search .searchType .searchTypeList ul{padding: 0.1rem 0;}
+.search .searchType .searchTypeList .list{line-height: 0.55rem;width:0.9rem;display: inline-block;text-align: center;color:white;}
+.search .searchType .searchTypeList .listImg{width: 0.3rem;vertical-align: middle;padding-left: 0.15rem;}
+.search .searchType img{width:0.3rem;padding-left:0.05rem;vertical-align: middle;}
+.search .searchType .searchTypeName{font-size: 0.28rem;color:#303030;vertical-align: middle;}
+.search .searchBox input{width: 4.8rem;height: 0.4rem;background-color: #d3d4d4;}
+.search .searchBtn{display: inline-block;}
+
+.hotsearch{width:100%;line-height: 0.5rem;padding:0 0.2rem;background-color: white;margin:0.2rem 0;}
+
+.searchCon{width:100%;}
+.searchCon .p{width:100%;line-height: 0.5rem;padding:0 0.2rem;background-color: white;margin:0.2rem 0;}
+.searchs{width:100%;padding: 0.1rem 0;box-sizing:border-box;background-color: white;margin-bottom:0.2rem;}
+.searchs .con3Tit{font-size: 0.32rem;line-height: 0.8rem;text-align: center;color:#111;}
+.searchs .con3Item{width: 100%;padding: 0.2rem 0;border-bottom: 0.01rem solid #ccc;}
+.searchs .con3ItemLeft{width: 3rem;height: 2rem;vertical-align:middle;padding: 0 0.1rem 0 0.2rem;}
+.searchs .con3ItemRight{display: inline-block;width:3.9rem;vertical-align: middle;}
+.searchs .con3ItemRight .coachName{display: inline-block;width:3.9rem;font-size: 0.28rem;color:#333;}
+.searchs .con3ItemTitle{height: 1rem;display: inline-block;}
+.searchs .con3ItemBody{width:100%;}
+.searchs .con3ItemTime{width:48%;line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;overflow: hidden;}
+.searchs .con3ItemTime.con3ItemTimeMoney{width:30%;line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;overflow: hidden;}
+.searchs .con3ItemTime.con3ItemTimeMan{width:66%;line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;overflow: hidden;}
+.searchs .con3ItemTime a{color:#ffa42f;}
+.searchs .con3ItemTime a b{font-size: 0.32rem;color:#ffa42f;}
+.searchs .con3ItemBody span{display: inline-block;background-color: #ffa42f;color:#fefefe;font-size: 0.3rem;padding: 0.05rem 0.24rem;border-radius: 0.2rem;margin: 0.08rem;}
+.searchs .con3Con{padding: 0 0.2rem;display: flex;justify-content: space-between;padding-bottom: 0.2rem;}
+
+.searchClear{width:100%;}
+.searchClear .searchClearBtn{display:block;width:5rem;line-height: 0.55rem;text-align: center;margin:0 auto;border:0.01rem solid #ccc;border-radius: 0.2rem;font-size: 0.28rem;color:#333;box-shadow: 0rem 0.02rem 0.02rem #888;}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>用户中心</title>
+    <link href="${ctx}css/reset.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${ctx}js/conform.js"></script>
+    <script src="${ctx}js/jquery.min.js" type="text/javascript" ></script>
+    <script src="${ctx}js/vue.min.js" type="text/javascript"></script>
+    <style>
+        html,body{width:100%;height: 100%}
+        .body{width:100%;height:100%;}
+        .body .title{width:100%;text-align: center;line-height: 1rem;font-size: 0.4rem;background-color: #22272a;color: white;overflow: hidden;position: fixed;top:0;z-index: 40;}
+        .body .time{width:100%;line-height: 0.6rem;text-align: right;margin-bottom: 0.3rem;padding-top: 1rem;font-size: 0.26rem;}
+        .body .time b{padding-right: 0.2rem;}
+        .body .p{width:100%;box-sizing: border-box;padding: 0.2rem 0.8rem;line-height: 0.5rem;text-indent: 2em;font-size: 0.28rem;}
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="title" v-html="title">会员权益</div>
+    <div class="p" style="text-indent: 0">一、会员等级规则</div>
+    <div class="p" style="text-indent: 0">1）升级成功后，会员级别会永久保留吗？</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">会员的有效期是自升级后一年，级别过期后，我们会根据您过去一年的成长值，重新调整您的会员级别。</div>
+    <div class="p" style="text-indent: 0">2）会员级别的有效期限能延长吗？</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">当会员级别到期后，如未能达到升级标准，但凡会员到期前12个月消费金额大于0元，则当前会员级别就可以顺延一年。</div>
+    <div class="p" style="text-indent: 0">3）我是钻石会员，会员级别到期后没达到延长升级条件，会如何降级？</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">会员级别到期后，如果未能达到升级及延长有效期条件，将顺次下调一个会员级别（但最低只降到一星会员），同时按照下调日更新会员级别有效期。</div>
+    <div class="p" style="text-indent: 0">二、等级特权详细说明</div>
+    <div class="p" style="text-indent: 0">1）会员升级</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">权益有效时间：在升级后一周内；</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">权益内容：您将额外获取100个成长值和100个牛大头，并获得对应等级所享有的权益；</div>
+    <div class="p" style="text-indent: 0">2）节日特权</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">权益内容：以节日内容为准；</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">权益对象：教头学院一星及以上会员</div>
+    <div class="p" style="text-indent: 0">3）投诉绿色通道</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">权益内容：归来后若有投诉均有资深坐席受理，并优先响应，优先解决；</div>
+    <div class="p" style="padding-top: 0;padding-bottom: 0">权益对象：教头学院三星及以上会员。</div>
+</div>
+</body>
+<script>
+    var v1 = new Vue({
+        el:".body",
+        data:{
+            title:"会员权益",
+            time:"",
+            p:""
+        }
+    })
+</script>
+</html>

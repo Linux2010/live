@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.shop.mapper.OrderMapper">
+
+    <resultMap type="Order" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="order_type" property="orderType" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="address_id" property="addressId" jdbcType="VARCHAR" />
+        <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
+        <result column="order_money" property="orderMoney" jdbcType="DOUBLE" />
+        <result column="order_yh" property="orderYh" jdbcType="DOUBLE" />
+        <result column="order_yf" property="orderYf" jdbcType="DOUBLE" />
+        <result column="order_sf" property="orderSf" jdbcType="DOUBLE" />
+        <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="userPhone" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="userAddress" property="userAddress" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ovMap" type="cn.com.myproject.shop.entity.VO.OrderVO">
+        <result column="orderId" property="orderId" jdbcType="VARCHAR"/>
+        <result column="orderNo" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="orderType" property="orderType" jdbcType="INTEGER"/>
+        <result column="orderMoney" property="orderMoney" jdbcType="DOUBLE"/>
+        <result column="orderYh" property="orderYh" jdbcType="DOUBLE" />
+        <result column="orderYf" property="orderYf" jdbcType="DOUBLE" />
+        <result column="orderSf" property="orderSf" jdbcType="DOUBLE" />
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="orderTime" property="orderTime" jdbcType="BIGINT" />
+        <result column="payStatus" property="payStatus" jdbcType="INTEGER" />
+        <result column="orderStatus" property="orderStatus" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="omMap" type="cn.com.myproject.shop.entity.VO.OrderMoneyVO">
+        <result column="goodsId" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goodsImg" property="goodsImg" jdbcType="VARCHAR"/>
+        <result column="goodsNum" property="goodsNum" jdbcType="INTEGER"/>
+        <result column="goodsSpecId" property="goodsSpecId" jdbcType="VARCHAR"/>
+        <result column="goodsSpecVal" property="goodsSpecVal" jdbcType="VARCHAR"/>
+        <result column="goodsMoney" property="goodsMoney" jdbcType="DOUBLE" />
+    </resultMap>
+
+    <resultMap id="olMap" type="cn.com.myproject.shop.entity.VO.OrderYLVO">
+        <result column="goodsId" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goodsImg" property="goodsImg" jdbcType="VARCHAR"/>
+        <result column="goodsNum" property="goodsNum" jdbcType="INTEGER"/>
+        <result column="goodsSpecId" property="goodsSpecId" jdbcType="VARCHAR"/>
+        <result column="goodsSpecVal" property="goodsSpecVal" jdbcType="VARCHAR"/>
+        <result column="goodsYL" property="goodsYL" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="searchOrderList" resultMap="ovMap" parameterType="cn.com.myproject.shop.entity.VO.OrderVO">
+        select o.order_id as orderId,o.order_no as orderNo,o.order_type as orderType,
+        o.order_money as orderMoney,o.order_yh as orderYh,o.order_yf as orderYf,order_sf as orderSf,u.user_name as userName,
+        o.create_time as orderTime,o.pay_status as payStatus,o.order_status as orderStatus,o.status as status
+        from s_order o
+        left join user u on u.user_id = o.user_id
+        where 1=1
+        <if test="orderNo != null and orderNo != ''">
+            and o.order_no like CONCAT('%', #{orderNo},'%')
+        </if>
+        <if test="orderType != 0">
+            and o.order_type = #{orderType}
+        </if>
+        <if test="status != 0">
+            and o.status = #{status}
+        </if>
+        <if test="orderStatus != 0">
+            and o.order_status = #{orderStatus}
+        </if>
+        <if test="payStatus != 0">
+            and o.pay_status = #{payStatus}
+        </if>
+        <if test="userName != null and userName != ''">
+            and u.user_name like CONCAT('%', #{userName},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and FROM_UNIXTIME(o.create_time/1000, '%Y-%m-%d %H:%i:%S') >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and <![CDATA[ FROM_UNIXTIME(o.create_time/1000, '%Y-%m-%d %H:%i:%S') <= #{endTime} ]]>
+        </if>
+        order by o.create_time desc
+    </select>
+
+    <update id="updateOrderStatus" parameterType="Order">
+        update s_order set status = #{status} where order_id = #{orderId}
+    </update>
+
+    <update id="updateFhStatus" parameterType="Order">
+        update s_order set order_status = #{orderStatus} where order_id = #{orderId}
+    </update>
+
+    <select id="searchOrderById" resultType="Order">
+        select o.*,ua.user_name as userName,ua.phone as userPhone,ua.address as userAddress
+        from s_order o
+        left join user_address ua on ua.add_id = o.address_id
+        where o.order_id = #{orderId}
+    </select>
+
+    <select id="searchOMList" resultMap="omMap">
+        select c.goods_id as goodsId,
+        g.goods_name as goodsName,gi.url as goodsImg,c.goods_num as goodsNum,
+        c.goods_spec_id as goodsSpecId,c.goods_spec_val as goodsSpecVal,
+        c.goods_money as goodsMoney from s_cart c
+        left join s_goods g on g.goods_id = c.goods_id
+        left join s_goods_img gi on gi.goods_id = c.goods_id
+        where gi.first = 1 and c.user_id = #{userId}
+    </select>
+
+    <insert id="insertOrder" parameterType="Order">
+        insert into s_order(order_id,order_no,order_type,user_id,address_id,coupon_id,
+        pay_status,order_status,order_money,order_yh,order_yf,order_sf,create_time,status)
+        values(#{orderId},#{orderNo},#{orderType},#{userId},#{addressId},#{couponId},
+        #{payStatus},#{orderStatus},#{orderMoney},#{orderYh},#{orderYf},#{orderSf},#{createTime},#{status})
+    </insert>
+
+    <update id="updatePsAndSfByOrderNo" parameterType="Order">
+        update s_order set pay_status = 2,order_sf = #{orderSf} where order_no = #{orderNo}
+    </update>
+
+</mapper>

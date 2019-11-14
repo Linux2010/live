@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.live.mapper.ChatRoomMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="ChatRoom" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+        <result column="room_name" property="roomName" jdbcType="VARCHAR" />
+        <result column="room_remark" property="roomRemark" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+
+        <result column="im_creator" property="imCreator" jdbcType="VARCHAR" />
+
+        <result column="im_announcement" property="imAnnouncement" jdbcType="VARCHAR" />
+        <result column="im_broadcasturl" property="imBroadcasturl" jdbcType="VARCHAR" />
+        <result column="im_roomid" property="imRoomid" jdbcType="VARCHAR" />
+        <result column="im_valid" property="imValid" jdbcType="SMALLINT" />
+        <result column="im_muted" property="imMuted" jdbcType="SMALLINT" />
+        <result column="im_neednotify" property="imNeednotify" jdbcType="SMALLINT" />
+        <result column="im_onlineusercount" property="imOnlineusercount" jdbcType="BIGINT" />
+
+    </resultMap>
+    <insert id="insert" parameterType="ChatRoom">
+    insert into chat_room(status,create_time,version,room_id,room_name,room_remark,user_id)
+    VALUES
+    (#{status},#{createTime},#{version},#{roomId},#{roomName},#{roomRemark},#{userId})
+    </insert>
+
+    <update id="updateIMValue" parameterType="ChatRoom">
+      update chat_room
+        <set>
+            <if test=" imName != null and imName !=''">
+                im_name = #{imName},
+            </if>
+            <if test=" imCreator != null and imCreator !=''">
+               im_creator = #{imCreator},
+            </if>
+            <if test=" imAnnouncement != null and imAnnouncement !=''">
+                im_announcement = #{imAnnouncement},
+            </if>
+            <if test=" imBroadcasturl != null and imBroadcasturl !=''">
+                im_broadcasturl = #{imBroadcasturl},
+            </if>
+            <if test=" imRoomid != null and imRoomid !=''">
+                im_roomid = #{imRoomid},
+            </if>
+            <if test=" imValid != null ">
+                im_valid = #{imValid},
+            </if>
+            <if test=" imMuted != null ">
+                im_muted = #{imMuted},
+            </if>
+            <if test=" imNeednotify != null ">
+                im_neednotify = #{imNeednotify} ,
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+    <select id="getList" resultMap="resultMap">
+      select im_roomid,room_name,room_remark,im_onlineusercount from chat_room
+    </select>
+</mapper>

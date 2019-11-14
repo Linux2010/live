@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: api
+  redis:
+    database: 10
+    host: r-j6c47faad140a124555.redis.rds.aliyuncs.com
+    prot: 6379
+    password: App54072336
+  freemarker:
+    cache: true #为了热加载
+    charset: utf-8
+    allow-request-override: false
+    allow-session-override: false
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    prefer-file-system-access: true
+  autoconfigure:
+    exclude: #org.springframework.boot.actuate.autoconfigure.MetricExportAutoConfiguration
+
+# Define the port where the UAA server would be running
+server:
+  port: 4444
+  # Use different context-path to avoid session cookie overlapping
+  context-path: /
+#  use-forward-headers: true
+
+alipay:
+   gateway-url: https://openapi.alipay.com/gateway.do
+   app-id: 2017081608222605
+   app-private-key: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC5yV380EnWRGFCi2YvobCzT2aPjEPcA1X/9or+2T8NI4dd60JHYfdWmmxkUbo4T4bVuYwtue3j0OqrE7S55KYBk5U2voamae2P3xt7IGNkDo/9vm2jxpDXmRyNiZX2WXamEF5b3dujurxg9FU7BdQnoHavUCM1SSA2WLX1IVF7E7ZlM0Nlp08scMycXPev3LyI6dl0xrLhUO3O0hsNV/n+CMDdzGxhXpz9RH89VOgULjbYuiq/zpf3FqSzEtjsKV3tKGb88wrg2Jdy7uHcO7DCbnGWiMEwFcNzL0oXGRqu8UAzUCCLPU/zA81AgB+WhbtZT9gpwwkc8+Ts5l7B7tXJAgMBAAECggEAPRRQzA8GV2U/vIrr23kDCNBv3X21yZ1nJrG9XK+7pOwrUttHfQReNqCqRgkAegbbQ2SvC1F3PlCu9fOSlRLw6M/GXKsixY9JxOUKud4aDwkimb+DeDaN4/O4iWfUX5tmAI6dFwLHdPqteAqcAr2V1DlTC6wDBz+1UWi02ZRMn3N4oEfZBPuK9xUiQokF9rAdi2iYF4YvOSurs1mXmPakOYLCFJqoX0U2DrwCIVoQGwKrRSCYykBeg2+VvO0vdOoF3GQdUXLk/YMoITWEEQa0F7OaQtk0vL6mAEzlLOAvnbB3zYqofiUt5cWz/qe1O1MDY5MHjFPcsoGMQv8AZ43KKQKBgQD9RaizEaMUUL8/1kFLfntuzcWAmNnFX6UbkiWagLmqgMEYquJtAGU+Dbz/z8B0KoJCcN05EIHk/Yp7Aw8WdUrdP5gNTe0QvlknDPk5QIxlNGiZF6y5YSogmfjERCmMPY2iKAOPRr6zUXS+uRb/cqMtPeb58c9kgVlrN5SpaXlQWwKBgQC7yaHJ5Xa+tlY2WfJp9/GXKild93zH35icPC7nIMdPv7vQ449svMy6Wl4Rges35e6DCMnW6twl3ytWhcC+O7qcc7+eXUCAGzl8Fdu93qPaDq4QsKAzLTIuELaEYIw4hFnhaZXsfA5/OY1rfGlvkWgAEWaAjVDaf4lJGzNMeOrLqwKBgQCBtNn3kvG8prm7HKPl4Mmf7lvWRvFIBnqNCySc4o2zRysc0e8RuaEfzXNcYu4Bz/9TvW9eGRkcx8fSxbdFXh5P/pCFR8I/z+vidt9vtaHw9o0W0iwP6DXl6lSfVvUcMC3HvMxN5QIm3XF3d1zSx8fPlKMkn/UBWMkNgrJsrGqHfwKBgQCQsUcBKtZ5EkORc3LupcY35JulNKmn1Chh0ZmOK1qHn0OXK4/6h+rzd+fdc46LLpa9zkq/V42zfKaG715Y9erO2/z8h/vH+bIsYydCwEbeIMuMPpvhcuSkS+pmS4IflhMvNUz4v4noC69k76LJ/W72BnJFgR2YjgZ5FwVK2iyIKwKBgQCBa5FZy+J9x+S++/UbnM8pTPMQz203Vw4UDS5TUh5g4Z/xrNogSOYOAOZDceF0sbzagxER8W+v/qLtxrjawwp9dENSy3ZCVuroea/cfI81bCXm+ZL0wjjx7BRHmaS2nTAkntHdd+BR+u4tli60D1HhmRzuEPxDJENeZhk4ZkgFRQ==
+   alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkBaPy0pYISoUJvfpu2CMP2CQ7us1SgTE9N61w9QcXeuQdxDTaLS4H/0d6ItGgG9OC9iyWuOAZYfLUHDD1qMFgHlVqIbPi637Lb+3W50HpQw3v0vtXrIcrL3SCRvbVZ11KzWZJU89uDfB6oMwDVYY3UZM4s+EWOEMHy3DlrsD1thVcBeAiw0Ho8XIB213Kpyp8KcmVVovY7jfEqyieP4n6cdBnLTBaHxniLGXVWduyVgsRAV8V0ZOJns1LxI5LS5I+TlnraCI1fRrho7ITeCFzHoOcoitLUQOMAC1DBOXjRXcmsws2S9r704Qx7r/bxjndeCln/vOpQmjBoCwWG0SqQIDAQAB
+   notify-url: https://jtxyapp.doers.cn/api/paycallback/alipay
+
+
+wxJspPay:
+    secret: 9bde8d38d38d83c8ddd01947c7acf819
+    business-secret-key: fb59bafef3be4b4bba40456686f377d3
+    notify-url: http://jtxyapp.doers.cn/wap/wx/notify
+
+wxAppPay:
+    secret: 5658724ff327aff40599f793f0453767
+    business-secret-key: 19db41eb64ac48a68e44ffb3e9959cb3
+    notify-url: http://jtxyapp.doers.cn/api/paycallback/wxAppNotify
+    wap-notify-url:  http://jtxyapp.doers.cn/wap/wx/wapnotify
+
+#logging:
+#  level.root: DEBUG
+#  file: ./logs/log.log
+
+logging:
+   config: classpath:log4j2.yml
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.31.25.77:1111/eureka/,http://172.31.25.79:1111/eureka/,http://172.31.25.80:1111/eureka/
+    register-with-eureka: true
+
+feignclient:
+  url: #127.0.0.1:3333
+
+
+admin-api-provide:
+  ribbon:
+    ReadTimeout: 30000
+
+jtxyapp:
+   url: https://jtxyapp.doers.cn

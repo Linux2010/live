@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<link rel="stylesheet" href="css/iscroll.css">
+	<!--<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/iscroll.js"></script>
+	<title>上拉加载更多</title>
+</head>
+<body>
+	<header>这是头部</header>
+	<div id="wrapper">
+		<div class="scroller">
+			<div class="fresh"><i class="pull_icon"></i><span>上拉加载...</span></div>
+			<ul>
+				<li>你就是一个天才</li>
+				<li>你就是一个天才</li>
+				<li>你就是一个天才</li>
+				<li>你就是一个天才</li>
+				<li>你就是一个天才</li>
+				<li>你就是一个天才</li>
+			</ul>
+			<div class="more"><i class="pull_icon"></i><span>上拉加载...</span></div>
+		</div>
+	</div>
+	<footer>这是底部</footer>
+	<script>
+		var freshH=$(".fresh").height();
+		var myscroll = new iScroll("wrapper",{
+            topOffset:freshH,
+			onScrollMove:function(){
+			    console.log(this.y);
+				if (this.y<(this.maxScrollY)) {
+					$('.pull_icon').addClass('flip');
+					$('.pull_icon').removeClass('loading');
+					$('.more span').text('释放加载...');
+				}else{
+					$('.pull_icon').removeClass('flip loading');
+					$('.more span').text('上拉加载...')
+				}
+			},
+			onScrollEnd:function(){
+                this.minScrollY=0
+				if ($('.pull_icon').hasClass('flip')) {
+					$('.pull_icon').addClass('loading');
+					$('.more span').text('加载中...');
+					pullUpAction();
+				}
+				
+			},
+			onRefresh:function(){
+                this.topOffset=100;
+				$('.more').removeClass('flip');
+				$('.more span').text('上拉加载...');
+			}
+			
+		});
+		
+		function pullUpAction(){
+			setTimeout(function(){
+				$.ajax({
+					url:'json/ay.json',
+					type:'get',
+					dataType:'json',
+					success:function(data){
+					    console.log(data)
+						for (var i = 0; i < 5; i++) {
+							$('.scroller ul').append(data);
+						}
+						myscroll.refresh();
+					},
+					error:function(){
+						console.log('error');
+					},
+				})
+			}, 1000)
+		}
+		if ($('.scroller').height()<$('#wrapper').height()) {
+			$('.more').hide();
+			myscroll.destroy();
+		}
+
+	</script>
+</body>
+</html>

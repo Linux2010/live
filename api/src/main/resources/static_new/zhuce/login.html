@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/login.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/picker.min.js"></script>
+</head>
+<body>
+<div class="con1">
+    <span style="width: 100%;display: inline-block;margin: 0 auto;text-align: center;">登录</span>
+</div>
+<div class="con2">
+    <p class="p1">欢迎来到教头学院</p>
+</div>
+<div class="con3">
+    <div class="con3Con">
+        <div style="margin: 0.2rem auto;"><span class="span1" id="sel_city">+86</span><input class="input1" type="text" v-model="telVal" :disabled="telDisabled" placeholder="请输入手机号"></div>
+    </div>
+    <div class="con3Con">
+        <input type="password" placeholder="输入登录密码">
+    </div>
+    <div class="con3Con">
+        <input type="button" value="登录" style="background-color: #ffa42f;border-color: transparent;margin:0.4rem auto;">
+    </div>
+</div>
+<div class="con4">
+    <div class="con4Con">
+        <a href="zhuce/getpwd.html"> <span >忘记密码</span></a>
+        <a href="zhuce/zhuce.html"> <span style="float:right;">注册新用户</span></a>
+    </div>
+</div>
+<div class="con5">
+    <div class="line"></div>
+    <div class="l">或从一下方式登录</div>
+</div>
+<div class="con6">
+    <div class="cell"><img src="image/zhifubao.png"/><p>支付宝</p> </div>
+    <div class="cell"><img src="image/weixin.png"/><p>新浪微信</p> </div>
+    <div class="cell"><img src="image/weibo.png"/><p>微博</p> </div>
+    <div class="cell"><img src="image/QQ.png"/><p>QQ</p> </div>
+    <div class="cell"><img src="image/facebook.png"/><p>FACEBOOK</p> </div>
+</div>
+</body>
+<script src="js/tele86.js"></script>
+<script>
+
+</script>
+</html>

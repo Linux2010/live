@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/zhuce.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js" type="text/javascript"></script>
+    <script src="js/picker.min.js"></script>
+</head>
+<body>
+<div class="con1">
+    <span style="width: 20%;display: inline-block;"><</span><span style="width: 60%;display: inline-block;margin: 0 auto;text-align: center;">注册</span>
+</div>
+<div class="con3">
+    <div class="con3Con">
+        <label>手机号码</label><span class="span1" id="sel_city">+86</span><input class="input1" type="text" v-model="telVal" :disabled="telDisabled" placeholder="请输入手机号">
+    </div>
+    <div class="con3Con">
+        <label style="vertical-align: middle;"> </label><input class="input2" type="text" v-model="codeVal" placeholder="输入验证码"><span class="span2" v-html="codeImgVal" v-bind:class="{inputcodeimg:telStates&codeImgValStates}" v-on:click="getCode($event)"></span>
+    </div>
+    <div class="con3Con">
+        <label>用户名</label><input type="text" v-model="usernameVal" placeholder="输入用户名">
+    </div>
+    <div class="con3Con">
+        <label>密码</label><input type="password" v-model="passwordVal" placeholder="设置密码">
+    </div>
+    <div class="con3Con">
+        <label>确认密码</label><input type="password" v-model="truePasswordVal" placeholder="确认密码">
+    </div>
+    <div class="con3Con">
+        <label>推荐人</label><input type="text">
+    </div>
+    <div class="con3Con">
+        <input type="button" v-model="registerVal" v-bind:class="{submit:telStates&codeStates&usernameStates&passwordValStates&truePasswordValStates}" v-on:click="sub()">
+    </div>
+</div>
+<div class="con4">
+    <div class="con4Con">
+        注册代表您已经阅读并同意《教头学院协议》
+    </div>
+</div>
+
+
+</body>
+<script>
+
+    var v1=new Vue({
+        el:'.con3',
+        data:{
+            telVal:'',
+            telDisabled:false,
+            codeVal:'',
+            codeImgVal:'获取验证码',
+            codeImgValStates:true,
+            usernameVal:'',
+            passwordVal:'',
+            truePasswordVal:'',
+            registerVal:'下一步',
+            wait:60,
+            message:'qwle'
+        },
+        computed:{
+            telStates:function () {
+                return this.telVal!=="";
+            },
+            codeStates:function () {
+                return this.codeVal!=="";
+            },
+            usernameStates:function () {
+                return this.usernameVal!=="";
+            },
+            passwordValStates:function () {
+                return this.passwordVal!=="";
+            },
+            truePasswordValStates:function () {
+                return this.truePasswordVal!==""&&(this.passwordVal===this.truePasswordVal);
+            }
+        },
+        methods:{
+            getCode:function (e) {
+                var a = e.currentTarget;
+                if(this.wait===60&&this.telStates){
+                    console.log("ajax");
+                    this.codeImgValStates=false;
+                    this.telDisabled=true;
+                    time(a);
+                }
+                function time(a) {
+                    if (v1.wait === 0) {
+                        v1.codeImgValStates=true;          //toyellow
+                        v1.telDisabled=false;              //toyellow
+                        v1.codeImgVal="发送验证码";
+                        v1.wait = 60;
+                    } else {
+                        v1.codeImgVal="重新发送("+v1.wait+")";
+                        v1.wait--;
+                        setTimeout(function(){time(a)},1000)
+                    }
+                }//time
+            },
+            sub:function () {
+                window.location.href="zhuce/zhuce2.html";
+            }
+        }
+    })
+</script>
+<script src="js/tele86.js"></script>
+</html>

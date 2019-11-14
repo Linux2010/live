@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.course.mapper.CourseFinishRecordMapper" >
+  <resultMap id="BaseResultMap" type="CourseFinishRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cfr_id" property="cfrId" jdbcType="VARCHAR" />
+    <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="pause_duration" property="pauseDuration" jdbcType="INTEGER" />
+    <result column="duration" property="duration" jdbcType="INTEGER" />
+    <result column="record_status" property="recordStatus" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, cfr_id, course_id, user_id, pause_duration, duration, record_status, create_time, status, version
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from cource_finish_record
+    where cfr_id = #{cfrId}
+  </select>
+
+  <select id="selectByCourseId" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from cource_finish_record
+    where course_id = #{courseId}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from cource_finish_record
+    where user_id = #{userId}
+  </select>
+
+  <select id="selectByCourseIdAndUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cource_finish_record
+    where user_id = #{userId} and course_id = #{courseId}
+  </select>
+
+  <select id="getFinishNum" resultType="Integer" parameterType="String" >
+    select count(course_id) from cource_finish_record where user_id = #{userId}
+  </select>
+
+  <select id="selectCuCountByPId" resultType="Integer" parameterType="String">
+    select count(*) from a_profit_share_relation a where a.parent_user_id = #{userId}
+  </select>
+
+  <select id="getTotalDuration" resultType="Long" parameterType="String" >
+    SELECT SUM(pause_duration) FROM cource_finish_record WHERE user_id = #{userId}
+  </select>
+
+
+  <select id="getFinishTeacherNum" resultType="Integer" parameterType="String" >
+     SELECT COUNT(a.`course_id`) FROM course a RIGHT JOIN cource_finish_record b ON a.`course_id` = b.`course_id`
+     WHERE b.`user_id` = #{userId} GROUP BY a.`teacher_id`
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from cource_finish_record
+    where cfr_id = #{cfrId}
+  </delete>
+
+  <insert id="insert" parameterType="CourseFinishRecord" >
+    insert into cource_finish_record (id, cfr_id, course_id, 
+      user_id, pause_duration, duration, 
+      record_status, create_time, status, 
+      version)
+    values (#{id,jdbcType=INTEGER}, #{cfrId,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{pauseDuration,jdbcType=INTEGER}, #{duration,jdbcType=INTEGER},
+      #{recordStatus,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{status,jdbcType=BIGINT}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="CourseFinishRecord" >
+    insert into cource_finish_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cfrId != null" >
+        cfr_id,
+      </if>
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="pauseDuration != null" >
+        pause_duration,
+      </if>
+      <if test="duration != null" >
+        duration,
+      </if>
+      <if test="recordStatus != null" >
+        record_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cfrId != null" >
+        #{cfrId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="pauseDuration != null" >
+        #{pauseDuration,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="CourseFinishRecord" >
+    update cource_finish_record
+    <set >
+      <if test="cfrId != null" >
+        cfr_id = #{cfrId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="pauseDuration != null" >
+        pause_duration = #{pauseDuration,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null" >
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="recordStatus != null" >
+        record_status = #{recordStatus,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cfr_Id = #{cfrId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="CourseFinishRecord" >
+    update cource_finish_record
+    set cfr_id = #{cfrId,jdbcType=VARCHAR},
+      course_id = #{courseId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      pause_duration = #{pauseDuration,jdbcType=INTEGER},
+      duration = #{duration,jdbcType=INTEGER},
+      record_status = #{recordStatus,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=BIGINT},
+      version = #{version,jdbcType=INTEGER}
+      where cfr_Id = #{cfrId}
+  </update>
+</mapper>

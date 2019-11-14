@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.CouponClaimUserMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CouponClaimUser" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="coupon_claim_user_id" property="couponClaimUserId" jdbcType="VARCHAR"/>
+        <result column="coupon_id" property="couponId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="is_claim" property="isClaim" jdbcType="DECIMAL"/>
+        <result column="claim_time" property="claimTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+    </resultMap>
+
+    <select id="searchCouponClaimUserById" resultType="CouponClaimUser">
+        select * from s_coupon_claim_user where coupon_claim_user_id =#{couponClaimUserId}
+    </select>
+
+    <select id="searchCouponClaimUserDetail" resultType="CouponClaimUser">
+        select * from s_coupon_claim_user where 1=1
+        <if test="couponId != null and couponId !=''">
+            and  coupon_id =#{couponId}
+        </if>
+
+        <if test="userId != null and userId !=''">
+            and  user_id =#{userId}
+        </if>
+    </select>
+
+    <insert id="insertCouponClaimUser" parameterType="CouponClaimUser">
+        insert into
+             s_coupon_claim_user(
+                    coupon_claim_user_id,
+                    coupon_id,
+                    user_id,
+                    is_claim,
+                    claim_time,
+                    version,
+                    status)
+            values(#{couponClaimUserId},
+                    #{couponId},
+                    #{userId},
+                    #{isClaim},
+                    #{claimTime},
+                    #{version},
+                    #{status})
+    </insert>
+
+    <delete id="deleteCouponClaimUser" parameterType="java.lang.String">
+        delete from s_coupon_claim_user where coupon_claim_user_id = #{couponClaimUserId}
+    </delete>
+
+    <update id="updateCouponClaimUser" parameterType="CouponClaimUser">
+        update s_coupon_claim_user
+        <set>
+            <if test="isClaim != null">
+                is_claim = #{isClaim},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where 1=1
+        <if test="couponClaimUserId != null and couponClaimUserId !=''">
+            and coupon_claim_user_id = #{couponClaimUserId}
+        </if>
+    </update>
+
+    <select id="searchCouponClaimUserList" resultType="CouponClaimUser">
+        select * from s_coupon_claim_user where 1=1
+        <if test="userId != null and userId != ''">
+            and user_id =#{userId}
+        </if>
+        order by claim_time desc
+    </select>
+
+    <select id="getCouponClaimUserList" resultMap="resultMap">
+        select * from s_coupon_claim_user where 1=1 and status =1
+        order by claim_time desc
+    </select>
+</mapper>

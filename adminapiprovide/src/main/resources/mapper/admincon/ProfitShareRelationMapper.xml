@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.admincon.mapper.ProfitShareRelationMapper">
+
+  <resultMap id="BaseResultMap" type="ProfitShareRelation">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="relation_id" jdbcType="VARCHAR" property="relationId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="parent_user_id" jdbcType="VARCHAR" property="parentUserId" />
+    <result column="no" jdbcType="INTEGER" property="no" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+    <result column="user_identity" property="userIdentity" jdbcType="INTEGER" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, relation_id, user_id, parent_user_id, no, create_time, status, version
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
+    select a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name
+    from a_profit_share_relation a LEFT JOIN user b ON a.user_id = b.user_id
+    where relation_id = #{relationId}
+  </select>
+
+  <select id="getPage"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from a_profit_share_relation where 1=1
+  </select>
+
+  <!--查询-1的父级分润关系-->
+  <select id="selectMinusProfitRalationByUserId" resultMap="BaseResultMap" parameterType="String">
+    select a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name
+    from a_profit_share_relation a LEFT JOIN user b ON a.user_id = b.user_id
+    where a.user_id = #{userId} and a.parent_user_id = '-1'
+  </select>
+  <!--查询非-1的父级分润关系-->
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="String">
+    select a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name
+    from a_profit_share_relation a LEFT JOIN user b ON a.user_id = b.user_id
+    where a.user_id = #{userId} and a.parent_user_id != '-1'
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="String">
+    delete from a_profit_share_relation
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="ProfitShareRelation">
+    insert into a_profit_share_relation (relation_id, user_id,
+      parent_user_id, no, create_time, 
+      status, version)
+    values (#{relationId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+      #{parentUserId,jdbcType=VARCHAR}, #{no,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, 
+      #{status,jdbcType=BIT}, #{version,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertSelective" parameterType="ProfitShareRelation">
+    insert into a_profit_share_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="relationId != null">
+        relation_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="parentUserId != null">
+        parent_user_id,
+      </if>
+      <if test="no != null">
+        no,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="relationId != null">
+        #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null">
+        #{parentUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="ProfitShareRelation">
+    update a_profit_share_relation
+    <set>
+      <if test="relationId != null">
+        relation_id = #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null">
+        parent_user_id = #{parentUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        no = #{no,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="ProfitShareRelation">
+    update a_profit_share_relation
+    set relation_id = #{relationId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      parent_user_id = #{parentUserId,jdbcType=VARCHAR},
+      no = #{no,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER}
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getRelationList" parameterType="Map" resultMap="BaseResultMap">
+    SELECT a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name FROM a_profit_share_relation a LEFT JOIN user b ON
+    a.user_id = b.user_id
+    where 1=1  AND b.`user_id` IS NOT NULL
+    AND parent_user_id = #{map.userId}
+    <if test="map.keyword != null">
+      AND (
+          b.user_name LIKE CONCAT('%',#{map.keyword},'%') OR b.phone LIKE CONCAT('%',#{map.keyword},'%')
+         )
+    </if>
+  </select>
+
+   <!--获取上级会员-->
+   <select id="getRelationU" parameterType="String" resultMap="BaseResultMap">
+        SELECT a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name FROM a_profit_share_relation a LEFT JOIN user b ON
+        a.parent_user_id = b.user_id
+        where parent_user_id != '-1' and  user_id = #{userId}
+   </select>
+
+  <!--获取下级会员-->
+  <select id="getRelationD" parameterType="String" resultMap="BaseResultMap">
+    SELECT a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name FROM a_profit_share_relation a LEFT JOIN user b ON
+    a.user_id = b.user_id
+    where parent_user_id = #{userId}
+  </select>
+
+  <select id="getRelationListByMap" parameterType="Map" resultMap="BaseResultMap">
+    SELECT id,relation_id,user_id,parent_user_id,no,create_time,status,version FROM a_profit_share_relation
+    WHERE status = 1
+    <if test="relationId != null">AND relation_id = #{relation_id}</if>
+    <if test="userId != null">AND user_id = #{userId}</if>
+    <if test="parentUserId != null">AND parent_user_id = #{parentUserId}</if>
+    <if test="parentUserIdNQ != null">AND parent_user_id != #{parentUserIdNQ}</if>
+    <if test="parentUserIdNQS != null">AND parent_user_id not in (#{parentUserIdNQS})</if>
+  </select>
+
+  <!--上级用户-->
+  <select id="getUpLevelUser" parameterType="String" resultMap="BaseResultMap">
+      SELECT a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name,b.photo,b.signature
+          FROM a_profit_share_relation a LEFT JOIN user b ON a.`parent_user_id` = b.`user_id`
+      WHERE a.user_id = #{userId} AND b.`user_name` IS NOT NULL
+  </select>
+
+  <!--二级用户-->
+  <select id="getSecondLevelUser" parameterType="String" resultMap="BaseResultMap">
+   SELECT a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name,b.photo
+        FROM a_profit_share_relation a LEFT JOIN user b ON a.`user_id` = b.`user_id`
+   WHERE a.`parent_user_id` = #{userId}
+  </select>
+
+  <!--三级用户-->
+  <select id="getThreeLevelUser" parameterType="String" resultMap="BaseResultMap">
+      SELECT a.*,b.user_name,b.nick_name,b.phone,b.user_level,b.user_identity,b.login_name,b.photo
+          FROM a_profit_share_relation a LEFT JOIN user b ON a.`user_id` = b.`user_id`
+      WHERE a.`parent_user_id` IN (SELECT user_id FROM a_profit_share_relation WHERE parent_user_id = #{userId})
+  </select>
+
+  <!--三级用户人数-->
+  <select id="getThreeLevelUserCount" parameterType="String" resultType="Integer">
+    SELECT count(1)
+    FROM a_profit_share_relation a LEFT JOIN user b ON a.`user_id` = b.`user_id`
+    WHERE a.`parent_user_id` IN (SELECT user_id FROM a_profit_share_relation WHERE parent_user_id = #{userId})
+  </select>
+
+</mapper>

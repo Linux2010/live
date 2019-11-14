@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.advertise.mapper.AdvertiseMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Advertise" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+
+        <result column="adver_id" property="adverId" jdbcType="VARCHAR" />
+        <result column="adver_name" property="adverName" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="adver_img" property="adverImg" jdbcType="VARCHAR" />
+        <result column="adver_place" property="adverPlace" jdbcType="VARCHAR" />
+        <result column="link_address" property="linkAddress" jdbcType="VARCHAR"/>
+        <result column="detail_id" property="detailId" jdbcType="VARCHAR"/>
+        <result column="link_type" property="linkType" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap type="Goods" id="resultMapGoods">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_type" property="goodsType" jdbcType="SMALLINT"/>
+        <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR"/>
+        <result column="cost_price" property="costPrice" jdbcType="DECIMAL"/>
+        <result column="mkt_price" property="mktPrice" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="expreeFee" property="expreeFee" jdbcType="DECIMAL"/>
+        <result column="cat_id" property="catId" jdbcType="VARCHAR"/>
+        <result column="is_sold_out" property="isSoldOut" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+        <result column="ext" property="ext" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="cat_name" property="catName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getPage" resultMap="resultMap">
+        select id, adver_id, adver_name, `name`, adver_img, adver_place, `type`, create_time, status, version, link_address, detail_id, link_type from sys_advertise where 1=1
+        <if test="map.keyword != null"> and
+            (
+            adver_name like CONCAT('%', #{map.keyword},'%')
+            )
+        </if>
+        <if test="map.type != null"> and
+            `type` = #{map.type}
+        </if>
+            order by id desc
+
+    </select>
+    <select id="selectAdverById" resultMap="resultMap" parameterType="java.lang.String">
+        select id, adver_id, adver_name, `name`, adver_img, adver_place, `type`, create_time, status, version, link_address, detail_id, link_type from sys_advertise where adver_id = #{adverId}
+    </select>
+    <select id="selectAll" resultMap="resultMap">
+        select id, adver_id, adver_name, `name`, adver_img, adver_place, `type`, create_time, status, version, link_address, detail_id, link_type from sys_advertise
+    </select>
+    <select id="selectAdverType" resultMap="resultMap" parameterType="java.lang.Integer">
+        select id, adver_id, adver_name, `name`, adver_img, adver_place, `type`, create_time, status, version, link_address, detail_id, link_type from sys_advertise
+        where `type` = #{type} and status = #{status} order by id desc
+    </select>
+    <insert id="addAdver" parameterType="Advertise">
+        insert into sys_advertise(adver_id, adver_name, `name`, adver_img, adver_place, `type`, create_time, status, version, link_address, detail_id, link_type)
+        values(
+        #{adverId}, #{adverName}, #{name}, #{adverImg}, #{adverPlace}, #{type}, #{createTime}, #{status}, #{version}, #{linkAddress}, #{detailId}, #{linkType}
+        )
+    </insert>
+    <update id="updateAdver" parameterType="Advertise">
+        update sys_advertise set adver_name = #{adverName}, `name` = #{name}, adver_img = #{adverImg}, adver_place = #{adverPlace},
+        `type` = #{type}, status = #{status}, link_address = #{linkAddress}, detail_id = #{detailId}, link_type = #{linkType} where adver_id = #{adverId}
+    </update>
+    <delete id="deleteAdver" parameterType="java.lang.String">
+        delete from sys_advertise where adver_id = #{adverId}
+    </delete>
+    <select id="selectAllGoods" resultMap="resultMapGoods">
+        select * from s_goods
+    </select>
+    <select id="selectGoodsByKeyword" resultMap="resultMapGoods">
+        select
+        s.`id`,
+        s.`goods_id`,
+        s.`goods_name`,
+        s.`goods_type`,
+        s.`goods_number`,
+        (SELECT MIN(spec.cost_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) cost_price,
+        (SELECT MIN(spec.user_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) mkt_price,
+        (SELECT MIN(spec.vip_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) price,
+        s.`unit`,
+        s.`intro`,
+        s.`expreeFee`,
+        s.`brand_id`,
+        s.`cat_id`,
+        s.`is_sold_out`,
+        s.`create_time`,
+        s.`creater`,
+        s.`version`,
+        s.`status`,
+        s.`seqno`,
+        s.`ext1`,
+        s.`ext2`,
+        (select url from s_goods_img img where img.`goods_id` = s.goods_id  and img.first=1 order by seqno asc limit 1) AS mastImg
+        from s_goods s where 1=1
+        <if test="keyword != null and keyword != ''">
+            and (s.goods_name like CONCAT('%', #{keyword},'%')
+            )
+        </if>
+        order by s.seqno asc ,s.create_time desc
+    </select>
+    <select id="getPageGoods" resultMap="resultMapGoods">
+        select * from s_goods
+    </select>
+</mapper>

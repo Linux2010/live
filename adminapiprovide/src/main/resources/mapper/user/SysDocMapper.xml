@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.user.mapper.SysDocMapper">
+
+    <resultMap type="SysDoc" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="doc_type" property="docType" jdbcType="INTEGER" />
+        <result column="doc_content" property="docContent" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectSdList" resultMap="resultMap" parameterType="java.lang.Integer">
+        select sd.* from sys_doc sd where 1=1
+        <if test="docType != 0">
+            and sd.doc_type = #{docType}
+        </if>
+    </select>
+
+    <select id="selectSdcByType" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select sd.doc_content from sys_doc sd where sd.doc_type = #{docType}
+    </select>
+
+    <update id="updateSdc" parameterType="SysDoc">
+        update sys_doc set doc_content = #{docContent},create_time = #{createTime} where id = #{id}
+    </update>
+
+</mapper>

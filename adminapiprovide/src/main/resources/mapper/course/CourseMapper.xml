@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.course.mapper.CourseMapper">
+
+    <resultMap type="Course" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="courseFbTime" property="courseFbTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+        <result column="course_type_id" property="courseTypeId" jdbcType="VARCHAR" />
+        <result column="seqno" property="seqno" jdbcType="INTEGER" />
+        <result column="course_title" property="courseTitle" jdbcType="VARCHAR" />
+        <result column="course_content" property="courseContent" jdbcType="VARCHAR" />
+        <result column="course_begin_time" property="courseBeginTime" jdbcType="BIGINT" />
+        <result column="course_end_time" property="courseEndTime" jdbcType="BIGINT" />
+        <result column="teacher_id" property="teacherId" jdbcType="VARCHAR" />
+        <result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
+        <result column="vip_price" property="vipPrice" jdbcType="DOUBLE" />
+        <result column="course_intro" property="courseIntro" jdbcType="VARCHAR" />
+        <result column="course_integral" property="courseIntegral" jdbcType="INTEGER" />
+        <result column="course_address" property="courseAddress" jdbcType="VARCHAR" />
+        <result column="course_tag_id" property="courseTagId" jdbcType="VARCHAR" />
+        <result column="course_cover" property="courseCover" jdbcType="VARCHAR" />
+        <result column="tyname" property="tyname" jdbcType="VARCHAR" />
+        <result column="tyval" property="tyval" jdbcType="VARCHAR" />
+        <result column="tname" property="tname" jdbcType="VARCHAR" />
+        <result column="video_id" property="videoId" jdbcType="VARCHAR" />
+        <result column="obj_name" property="objName" jdbcType="VARCHAR" />
+        <result column="ctName" property="ctName" jdbcType="VARCHAR" />
+        <result column="zb_type" property="zbType" jdbcType="VARCHAR" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="signature" property="signature" jdbcType="VARCHAR" />
+        <result column="attentionFlag" property="attentionFlag" jdbcType="INTEGER" />
+        <result column="collectFlag" property="collectFlag" jdbcType="INTEGER" />
+        <result column="orderFlag" property="orderFlag" jdbcType="INTEGER" />
+        <result column="wyUrlVal" property="wyUrlVal" jdbcType="VARCHAR" />
+        <result column="orderNumber" property="orderNumber" jdbcType="INTEGER"/>
+        <result column="course_address_detail" property="courseAddressDetail" jdbcType="VARCHAR" />
+        <result column="courseOrderNo" property="courseOrderNo" jdbcType="VARCHAR" />
+        <result column="ktCount" property="ktCount" jdbcType="VARCHAR" />
+        <result column="course_img" property="courseImg" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="coMap" type="cn.com.myproject.live.entity.VO.CourseOrderVO">
+        <result column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="realName" property="realName" jdbcType="VARCHAR"/>
+        <result column="userPhone" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="userEmail" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="tName" property="tName" jdbcType="VARCHAR"/>
+        <result column="tPhoto" property="tPhoto" jdbcType="VARCHAR"/>
+        <result column="courseId" property="courseId" jdbcType="VARCHAR"/>
+        <result column="courseTitle" property="courseTitle" jdbcType="VARCHAR"/>
+        <result column="courseCover" property="courseCover" jdbcType="VARCHAR"/>
+        <result column="courseBeginTime" property="courseBeginTime" jdbcType="BIGINT"/>
+        <result column="courseEndTime" property="courseEndTime" jdbcType="BIGINT"/>
+        <result column="costPrice" property="costPrice" jdbcType="DOUBLE" />
+        <result column="vipPrice" property="vipPrice" jdbcType="DOUBLE" />
+        <result column="courseImg" property="courseImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="User" id="userMap">
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap type="CourseCollect" id="ccMap">
+        <result column="collect_id" property="collectId" jdbcType="VARCHAR" />
+        <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap type="CourseTopic" id="courseTopicMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="course_topic_id" property="courseTopicId" jdbcType="VARCHAR" />
+        <result column="course_topic_examination_id" property="courseTopicExaminationId" jdbcType="VARCHAR" />
+        <result column="topic_name" property="topicName" jdbcType="VARCHAR" />
+        <result column="topic_a_value" property="topicAvalue" jdbcType="VARCHAR" />
+        <result column="topic_b_value" property="topicBvalue" jdbcType="VARCHAR" />
+        <result column="topic_c_value" property="topicCvalue" jdbcType="VARCHAR" />
+        <result column="topic_d_value" property="topicDvalue" jdbcType="VARCHAR" />
+        <result column="topic_a_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="topic_b_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="topic_c_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="topic_d_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="right_answer" property="rightAnswer" jdbcType="VARCHAR"/>
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+        <result column="topic_no" property="topicNo" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insertCourse" parameterType="Course">
+        insert into course(status,create_time,version,course_id,course_type_id,seqno,course_title,
+        course_begin_time,course_end_time,teacher_id,cost_price,vip_price,
+        course_intro,course_integral,course_address,course_tag_id,course_cover,zb_type,course_address_detail,course_img)
+        values(#{status},#{createTime},#{version},#{courseId},#{courseTypeId},#{seqno},#{courseTitle},
+        #{courseBeginTime},#{courseEndTime},#{teacherId},#{costPrice},#{vipPrice},
+        #{courseIntro},#{courseIntegral},#{courseAddress},#{courseTagId},#{courseCover},#{zbType},#{courseAddressDetail},#{courseImg})
+    </insert>
+
+    <delete id="deleteCourse" parameterType="java.lang.String">
+        delete from course where course_id = #{courseId}
+    </delete>
+
+    <update id="updateCourse" parameterType="Course">
+        update course set course_type_id=#{courseTypeId},seqno=#{seqno},course_title=#{courseTitle},
+          course_begin_time=#{courseBeginTime},teacher_id=#{teacherId},cost_price=#{costPrice},
+          vip_price=#{vipPrice},course_intro=#{courseIntro},
+          course_tag_id=#{courseTagId}
+          <if test="courseEndTime != 0">
+             ,course_end_time=#{courseEndTime}
+          </if>
+          <if test="courseAddress != null and courseAddress != ''">
+            ,course_address=#{courseAddress}
+          </if>
+          <if test="courseAddressDetail != null and courseAddressDetail != ''">
+            ,course_address_detail=#{courseAddressDetail}
+          </if>
+          <if test="courseIntegral != 0">
+            ,course_integral=#{courseIntegral}
+          </if>
+          <if test="courseCover != null and courseCover != ''">
+              ,course_cover=#{courseCover}
+          </if>
+          <if test="zbType != null and zbType != ''">
+              ,zb_type=#{zbType}
+          </if>
+          <if test="courseImg != null and courseImg != ''">
+              ,course_img=#{courseImg}
+          </if>
+         where course_id = #{courseId}
+    </update>
+
+    <select id="searchCourseListByTeacherId" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT
+        c.course_id,
+        c.`course_title`,
+        c.`create_time`,
+        c.`create_time` as courseFbTime,
+        c.course_begin_time,
+        c.`course_cover`,
+        c.`course_img`,
+        c.`cost_price`,
+        c.`vip_price`,
+        (SELECT COUNT(course_order_id) FROM course_order o WHERE o.course_id= c.course_id AND o.pay_status =1) AS orderNumber,
+        ct.type_name AS tyname,
+        ct.`type_val` tyval,
+        u.user_name AS tname,
+        u.photo
+        FROM
+        course c
+        LEFT JOIN course_type ct
+        ON ct.course_type_id = c.course_type_id
+        LEFT JOIN user u
+        ON u.user_id = c.teacher_id
+        WHERE 1 = 1
+        <if test="teacherId != null  and teacherId != ''">
+            and  c.teacher_id = #{teacherId}
+        </if>
+        <!-- type 0：动态；1：作品-->
+        <if test="type != null and type!=''">
+            <choose>
+                <when test="type == '0'.toString()">
+                    <![CDATA[
+                      and UNIX_TIMESTAMP(  FROM_UNIXTIME(  c.`course_begin_time`/1000,'%Y-%m-%d %h:%m:%s') ) > unix_timestamp( now() )
+                     ]]>
+                </when>
+                <when test="type == '1'.toString()">
+                    <![CDATA[
+                      and  UNIX_TIMESTAMP(  FROM_UNIXTIME(  c.`course_begin_time`/1000,'%Y-%m-%d %h:%m:%s') ) <=unix_timestamp( now() )
+                     ]]>
+                </when>
+            </choose>
+        </if>
+        order by c.seqno asc,c.create_time desc
+    </select>
+
+    <select id="searchCourseList" resultMap="resultMap">
+        SELECT
+        c.*,
+        (SELECT COUNT(course_order_id) FROM course_order o WHERE o.course_id= c.course_id AND o.user_id =c.`teacher_id` AND o.pay_status =1) AS orderNumber,
+        ct.type_name AS tyname,
+        ct.`type_val` tyval,
+        u.user_name AS tname
+        FROM
+        course c
+        LEFT JOIN course_type ct
+        ON ct.course_type_id = c.course_type_id
+        LEFT JOIN user u
+        ON u.user_id = c.teacher_id
+        WHERE 1 = 1
+        <if test="typeVal != null  and typeVal != ''">
+            and  ct.type_val = #{typeVal}
+        </if>
+        <if test="courseTitle != null and courseTitle != ''">
+            and c.course_title like CONCAT('%', #{courseTitle},'%')
+        </if>
+        <if test="zbType != null and zbType != ''">
+            and c.zb_type = #{zbType}
+        </if>
+        order by c.seqno
+    </select>
+
+    <select id="selectAllCourse" resultMap="resultMap">
+        select * from course
+    </select>
+
+    <select id="searchLiveCourseList" resultMap="resultMap">
+        SELECT
+        c.*,
+        (SELECT COUNT(course_order_id) FROM course_order o WHERE o.course_id= c.course_id AND o.pay_status =1) AS orderNumber,
+        IF(c.zb_type = 'yp' || c.zb_type='sp', IF(UNIX_TIMESTAMP( NOW()) >= UNIX_TIMESTAMP(DATE_ADD( FROM_UNIXTIME(  c.`course_begin_time`/1000,'%Y-%m-%d %h:%m:%s'), INTERVAL - 5 MINUTE)),1,0),0) AS iSCanOpenLive ,
+        ct.type_name AS tyname,
+        ct.`type_val` tyval,
+        u.user_name AS tname
+        FROM
+        course c
+        LEFT JOIN course_type ct
+        ON ct.course_type_id = c.course_type_id
+        LEFT JOIN user u
+        ON u.user_id = c.teacher_id
+        WHERE 1 = 1
+        <if test="typeVal != null  and typeVal != ''">
+            and  ct.type_val = #{typeVal}
+        </if>
+        <if test="courseTitle != null and courseTitle != ''">
+            and c.course_title like CONCAT('%', #{courseTitle},'%')
+        </if>
+        <if test="zbType != null and zbType != ''">
+            and c.zb_type = #{zbType}
+        </if>
+        <if test="teacherId != null and teacherId != ''">
+            and c.teacher_id = #{teacherId}
+        </if>
+        order by c.seqno
+    </select>
+
+    <select id="searchAllCourseList" resultMap="resultMap">
+        select c.*,ct.type_name as tyname,ct.type_val as tyval,u.real_name as tname from course c
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        left join user u on u.user_id = c.teacher_id
+        where 1=1
+        <if test="courseTypeId != null and courseTypeId != '' and courseTypeLevel != 1">
+            and  ct.course_type_id = #{courseTypeId}
+        </if>
+        <if test="courseTypeId != null and courseTypeId != '' and courseTypeLevel == 1">
+            and  ct.course_type_id in (select cty.course_type_id from course_type cty where cty.parent_id = #{courseTypeId})
+        </if>
+        <if test="courseTitle != null and courseTitle != ''">
+            and c.course_title like CONCAT('%', #{courseTitle},'%')
+        </if>
+        <if test="zbType != null and zbType != ''">
+            and c.zb_type = #{zbType}
+        </if>
+        <if test="typeVal != null and typeVal != ''">
+            and ct.type_val = #{typeVal}
+        </if>
+        order by c.seqno
+    </select>
+
+    <select id="searchLtcList" resultMap="resultMap">
+        (select c.*,u.real_name as tname,ct.type_val as tyval,(select count(*) from course_order co where co.pay_status = 1 and co.order_status = 1 and co.course_id = c.course_id) as orderNumber
+        from course c
+        left join user u on u.user_id = c.teacher_id
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        where <![CDATA[FROM_UNIXTIME(c.course_begin_time/1000, '%Y-%m-%d') >= DATE_SUB(now(),INTERVAL 3 DAY) and (c.course_begin_time/1000) <= unix_timestamp(now())]]>
+        and c.course_id in(select a.course_id from course_order a where a.pay_status = 1 and a.order_status = 1 and a.user_id = #{userId})
+        order by c.course_begin_time desc)
+        union
+        (select c.*,u.real_name as tname,ct.type_val as tyval,(select count(*) from course_order co where co.pay_status = 1 and co.order_status = 1 and co.course_id = c.course_id) as orderNumber
+        from course c
+        left join user u on u.user_id = c.teacher_id
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        where <![CDATA[FROM_UNIXTIME(c.course_begin_time/1000, '%Y-%m-%d') >= DATE_SUB(now(),INTERVAL 3 DAY) and (c.course_begin_time/1000) <= unix_timestamp(now())]]>
+        and c.course_id not in(select a.course_id from course_order a where a.pay_status = 1 and a.order_status = 1 and a.user_id = #{userId})
+        order by c.course_begin_time desc)
+    </select>
+
+    <select id="searchTeaList" resultMap="userMap">
+        select u.user_id,u.user_name from user u where u.user_type = 1
+    </select>
+
+    <select id="searchCourseInfoById" resultType="Course">
+        select c.* from course c where c.course_id = #{courseId}
+    </select>
+
+    <select id="searchCourseById" resultType="Course">
+        select c.*,ct.type_name as ctName,u.photo as photo,u.signature as signature,u.real_name as tname,
+      ( SELECT im_roomid FROM chat_room chat WHERE chat.user_id = c.teacher_id) AS imRoomid from course c
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        left join user u on u.user_id = c.teacher_id
+        where c.course_id = #{courseId}
+    </select>
+
+    <update id="updateVideo" parameterType="Course">
+        update course set video_id = #{videoId},obj_name = #{objName} where course_id = #{courseId}
+    </update>
+    
+    <select id="searchCtListByCId" resultMap="courseTopicMap">
+        select ct.* from course_topic ct
+        left join course_topic_examination cte on cte.course_topic_examination_id = ct.course_topic_examination_id
+        where cte.is_register_topic = 1 and cte.course_id = #{courseId}
+    </select>
+    
+    <update id="updateCourseContent" parameterType="Course">
+        update course set course_content = #{courseContent} where course_id = #{courseId}
+    </update>
+
+    <select id="searchCourseContentById" resultType="Course">
+        select c.course_title,c.course_content from course c where c.course_id = #{courseId}
+    </select>
+
+    <select id="searchCtCountByCId" resultType="Integer">
+        select count(*) from course_topic ct
+        left join course_topic_examination cte on cte.course_topic_examination_id = ct.course_topic_examination_id
+        where cte.is_register_topic = 1 and cte.course_id = #{courseId}
+    </select>
+
+    <select id="searchAttCount" resultType="Integer">
+        select count(*) from user_teacher_focus utf where utf.is_focus = 1 and utf.user_id = #{uId} and utf.teacher_id = #{tId}
+    </select>
+
+    <select id="searchCollCount" resultType="Integer">
+        select count(*) from course_collect cc where cc.user_id = #{uId} and cc.course_id = #{cId}
+    </select>
+
+    <select id="searchOrderCount" resultType="Integer">
+        select count(*) from course_order co where co.pay_status = 1 and co.user_id = #{uId} and co.course_id = #{cId}
+    </select>
+
+    <insert id="insertCc" parameterType="CourseCollect">
+        insert into course_collect(collect_id,course_id,user_id) values(#{collectId},#{courseId},#{userId})
+    </insert>
+
+    <delete id="deleteCc" parameterType="CourseCollect">
+        delete from course_collect where course_id = #{courseId} and user_id = #{userId}
+    </delete>
+
+    <select id="searchOrderCourse" resultMap="coMap">
+        select
+        t.user_name as tName,
+        t.photo as tPhoto,
+        c.course_id as courseId,
+        c.course_title as courseTitle,
+        c.course_cover as courseCover,
+        c.course_begin_time as courseBeginTime,
+        c.course_end_time as courseEndTime,
+        c.cost_price as costPrice,
+        c.vip_price as vipPrice,
+        c.course_img as courseImg
+        from course c
+        left join user t on t.user_id = c.teacher_id
+        where c.course_id = #{courseId}
+    </select>
+
+    <select id="searchOrderUser" resultMap="coMap">
+        select
+        u.user_id as userId,
+        u.user_name as userName,
+        u.real_name as realName,
+        u.phone as userPhone,
+        u.email as userEmail
+        from user u where u.user_id = #{userId}
+    </select>
+
+    <select id="serachMyFbcList" resultMap="resultMap">
+        select c.*,u.real_name as tname,ct.type_val as tyval from course c
+        left join user u on u.user_id = c.teacher_id
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        where c.teacher_id = #{userId} order by c.seqno
+    </select>
+
+    <select id="serachMyGmcList" resultMap="resultMap">
+        select c.*,u.real_name as tname,co.pay_status as orderFlag,
+        co.course_order_no as courseOrderNo,ct.type_val as tyval,cfr.record_status as viewFinishStatus
+        from course c
+        left join user u on u.user_id = c.teacher_id
+        left join course_order co on co.course_id = c.course_id
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        left join cource_finish_record cfr on cfr.course_id = c.course_id and cfr.user_id = co.user_id
+        where co.user_id = #{userId} order by co.order_create_time desc
+    </select>
+
+    <select id="searchMyCcList" resultMap="resultMap">
+        select c.*,u.real_name as tname,ct.type_val as tyval from course c
+        left join user u on u.user_id = c.teacher_id
+        left join course_collect cc on cc.course_id = c.course_id
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        where cc.user_id = #{userId} order by c.seqno
+    </select>
+
+    <delete id="deleteCoByNo" parameterType="String">
+        delete from course_order where course_order_no = #{courseOrderNo}
+    </delete>
+
+    <select id="searchUserType" resultType="Integer">
+        select u.user_type from user u where u.user_id = #{userId}
+    </select>
+
+    <select id="serachMyFbcCount" resultType="Integer">
+        select count(1) from course c
+        left join user u on u.user_id = c.teacher_id
+        where c.teacher_id = #{userId}
+    </select>
+
+    <select id="serachMyGmcCount" resultType="Integer">
+        select count(1) from course c
+        left join user u on u.user_id = c.teacher_id
+        left join course_order co on co.course_id = c.course_id
+        where co.user_id = #{userId}
+    </select>
+
+    <select id="searchMyCcCount" resultType="Integer">
+        select count(1) from course c
+        left join user u on u.user_id = c.teacher_id
+        left join course_collect cc on cc.course_id = c.course_id where cc.user_id = #{userId}
+    </select>
+
+    <select id="getCourseByOrderUserId" resultMap="resultMap">
+       SELECT b.`id`,b.`course_id`,b.`course_type_id`,b.`seqno`,b.`course_title`,b.`course_content`,b.`course_begin_time`,b.`course_end_time`,b.`teacher_id`,b.`cost_price`,b.`vip_price`,b.`course_intro`,
+               b.`course_integral`,b.`course_address`,b.`course_tag_id`,b.`course_cover`,b.`video_id`,b.`obj_name`,b.`zb_type`,b.`course_address_detail`,b.`course_img`,
+               a.`order_create_time` AS create_time,c.`type_name` AS tyname,c.`type_val` AS tyval,d.`user_name` AS tname FROM course_order a
+            LEFT JOIN course b ON a.`course_id` = b.`course_id`
+            LEFT JOIN course_type c ON b.`course_type_id` = c.`course_type_id`
+            LEFT JOIN user d ON d.`user_id` = b.`teacher_id` WHERE a.order_status = '1' AND a.pay_status = '1'
+       and a.user_id = #{userId} and b.`id` is not null ORDER BY a.`order_create_time` DESC
+    </select>
+
+    <select id="selectCategory" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT c.*,t.`type_val` FROM course c INNER JOIN course_type t ON c.`course_type_id` = t.`course_type_id` WHERE t.`type_val` = #{value}
+    </select>
+
+    <select id="searchDtCount" resultType="Integer">
+        select count(*) from course_topic_user_answer ctua
+        left join course_topic_examination cte on cte.course_topic_examination_id = ctua.course_topic_examination_id
+        where cte.course_id = #{courseId} and ctua.user_id = #{userId}
+    </select>
+
+    <select id="buyCourseNum" resultType="Integer">
+        SELECT COUNT(1) FROM course_order WHERE order_status = '1' AND pay_status = '1' AND user_id = #{userId}
+    </select>
+
+    <select id="buyCourseTeacherNum" resultType="Integer">
+      SELECT COUNT(1) FROM(
+         SELECT COUNT(a.`course_id`) FROM course_order a LEFT JOIN course b
+            ON a.`course_id` = b.`course_id` WHERE a.`order_status` = '1' AND a.`pay_status` = '1' AND a.`user_id` = #{userId}
+        GROUP BY b.`teacher_id`
+      ) c
+    </select>
+
+    <select id="selectCourseList" resultMap="resultMap">
+        select
+        c.*,
+        ct.type_name as tyname,
+        u.user_name as tname,
+        (select count(*) from course_topic ct
+        left join course_topic_examination cte on cte.course_topic_examination_id = ct.course_topic_examination_id
+        where cte.is_register_topic = 1 and cte.course_id = c.course_id) as ktCount
+        from
+        course c
+        left join course_type ct on ct.course_type_id = c.course_type_id
+        left join user u on u.user_id = c.teacher_id
+        where 1 = 1
+        <if test="courseTitle != null and courseTitle != ''">
+            and c.course_title like CONCAT('%', #{courseTitle},'%')
+        </if>
+        <if test="typeVal != null and typeVal != ''">
+            and ct.type_val = #{typeVal}
+        </if>
+        <if test="zbType != null and zbType != ''">
+            and c.zb_type = #{zbType}
+        </if>
+        order by c.seqno
+    </select>
+
+    <update id="updateWzkcFlag">
+        update course_order set version = 2 where course_id = #{courseId} and user_id = #{userId}
+    </update>
+
+    <select id="selectWakcFlag" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select co.version from course_order co where co.course_id = #{courseId} and co.user_id = #{userId} limit 1
+    </select>
+
+    <select id="selectCourseType" parameterType="String" resultType="String">
+        SELECT
+            ct.type_val
+        FROM
+            course_type ct
+        LEFT JOIN course c ON c.course_type_id = ct.course_type_id
+        WHERE
+            c.course_id = #{courseId}
+    </select>
+    
+    <select id="selectCoCountByCId" resultType="java.lang.Integer">
+        select count(*) from course_order co where co.course_id = #{courseId} and co.user_id = #{userId}
+    </select>
+
+</mapper>

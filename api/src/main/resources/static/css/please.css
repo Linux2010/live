@@ -1,0 +1,12 @@
+html{width:100%;height: 100%;}
+body{width:100%;height: 100%;}
+.title{width:100%;line-height: 0.5rem;position: fixed;top:0;text-align: center;background-color: white;}
+#wrapper{width:100%;height: 100%;overflow: hidden;box-sizing: border-box;}
+.iscroll{height: 100%;}
+.ul{height: 100%;display: inline-block;white-space: nowrap;padding:0.5rem 0rem;box-sizing: border-box;}
+.ul .li{height: 100%;display: inline-block;box-sizing: border-box;}
+.explain{position: fixed;width:100%;z-index: 100;background-color: white;}
+.explain .tit{line-height: 0.5rem;border-bottom: 0.01rem solid #ccc;margin:0 0.2rem;}
+.explain .tit .titL{}
+.explain .tit .titR{float: right;}
+.explain .con{width:100%;height: 3rem;overflow: scroll;margin:0 0.2rem;}

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.SpecValuesMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="SpecValues" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="goods_spec_values_id" property="goodsSpecValuesId" jdbcType="VARCHAR"/>
+        <result column="spec_id" property="specId" jdbcType="VARCHAR"/>
+        <result column="values_name" property="valuesName" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="searchSpecValuesById" resultType="SpecValues">
+        select * from s_spec_values where goods_spec_values_id =#{goodsSpecValuesId}
+    </select>
+
+    <insert id="insertSpecValues" parameterType="SpecValues">
+        insert into s_spec_values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsSpecValuesId != null and goodsSpecValuesId != ''">
+                goods_spec_values_id,
+            </if>
+            <if test="specId != null and specId != ''">
+                spec_id,
+            </if>
+            <if test="valuesName != null and valuesName !=''">
+                values_name,
+            </if>
+            <if test="type != null">
+                type ,
+            </if>
+            <if test="imageUrl !=null and imageUrl !=''">
+                image_url,
+            </if>
+            <if test="remark != null and remark !=''" >
+                remark,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="version != null" >
+                version,
+            </if>
+            <if test="seqno != null">
+                seqno
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsSpecValuesId != null and goodsSpecValuesId != ''">
+                #{goodsSpecValuesId,jdbcType=VARCHAR},
+            </if>
+            <if test="specId != null and specId != ''">
+                 #{specId,jdbcType=VARCHAR},
+            </if>
+            <if test="valuesName != null and valuesName !=''">
+                #{valuesName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="imageUrl !=null and imageUrl !=''">
+               #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark !=''" >
+                #{remark,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="version != null" >
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="seqno != null">
+                #{seqno,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteSpecValues" parameterType="java.lang.String">
+        delete from s_spec_values where goods_spec_values_id = #{goodsSpecValuesId}
+    </delete>
+
+    <update id="updateSpecValues" parameterType="SpecValues">
+        update s_spec_values
+        <set>
+            <if test="valuesName != null and valuesName !=''">
+                values_name = #{valuesName},
+            </if>
+            <if test="status != null and status !=''">
+                status = #{status},
+            </if>
+            <if test="imageUrl != null and imageUrl !=''">
+                image_url = #{imageUrl},
+            </if>
+            <if test="remark != null and remark !=''">
+                remark = #{remark},
+            </if>
+            <if test="seqno != null and seqno !=''">
+                seqno = #{seqno},
+            </if>
+        </set>
+        where 1=1
+        <if test="goodsSpecValuesId != null and goodsSpecValuesId !=''">
+            and goods_spec_values_id = #{goodsSpecValuesId}
+        </if>
+    </update>
+
+    <select id="searchSpecValuesList" resultMap="resultMap">
+        select * from s_spec_values where 1=1
+        <if test="valuesName != null and valuesName != ''">
+            and values_name like CONCAT('%', #{valuesName},'%')
+        </if>
+        <if test="specId != null and specId != ''">
+            and spec_id = #{specId}
+        </if>
+        order by seqno asc ,create_time desc
+    </select>
+
+</mapper>

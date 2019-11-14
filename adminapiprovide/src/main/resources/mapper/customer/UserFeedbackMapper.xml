@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.customer.mapper.UserFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="UserFeedback" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="feedback_id" property="feedbackId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="deal_status" property="dealStatus" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, feedback_id, user_id, content, user_name, phone, name, deal_status, create_time, 
+    status, version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from c_user_feedback
+    where feedback_id = #{feedbackId}
+  </select>
+
+  <select id="getPage" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from c_user_feedback
+    where 1=1
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from c_user_feedback
+    where feedback_id = #{feedbackId}
+  </delete>
+  <insert id="insert" parameterType="UserFeedback" >
+    insert into c_user_feedback (feedback_id, user_id,
+      content, user_name, phone, 
+      name, deal_status, create_time, 
+      status, version)
+    values (#{feedbackId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{dealStatus,jdbcType=SMALLINT}, #{createTime,jdbcType=BIGINT}, 
+      #{status,jdbcType=SMALLINT}, #{version,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertSelective" parameterType="UserFeedback" >
+    insert into c_user_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="feedbackId != null" >
+        feedback_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="dealStatus != null" >
+        deal_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackId != null" >
+        #{feedbackId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dealStatus != null" >
+        #{dealStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="UserFeedback" >
+    update c_user_feedback
+    <set >
+      <if test="feedbackId != null" >
+        feedback_id = #{feedbackId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dealStatus != null" >
+        deal_status = #{dealStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where feedback_id = #{feedbackId}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="UserFeedback" >
+    update c_user_feedback
+    set feedback_id = #{feedbackId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      deal_status = #{dealStatus,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT},
+      version = #{version,jdbcType=INTEGER}
+    where feedback_id = #{feedbackId}
+  </update>
+</mapper>

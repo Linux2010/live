@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.admincon.mapper.ProfitShareSettingMapper">
+  <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+  <resultMap id="BaseResultMap" type="ProfitShareSetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="set_id" property="setId" jdbcType="VARCHAR" />
+    <result column="primary_rule" property="primaryRule" jdbcType="DECIMAL" />
+    <result column="secondary_rule" property="secondaryRule" jdbcType="DECIMAL" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="is_open" property="isOpen" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+      id, set_id, primary_rule, secondary_rule, type, is_open, create_time, status, version
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from a_profit_share_setting
+    where set_id = #{setId}
+  </select>
+
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+    from a_profit_share_setting
+    where type = #{type}
+  </select>
+
+  <select id="getPage"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from a_profit_share_setting where 1=1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from a_profit_share_setting
+    where set_id = #{setId}
+  </delete>
+
+  <insert id="insert" parameterType="ProfitShareSetting" >
+    insert into a_profit_share_setting (set_id, primary_rule,
+      secondary_rule, type, is_open,
+      create_time, status, version
+      )
+    values (#{setId,jdbcType=VARCHAR}, #{primaryRule,jdbcType=DECIMAL},
+      #{secondaryRule,jdbcType=DECIMAL}, #{type,jdbcType=INTEGER}, #{isOpen,jdbcType=BIT}, 
+      #{createTime,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}, #{version,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="ProfitShareSetting">
+    insert into a_profit_share_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="setId != null" >
+        set_id,
+      </if>
+      <if test="primaryRule != null" >
+        primary_rule,
+      </if>
+      <if test="secondaryRule != null" >
+        secondary_rule,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="isOpen != null" >
+        is_open,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="setId != null" >
+        #{setId,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryRule != null" >
+        #{primaryRule,jdbcType=DECIMAL},
+      </if>
+      <if test="secondaryRule != null" >
+        #{secondaryRule,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null" >
+        #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="ProfitShareSetting" >
+    update a_profit_share_setting
+    <set >
+      <if test="setId != null" >
+        set_id = #{setId,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryRule != null" >
+        primary_rule = #{primaryRule,jdbcType=DECIMAL},
+      </if>
+      <if test="secondaryRule != null" >
+        secondary_rule = #{secondaryRule,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null" >
+        is_open = #{isOpen,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where set_id = #{setId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="ProfitShareSetting" >
+    update a_profit_share_setting
+    set set_id = #{setId,jdbcType=VARCHAR},
+      primary_rule = #{primaryRule,jdbcType=DECIMAL},
+      secondary_rule = #{secondaryRule,jdbcType=DECIMAL},
+      type = #{type,jdbcType=INTEGER},
+      is_open = #{isOpen,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT},
+      version = #{version,jdbcType=INTEGER}
+    where set_id = #{setId,jdbcType=INTEGER}
+  </update>
+</mapper>

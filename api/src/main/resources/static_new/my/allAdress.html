@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+    <link href="css/ace.min.css" type="text/css" rel="stylesheet"/>
+    <link href="css/myAdress.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/picker.min.js"></script>
+
+</head>
+<body>
+<div class="con1">
+    <span style="width: 20%;display: inline-block;"><</span><span style="width: 60%;display: inline-block;margin: 0 auto;text-align: center;">收货地址管理</span>
+</div>
+<div class="con3">
+    <div class="line1"><span class="span">郑三</span><span class="span">1546585284582</span></div>
+    <div class="line2"><span>河南 郑州 新郑 何庄 新新家园</span></div>
+    <div class="line3">
+        <div class="line3L"><input type="radio" name="adress"/><label>默认地址</label></div>
+        <div class="line3R">
+            <a href="my/myAdress.html"> <img class="img" src="image/bianji.png"><label style="margin-right: 0.5rem;">编辑</label></a>
+            <a ><img class="img" src="image/shanchu.png"><label onclick="del()">删除</label></a>
+        </div>
+    </div>
+</div>
+<div class="con3">
+    <div class="line1"><span class="span">郑三</span><span class="span">1546585284582</span></div>
+    <div class="line2"><span>河南 郑州 新郑 何庄 新新家园</span></div>
+    <div class="line3">
+        <div class="line3L"><input type="radio" name="adress"/><label>默认地址</label></div>
+        <div class="line3R">
+            <a href="my/myAdress.html"> <img class="img" src="image/bianji.png"><label style="margin-right: 0.5rem;">编辑</label></a>
+            <a ><img class="img" src="image/shanchu.png"><label onclick="del()">删除</label></a>
+        </div>
+    </div>
+</div>
+
+
+<a href="my/addadress.html"><div class="addAdress"> +新建收货地址</div></a>
+<div class="delAdress" style="display: none">
+    <div class="delBody">
+        <h1>提示</h1>
+        <p>您确定要删除此收货地址？</p>
+        <div><span onclick="d()">取消</span><span style="border:0;" onclick="d()"> 确定</span></div>
+    </div>
+</div>
+</body>
+<script>
+function del() {
+    $(".delAdress").show();
+}
+function d() {
+    $(".delAdress").hide();
+}
+</script>
+</html>

@@ -1,0 +1,6 @@
+#host=192.168.1.203
+host=r-j6c47faad140a124555.redis.rds.aliyuncs.com
+port=6379
+database=0
+#password=
+password=App54072336

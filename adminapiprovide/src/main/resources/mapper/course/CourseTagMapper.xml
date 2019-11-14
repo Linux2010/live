@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.course.mapper.CourseTagMapper">
+
+    <resultMap type="CourseTag" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="course_tag_id" property="courseTagId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insertCourseTag" parameterType="CourseTag">
+        insert into course_tag(course_tag_id,name,create_time,status,version)
+        values(#{courseTagId},#{name},#{createTime},#{status},#{version})
+    </insert>
+
+    <insert id="insertStudyLabel" parameterType="StudyLabel">
+        insert into study_label(label_id,labeltype,labelname,course_tag_id,create_time,status,version)
+        values(#{labelid},#{labeltype},#{labelname},#{courseTagId},#{createTime},#{status},#{version})
+    </insert>
+
+    <delete id="deleteCourseTag" parameterType="java.lang.String">
+        delete from course_tag where course_tag_id = #{courseTagId}
+    </delete>
+
+    <delete id="deleteStudyLabel" parameterType="java.lang.String">
+        delete from study_label where course_tag_id = #{courseTagId}
+    </delete>
+
+    <update id="updateCourseTag" parameterType="CourseTag">
+        update course_tag set name = #{name} where course_tag_id = #{courseTagId}
+    </update>
+
+    <update id="updateStudyLabel" parameterType="StudyLabel">
+        update study_label set labeltype = #{labeltype},labelname=#{labelname} where course_tag_id = #{courseTagId}
+    </update>
+
+    <select id="searchCtList" resultMap="resultMap">
+        select * from course_tag where 1=1
+        <if test="name != null and name != ''">
+            and name like CONCAT('%', #{name},'%')
+        </if>
+        order by id desc
+    </select>
+
+    <select id="searchCourseTagList" resultMap="resultMap">
+        select ct.course_tag_id,ct.name from course_tag ct where ct.status = 1
+    </select>
+
+</mapper>

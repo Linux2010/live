@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: admin
+  redis:
+    database: 9
+    #host: 192.168.1.203
+    host: r-j6c47faad140a124555.redis.rds.aliyuncs.com
+    prot: 6379
+    #password:
+    password: App54072336
+  freemarker:
+    cache: true #为了热加载
+    charset: utf-8
+    allow-request-override: false
+    allow-session-override: false
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    prefer-file-system-access: true
+  http:
+    multipart:
+      max-file-size: 2048mb
+      max-request-size: 2048mb
+
+# Define the port where the UAA server would be running
+server:
+  port: 8888
+  # Use different context-path to avoid session cookie overlapping
+  context-path: /admin
+#  use-forward-headers: true
+
+eureka:
+  client:
+    service-url:
+      #defaultZone: http://192.168.1.205:1111/eureka/,http://192.168.1.206:1111/eureka/,http://192.168.1.207:1111/eureka/
+      defaultZone: http://172.31.25.77:1111/eureka/,http://172.31.25.79:1111/eureka/,http://172.31.25.80:1111/eureka/
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+
+# Define security
+#security:
+#  basic:
+#    enabled: false
+#  user:
+#    password: password
+#  ignored: /css/**,/js/**,/favicon.ico,/webjars/**,/static/assets/**
+#  sessions: if_required
+
+feignclient:
+  url: #127.0.0.1:3333
+
+#logging:
+#  level.root: DEBUG
+#  file: ./logs/log.log
+#  level.org.apache.http: INFO
+#  level.com.netflix.discovery: INFO
+
+logging:
+  config: classpath:log4j2.yml
+
+
+ueditor:
+  url: /data/admin/
+
+
+

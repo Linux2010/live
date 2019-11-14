@@ -1,0 +1,21 @@
+html,body{width:100%;padding: 0;margin: 0;}
+html{position: relative;height: 100%;}
+body{background-color: #f9f9f9;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con3{padding:0.2rem;padding-bottom: 0;}
+.con3 .con3Con{}
+.con3 .con3Con .span1{text-align: center;display: inline-block;width:1.5rem;border-bottom-left-radius: 0.1rem;border:0.01rem solid #ffa42f;border-right:0;border-top-left-radius: 0.1rem;background-color: #ffa42f;vertical-align:middle;font-size:0.3rem;color:white;line-height:0.775rem}
+.con3 .con3Con .span2{text-align: center;display: inline-block;width:2rem;border-bottom-right-radius: 0.1rem;border-top-right-radius: 0.1rem;background-color: #ccc;vertical-align:middle;color:white;font-size:0.3rem;line-height:0.78rem;border:0.01rem;border-right: 0;}
+.con3 .con3Con .input1{text-align: center;display: inline-block;width:3.7rem;border-bottom-left-radius: 0;border-top-left-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+.con3 .con3Con .input2{text-align: center;display: inline-block;width:3.2rem;border-bottom-right-radius: 0;border-top-right-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+.con3 .con3Con .inputcodeimg{background-color: #ffa42f;}
+.con3 .con3Con input{width:5.2rem;height: 0.75rem;border-radius: 0.1rem;margin:0.2rem auto 0.2rem 0;text-align: center;font-size: 0.28rem;border:0.01rem solid #ccc;}
+.con3 .con3Con label{display:inline-block;width:1.6rem;height: 0.75rem;text-align: right;line-height: 0.75rem;margin:0.2rem 0.05rem 0.2rem 0;font-size: 0.3rem;}
+.con3 input[type=button]{width:100%;background-color: #ccc;border-color: transparent;margin:0.4rem auto;color: white;font-size: 0.32rem;}
+.con3 input[type=button].submit{background-color: #ffa42f}
+
+.con4{padding: 0.1rem 0.7rem;padding-bottom: 0.4rem;border-left: 0;border-right: 0;}
+.con4 .con4Con{font-size: 0.26rem;color: #ffa42f;text-align: center}

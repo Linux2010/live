@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/classify.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiper-3.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/swiper-3.3.1.min.js" type="text/javascript"></script>
+    <script src="js/iscroll.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="listL">
+    <div id="wrapper1" style="height: 100%;width: 100%;">
+        <div class="scroller">
+            <ul>
+                <li class="active">
+                    <div class="item"><span>前端</span></div>
+                </li>
+                <li>
+                    <div class="item"><span>Java</span></div>
+                </li>
+                <li>
+                    <div class="item"><span>IOS</span></div>
+                </li>
+                <li>
+                    <div class="item"><span>Andriod</span></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="listR">
+    <div id="wrapper2" style="height: 100%;width: 100%;">
+        <div class="scroller">
+            <!--home/teachers.html home/courseList.html-->
+            <ul>
+                <li><a href="home/teachers.html"><img class="img1" src="image/kechenging0.png"> </a></li>
+                <li><a href="home/courseList.html"><img class="img1" src="image/kechenging1.png"> </a> </li>
+                <li><a href="home/courseList.html"><img class="img1" src="image/kechenging2.png"> </a> </li>
+                <li><a href="home/courseList.html"><img class="img1" src="image/kechenging3.png"> </a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--<div class="yijiclassify">-->
+    <!--<div class="yijicell"><img class="img" src="image/logo.png"><p class="p">计算机基础</p> </div>-->
+    <!--<div class="yijicell"><img class="img" src="image/logo.png"><p class="p">计算机计算机基础计算机基础基础</p> </div>-->
+<!--</div>-->
+</body>
+<script>
+    $(function () {
+        var myscroll1 = new iScroll("wrapper1");
+        var myscroll2 = new iScroll("wrapper2");
+        var ulli1 = $(".listL #wrapper1 ul li");
+        ulli1.click(function () {
+            ulli1.removeClass("active");
+            $(this).addClass("active");
+        })
+    })
+
+</script>
+</html>

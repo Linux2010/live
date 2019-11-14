@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.course.mapper.CourseTopicMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CourseTopic" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="course_topic_id" property="courseTopicId" jdbcType="VARCHAR" />
+        <result column="course_topic_examination_id" property="courseTopicExaminationId" jdbcType="VARCHAR" />
+        <result column="topic_name" property="topicName" jdbcType="VARCHAR" />
+        <result column="topic_a_value" property="topicAvalue" jdbcType="VARCHAR" />
+        <result column="topic_b_value" property="topicBvalue" jdbcType="VARCHAR" />
+        <result column="topic_c_value" property="topicCvalue" jdbcType="VARCHAR" />
+        <result column="topic_d_value" property="topicDvalue" jdbcType="VARCHAR" />
+        <result column="topic_a_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="topic_b_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="topic_c_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="topic_d_label_id" property="topicAlabelId" jdbcType="VARCHAR"/>
+        <result column="right_answer" property="rightAnswer" jdbcType="VARCHAR"/>
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+        <result column="topic_no" property="topicNo" jdbcType="INTEGER"/>
+        <result column="userChooseAnswer" property="userChooseAnswer" jdbcType="VARCHAR"/>
+        <result column="answerRate" property="answerRate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertTopic" parameterType="java.util.Map" >
+        insert into course_topic(
+            course_topic_id,
+            course_topic_examination_id,
+            topic_name,
+            topic_a_value,
+            topic_b_value,
+            topic_c_value,
+            topic_d_value,
+            topic_a_label_id,
+            topic_b_label_id,
+            topic_c_label_id,
+            topic_d_label_id,
+            right_answer,
+            creater,
+            create_time,
+            update_time,
+            updater,
+            topic_no)
+        VALUES
+        (
+            #{map.course_topic_id},
+            #{map.course_topic_examination_id},
+            #{map.topic_name},
+            #{map.topic_a_value},
+            #{map.topic_b_value},
+            #{map.topic_c_value},
+            #{map.topic_d_value},
+            #{map.topic_a_label_id},
+            #{map.topic_b_label_id},
+            #{map.topic_c_label_id},
+            #{map.topic_d_label_id},
+            #{map.right_answer},
+            #{map.creater},
+            #{map.create_time},
+            #{map.update_time},
+            #{map.updater},
+            #{map.topic_no})
+    </insert>
+    <update id="updateTopic" parameterType="java.util.Map">
+        update course_topic set
+            course_topic_examination_id = #{map.course_topic_examination_id},
+            topic_name =#{map.topic_name},
+            topic_a_value = #{map.topic_a_value},
+            topic_b_value = #{map.topic_b_value},
+            topic_c_value = #{map.topic_c_value},
+            topic_d_value = #{map.topic_d_value},
+            topic_a_label_id = #{map.topic_a_label_id},
+            topic_b_label_id = #{map.topic_b_label_id},
+            topic_c_label_id = #{map.topic_c_label_id},
+            topic_d_label_id = #{map.topic_d_label_id},
+            right_answer =#{map.right_answer},
+            update_time =  #{map.update_time},
+            updater = #{map.updater},
+            topic_no = #{map.topic_no}
+            where    id=#{map.id}
+            and course_topic_id = #{map.course_topic_id}
+    </update>
+
+    <delete id="deleteCourseTopics" parameterType="java.lang.String">
+        delete from course_topic
+        where course_topic_examination_id = #{course_topic_examination_id,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectTopicsByCourseTopicExaminationId" parameterType="java.lang.String" resultType="java.util.Map">
+        select * from course_topic where  course_topic_examination_id =#{courseTopicExaminationId};
+    </select>
+
+    <select id="getExam" parameterType="java.lang.String" resultMap="resultMap">
+        select * from course_topic where  course_topic_examination_id =#{courseTopicExaminationId};
+    </select>
+
+    <select id="searchCourseTopicsByCourseId" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT*
+        FROM
+          course_topic
+        WHERE course_topic_examination_id =
+          (SELECT
+            course_topic_examination_id
+          FROM
+            course_topic_examination
+          WHERE course_id =#{courseId}
+          and status =1
+          and is_register_topic =1
+          ORDER BY create_time DESC
+          LIMIT 1)
+    </select>
+
+    <!-- 用户答题列表与选择答案 -->
+    <select id="selectUserCourseTopicsAndChooseAnswers" parameterType="CourseTopic" resultMap="resultMap">
+     SELECT
+          topic.*,
+          (SELECT
+            answer
+          FROM
+            course_topic_user_answer
+          WHERE
+            user_id = #{answerUserId}
+            AND course_topic_id = topic.`course_topic_id`
+            AND course_topic_examination_id = topic.`course_topic_examination_id`
+          LIMIT 1) AS userChooseAnswer,
+           CONCAT(  ROUND(IFNULL(((SELECT COUNT(course_topic_id) FROM course_topic_user_answer WHERE course_topic_id= topic.`course_topic_id`  AND FIND_IN_SET(userChooseAnswer, answer) >0)/
+           (SELECT COUNT(course_topic_id) FROM course_topic_user_answer WHERE course_topic_id= topic.`course_topic_id`) *100 ) ,0),2),'%')AS answerRate
+        FROM
+          course_topic topic
+        WHERE topic.`course_topic_examination_id` =#{courseTopicExaminationId}
+    </select>
+
+    <select id="selectRegisterAnswerById" resultMap="resultMap" parameterType="java.lang.String">
+        SELECT * FROM course_topic WHERE course_topic_id = #{courseTopicId} and course_topic_examination_id = #{courseTopicExaminationId}
+    </select>
+
+    <select id="selectTopicLable" parameterType="CourseTopic" resultType="CourseTopic">
+      select t.topic_a_label_id,t.topic_b_label_id,t.topic_c_label_id,t.topic_d_label_id from course_topic t where t.course_topic_examination_id = #{courseTopicExaminationId} and t.course_topic_id = #{courseTopicId}
+    </select>
+</mapper>

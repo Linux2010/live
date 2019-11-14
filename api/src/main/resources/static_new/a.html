@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiper-3.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/iscroll5.js"></script>
+    <title>Title</title>
+    <style>
+        #wrapper{
+            position:fixed;
+            /* top:4.5rem;*/
+            top:2.25rem;
+            left:0;
+            width:100%;
+            line-height: 2rem;
+            height: 2rem;
+            overflow:hidden;
+            z-index: 9;
+            background: white;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .category_nav{
+            white-space:nowrap;
+        }
+        .category_nav li{
+            display: inline-block;
+        }
+        .category_nav li a{
+            display: inline-block;
+            padding: 0 .5rem;
+        }
+        .title_active a{color:red;}
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="scroller">
+        <ul class="category_nav" >
+        <li class="title_active">
+            <a>综合</a>
+        </li>
+        <li>
+            <a>新闻资讯</a>
+        </li>
+        <li>
+            <a>讲师</a>
+        </li>
+        <li>
+            <a>课程</a>
+        </li>
+        <li>
+            <a>视频</a>
+        </li>
+        <li>
+            <a>试卷</a>
+        </li>
+        <li>
+            <a>讲师</a>
+        </li>
+        <li>
+            <a>课程</a>
+        </li>
+        <li>
+            <a>视频</a>
+        </li>
+        <li>
+            <a>试卷</a>
+        </li>
+        <li>
+            <a>讲师</a>
+        </li>
+        <li>
+            <a>课程1111</a>
+        </li>
+        <li >
+            <a>视频</a>
+        </li>
+        <li id="a">
+            <a>试卷</a>
+        </li>
+        <li >
+        <a>讲师1</a>
+    </li>
+        <li >
+            <a>课程2</a>
+        </li>
+        <li>
+            <a>视频3</a>
+        </li>
+        <li>
+            <a>试卷4</a>
+        </li>
+
+    </ul>
+    </div>
+</div>
+<div id="aaa">aaa</div>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+        $(function () {
+            var all_width = $(".category_nav")["0"].scrollWidth;
+            $('#scroller').css({
+                'width':all_width + 'px'
+            })
+            var currentPage=0;
+            var myscroll=new IScroll("#wrapper",{
+                scrollX: true,
+                scrollY: false,
+                hScrollbar:false,
+                vScrollbar : false,
+                vScroll:false,
+//                click : true,
+//                snap : 'li',
+                onScrollEnd:function (e) {
+                    console.log(currentPage)
+                    console.log(myscroll)
+//                if (currentPage !== myscroll.currentPage.pageY) {
+//                    currentPage = myscroll.currentPage.pageY;
+//                    var page = myscroll.currentPage.pageY;
+//                    var nowPage = $('.scroll-li').eq(page);//滚动到当前的页面。。好了 此页你可以随意蹂躏了
+//                }
+                },
+                onrefresh:function () {
+                    
+                }
+            })
+            $("#aaa").on("click",function () {
+                myscroll.scrollToElement(document.querySelector('#scroller li:nth-child(3)'),500,true,true);
+                console.log(myscroll)
+                myscroll.refresh();
+            })
+        })
+
+</script>
+</html>

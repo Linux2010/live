@@ -1,0 +1,27 @@
+body{position: relative;}
+.video{width:100%;height: 4rem;position: fixed;z-index: 50;top:0;}
+.tab{position: fixed;z-index: 50;top:4rem;width:100%;background-color: white;}
+.tabNav{display: flex;align-content: space-around;}
+.tabNav .navCon{width:50%;font-size: 0.3rem;line-height:0.8rem;text-align: center;}
+.tabNav .navCon.active{color:cornflowerblue;border-bottom: 0.1rem solid cornflowerblue;}
+.tabBody{padding:0.2rem;display: none;width:100%;box-sizing: border-box;margin-top:5rem;}
+.tabBody.activity{display: block;}
+.tabBody .wordCon{line-height: 0.5rem;color:red;font-size: 0.26rem;padding:0.1rem 0;}
+.tabBody .wordTimeLine{}
+.tabBody .wordTimeLine .t{}
+.tabBody .wordTimeLine .n{padding:0 0.2rem;}
+.tabBody .wordLine{}
+.tabBody .wordLine .word{text-indent: 2em;display: block}
+
+
+.sendCon{position: fixed;bottom: 0;z-index: 50;padding:0.2rem;width:100%;box-sizing: border-box;background-color: white;}
+.sendCon .sendWord{width:4rem;padding:0.2rem;border:0.01rem solid #ccc;border-radius: 0.1rem;line-height: 0.4rem;}
+.sendCon .send1{padding:0.2rem;vertical-align: middle;margin:0 0.2rem;}
+.sendCon .sendBtn{float: right;padding:0.1rem 0.2rem;line-height: 0.3rem;vertical-align: middle;margin:0.16rem 0;background-color: #ffa42f;color:red;}
+
+.tabBody .anchorLine{height: 1.2rem;padding:0.1rem;box-sizing: border-box}
+.tabBody .anchorLine .anchorImg{width:1rem;height: 1rem;display: inline-block;vertical-align: middle;padding-right: 0.1rem;}
+.tabBody .anchorLine .anchorDetail{height: 1rem;display: inline-block;line-height: 0.5rem;vertical-align: middle;max-width: 5.6rem;}
+.tabBody .notice{width:100%;padding:0.2rem 0;}
+.tabBody .noticeTit{width:100%;border-bottom: 0.01rem solid #ccc;line-height: 0.5rem;text-indent: 1em;font-size: 0.3rem;}
+.tabBody .noticeCon{width:100%;line-height: 0.3rem;text-indent: 2em;font-size: 0.26rem;padding:0.1rem 0;}

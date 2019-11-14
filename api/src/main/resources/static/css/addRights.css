@@ -1,0 +1,16 @@
+html,body{width:100%;}
+body{background-color: #f5f5f5;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{width:100%;padding:0.2rem;box-sizing: border-box;}
+.con2 .con2Title{line-height: 0.7rem;font-size: 0.3rem;color:#333;}
+.con2 textarea{width:100%;box-sizing: border-box;color:#666;font-size: 0.28rem;}
+.con2 .con2Imgs{display: flex;justify-content: space-around;}
+.con2 .con2Imgs img{width:1.8rem;max-height: 1.8rem;}
+.con2 .con2Imgs p{text-align: center}
+.con2 .con2Good{display: flex;justify-content: space-around;line-height: 1rem;padding:0 0.2rem;box-sizing:border-box;background-color: white;}
+.con2 .con2Good input{margin:0 0.1rem;}
+
+.button{width:90%;margin:3rem 5% 0;background-color: #ffa42f;color:white;font-size: 0.32rem;border-radius: 0.2rem;line-height: 0.7rem;text-align: center}

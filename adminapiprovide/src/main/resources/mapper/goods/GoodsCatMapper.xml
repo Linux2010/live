@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.GoodsCatMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="cn.com.myproject.goods.entity.PO.GoodsCat" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="cat_id" property="catId" jdbcType="VARCHAR"/>
+        <result column="cat_name" property="catName" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR"/>
+        <result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap type="cn.com.myproject.goods.entity.VO.GoodsCatVO" id="goodsCatMap">
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_type" property="goodsType" jdbcType="INTEGER"/>
+        <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR"/>
+        <result column="cost_price" property="costPrice" jdbcType="DECIMAL"/>
+        <result column="mkt_price" property="mktPrice" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="unit" property="unit" jdbcType="DECIMAL"/>
+        <result column="cat_id" property="catId" jdbcType="VARCHAR"/>
+        <result column="cat_name" property="catName" jdbcType="VARCHAR"/>
+        <result column="goodsNum" property="goodsNum" jdbcType="INTEGER"/>
+        <result column="mastImg" property="mastImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="searchGoodsCatById" resultType="cn.com.myproject.goods.entity.PO.GoodsCat">
+        select * from s_goods_cat where cat_id =#{catId}
+    </select>
+
+    <insert id="insertGoodsCat" parameterType="cn.com.myproject.goods.entity.PO.GoodsCat">
+        insert into
+        s_goods_cat(cat_id,
+                    cat_name,
+                    parent_id,
+                    image_url,
+                    level,
+                    status,
+                    create_time,
+                    version,
+                    seqno)
+            values(#{catId},
+                    #{catName},
+                    #{parentId},
+                    #{imageUrl},
+                    #{level},
+                    #{status},
+                    #{createTime},
+                    #{version},
+                    #{seqno} )
+    </insert>
+
+    <delete id="deleteGoodsCat" parameterType="java.lang.String">
+        delete from s_goods_cat where cat_id = #{catId}
+    </delete>
+
+    <update id="updateGoodsCat" parameterType="cn.com.myproject.goods.entity.PO.GoodsCat">
+        update s_goods_cat
+        <set>
+            <if test="catName != null and catName !=''">
+                cat_name = #{catName},
+            </if>
+            <if test="status != null and status !=''">
+                status = #{status},
+            </if>
+            <if test="imageUrl != null and imageUrl !=''">
+                image_url = #{imageUrl},
+            </if>
+            <if test="seqno != null and seqno !=''">
+                seqno = #{seqno},
+            </if>
+        </set>
+        where 1=1
+        <if test="catId != null and catId !=''">
+            and cat_id = #{catId}
+        </if>
+    </update>
+
+    <select id="searchGoodsCatList" resultMap="resultMap">
+        select * from s_goods_cat where 1=1
+        <if test="catName != null and catName != ''">
+            and cat_name like CONCAT('%', #{catName},'%')
+        </if>
+        <if test="parentId != null and parentId != ''">
+            and parent_id = #{parentId}
+        </if>
+        order by id desc
+    </select>
+
+    <select id="searchGoodsCatListByLevel" resultMap="resultMap">
+        select * from s_goods_cat where 1=1
+        <if test="parentId != null and parentId != ''">
+            and parent_id = #{parentId}
+        </if>
+        <if test="level != null and level != ''">
+            and level = #{level}
+        </if>
+        order by id desc
+    </select>
+
+    <select id="searchGoodsCatByParentId" parameterType="String" resultMap="resultMap">
+        select id,cat_id,cat_name,parent_id,image_url,`level`,version,create_time,`status`,seqno from s_goods_cat c where c.parent_id = #{parentId}
+    </select>
+
+    <select id="selectGoodsByCatId" resultMap="goodsCatMap">
+                SELECT
+                a.*, IFNULL(a.goodsN, 0) AS goodsNum
+                FROM
+                (
+                SELECT
+                g.goods_id,
+                i.url as mastImg,
+                g.goods_name,
+                g.goods_type,
+                (SELECT MIN(spec.cost_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=g.`goods_id`) cost_price,
+                (SELECT MIN(spec.user_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=g.`goods_id`) mkt_price,
+                (SELECT MIN(spec.vip_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=g.`goods_id`) price,
+                g.goods_number,
+                g.unit,
+                sc.cat_id,
+                sc.cat_name,
+                (
+                SELECT
+                od.goods_num
+                FROM
+                s_goods s
+                INNER JOIN s_order_detail od ON s.goods_id = od.goods_id
+                WHERE
+                s.goods_id = g.goods_id
+                GROUP BY
+                s.goods_id
+                ) AS goodsN
+                FROM
+                s_goods g
+                INNER JOIN s_goods_cat sc ON g.cat_id = sc.cat_id
+                INNER JOIN s_goods_img i ON g.goods_id = i.goods_id
+                WHERE
+                sc.cat_id = #{catId}
+                and   i.`first` = 1
+                <if test="sequenc == 1">
+                    order by goodsN desc
+                </if>
+                <if test="sequenc == 2">
+                    order by g.mkt_price desc
+                </if>
+                <if test="sequenc == 3">
+                    order by g.mkt_price asc
+                </if>
+                ) a
+    </select>
+</mapper>

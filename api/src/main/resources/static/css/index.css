@@ -1,0 +1,65 @@
+
+html,body{width:100%;padding: 0;margin: 0;}
+html{position: relative;height: 100%;}
+body{position: relative;}
+.top{position:fixed;top:0;left: 0;z-index: 50;width: 100%;background-color: #22272a;padding:0.1rem;}
+.top .logoTop{width:0.6rem;height: 0.6rem;margin:0 0.1rem;vertical-align: middle;border-radius: 50%;}
+.top .searchTop{display: inline-block;width: 6rem;background-color:#d3d4d4;border-radius: 0.25rem;padding: 0 0.1rem;line-height: 0.6rem;vertical-align: middle;}
+.top .searchTop .searchTopImg{width: 0.3rem;margin-right: 0.16rem;vertical-align: middle;margin-top: -0.05rem;}
+.top .searchTop .searchTopLable{font-size: 0.26rem;color: #666;}
+
+.buyVip{position:fixed;top:1.5rem;right:0;z-index:100;width:1.82rem;height: 1.4rem;padding:0.08rem 0.2rem;box-sizing: border-box;background-color: #ffa42f;border-radius: 0.3rem;}
+.buyVip span{width:100%;font-size: 0.24rem;color: white;display: inline-block;}
+.buyVip div{width:1rem;font-size: 0.2rem;color: white;line-height: 0.4rem;border-radius:0.1rem;text-align:center;margin:auto;margin-top: 0.15rem;background-color: #f62c2c;}
+
+.qiandao{position:fixed;top:4rem;right:0;z-index:100;width:1.3rem;height: 1.3rem;border-radius: 50%;background-color: white}
+
+.con1{background-color: #f5f5f5;padding:0.2rem;}
+.con1 .studyPar{display: flex;justify-content:space-between;}
+.con1 .study{display: inline-block;width:3.44rem;border-radius: 0.25rem;height: 1.4rem;background-color: white}
+.con1 .study img{width:1rem;height: 1rem;margin: 0.2rem 0.15rem 0.2rem 0.1rem;vertical-align: middle}
+.con1 .study span{font-size: 0.32rem;vertical-align: middle;padding-left: 0.2rem;}
+
+.con2{padding: 0.1rem 0.2rem;background-color: white;box-sizing: border-box;margin-bottom: 0.2rem;}
+.con2 .con2Tit{border-left: 0.1rem solid #ffa42f;font-size: 0.28rem;padding-left: 0.1rem;}
+.con2 .con2Con{padding: 0.1rem 0;}
+.con2 .con2Con .cell{width:100%;height: 2.5rem;border-bottom: 0.01rem solid #ccc;padding:0.2rem 0;box-sizing: border-box;}
+.con2 .con2Con .cell img{width:2.86rem;height:2.1rem;display: inline-block;vertical-align: bottom;}
+.con2 .con2Con .cell .cellR{width:4rem;display: inline-block;}
+.con2 .con2Con .cell .title{width:4rem;overflow: hidden;line-height: 0.5rem;white-space: nowrap;}
+.con2 .con2Con .cell .title .s1{display:inline-block;height: 0.4rem;  line-height: 0.4rem;margin-right: 0.05rem;  width: 1.1rem;background-color: #ffa42f;color:white;border-radius: 0.1rem;text-align: center;font-size: 0.24rem;}
+.con2 .con2Con .cell .title .s2{ display: inline-block;font-size: 0.32rem;width: 3rem;color: #333;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: middle;}
+.con2 .con2Con .cell .p{width:4rem;height: 1.3rem;overflow: hidden;font-size: 0.24rem;}
+.con2 .con2Con .cell .more{width:1rem;display: inline-block;float: right;font-size: 0.24rem;text-align: right;}
+
+
+.con3{padding: 0.1rem 0.2rem;background-color: white;margin-bottom: 0.2rem;}
+.con3 .con3Tit{border-left: 0.1rem solid #ffa42f;font-size: 0.28rem;padding-left: 0.1rem;}
+.con3 .con3Con{padding: 0.1rem 0;display: flex;justify-content: space-between;}
+.con3 .con3Con .flexCell{width: 3.45rem;}
+.con3 .con3Con .flexCell img{width: 100%;max-height: 2rem;margin-bottom: -0.55rem;}
+.con3 .con3Con .flexCell div{}
+.con3 .con3Con .flexCell .mask{line-height: 0.5rem;background-color: rgba(0,0,0,0.5);color: white; position: relative;z-index: 10}
+
+.con4{padding: 0.1rem 0.2rem;background-color: white;margin-bottom: 0.2rem;}
+.con4 .con4Tit{border-left: 0.1rem solid #ffa42f;font-size: 0.28rem;padding-left: 0.1rem;}
+.con4 .con4Con{padding: 0.1rem 0;}
+.con4 .con4Con .flexCell{width: 100%;}
+.con4 .con4Con .flexCell .img1{width: 100%;height: 3rem;}
+.con4 .con4Con .flexCell .title{width:100%;padding-bottom: 0.2rem;}
+.con4 .con4Con .flexCell .title .s1{display:inline-block;width:70%;}
+.con4 .con4Con .flexCell .title .s2{display:inline-block;width:28%;text-align: right;}
+.con4 .con4Con .flexCell .title .s2 .eye{width:0.3rem;}
+
+.bottom{width:100%;height: 1rem;border-top: 0.02rem solid #d2d1d1;position: fixed;bottom: 0;display: flex;z-index:99;justify-content: space-around;background-color: white;}
+.bottom .b{width: 1.85rem;text-align: center}
+.bottom .b img{width: 0.58rem;height: 0.58rem;margin-top:0.05rem;}
+.bottom .b span{display: block;font-size: 0.28rem;line-height: 0.2rem;}
+
+.mask1{width:100%;height: 100%;position: fixed;top: 0;background-color: rgba(0,0,0,0.5);z-index: 1000;}
+.mask1 .vip{width: 6.7rem;height: 6.7rem;background-color: white;margin: 3rem auto;border-radius: 0.15rem;}
+.mask1 .vip .vipTit{text-align: center;font-size: 0.34rem;color: #333;padding: 0.5rem 0 0.6rem;}
+.mask1 .vip .vipCon{width: 100%;border-top: 0.01rem solid #ccc;line-height: 1rem;font-size: 0.3rem;color: #333;padding: 0 0.36rem;box-sizing: border-box;}
+.mask1 .vip .vipCon label{}
+.mask1 .vip .button{padding: 0.32rem 0 0.4rem;width: 100%;border-top: 0.01rem solid #ccc;}
+.mask1 .vip .button span{display: block;width: 1.6rem;height: 0.5rem;line-height:0.5rem;border-radius: 0.15rem;color: white;background-color: #ffa42f;font-size: 0.3rem;text-align: center;margin: 0 auto;}

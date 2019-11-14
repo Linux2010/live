@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.recset.mapper.RecSettingsMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="cn.com.myproject.recset.entity.PO.RecSettings" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="rec_set_id" property="recSetId" jdbcType="VARCHAR"/>
+        <result column="rec_set_objid" property="recSetObjId" jdbcType="VARCHAR"/>
+        <result column="rec_sort" property="recSort" jdbcType="INTEGER"/>
+        <result column="rec_lab_type" property="recLabType" jdbcType="INTEGER"/>
+        <result column="rec_lab_id" property="recLabId" jdbcType="VARCHAR"/>
+        <association property="user" javaType="User" column="rec_set_objid">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <resultMap type="cn.com.myproject.recset.entity.PO.RecSettings" id="courseResult">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="rec_set_id" property="recSetId" jdbcType="VARCHAR"/>
+        <result column="rec_set_objid" property="recSetObjId" jdbcType="VARCHAR"/>
+        <result column="rec_sort" property="recSort" jdbcType="INTEGER"/>
+        <result column="rec_lab_type" property="recLabType" jdbcType="INTEGER"/>
+        <result column="rec_lab_id" property="recLabId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <association property="course" javaType="Course" column="rec_set_objid">
+            <id column="ID" property="id" jdbcType="INTEGER"/>
+            <result column="course_id" property="courseId" jdbcType="VARCHAR"/>
+            <result column="course_title" property="courseTitle" jdbcType="VARCHAR"/>
+            <result column="course_type_id" property="courseTypeId" jdbcType="VARCHAR"/>
+            <result column="course_tag_id" property="courseTagId" jdbcType="VARCHAR"/>
+        </association>
+        <association property="courseType" javaType="CourseType" column="course_type_id">
+            <id column="ID" property="id" jdbcType="INTEGER"/>
+            <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+        </association>
+        <association property="courseTag" javaType="CourseTag" column="course_type_id">
+            <id column="ID" property="id" jdbcType="INTEGER"/>
+            <result column="course_tag_id" property="courseTagId" jdbcType="VARCHAR"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <resultMap type="cn.com.myproject.live.entity.PO.Course" id="apiResult">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="course_id" property="courseId" jdbcType="VARCHAR"/>
+        <result column="course_title" property="courseTitle" jdbcType="VARCHAR"/>
+        <result column="course_type_id" property="courseTypeId" jdbcType="VARCHAR"/>
+        <result column="course_tag_id" property="courseTagId" jdbcType="VARCHAR"/>
+        <result column="teacher_id" property="teacherId" jdbcType="VARCHAR"/>
+        <result column="course_cover" property="courseCover" jdbcType="VARCHAR"/>
+        <result column="course_begin_time" property="courseBeginTime" jdbcType="BIGINT"/>
+        <result column="cost_price" property="costPrice" jdbcType="DOUBLE"/>
+        <result column="orderNumber" property="orderNumber" jdbcType="INTEGER"/>
+        <result column="tname" property="tname" jdbcType="VARCHAR"/>
+        <result column="tyval" property="tyval" jdbcType="VARCHAR"/>
+        <result column="orderNumber" property="orderNumber" jdbcType="INTEGER"/>
+        <result column="course_img" property="courseImg" jdbcType="VARCHAR"/>
+        <result column="course_intro" property="courseIntro" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap type="cn.com.myproject.user.entity.PO.User" id="apiTeacher">
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+        <result column="rectangle_photo" property="rectanglePhoto" jdbcType="VARCHAR"/>
+        <result column="signature" property="signature" jdbcType="VARCHAR"/>
+        <result column="wzkcNum" property="wzkcNum" jdbcType="INTEGER"/>
+        <result column="ypkcNum" property="ypkcNum" jdbcType="INTEGER"/>
+        <result column="spkcNum" property="spkcNum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getTeaPage" resultMap="resultMap">
+       select
+        t1.id,t1.rec_set_id,t1.rec_set_objid,t1.create_time,t1.rec_sort,t1.rec_lab_type,t2.user_name from
+        rec_settings t1 inner join `user` t2 on t1.rec_set_objid = t2.user_id inner join rec_lable t3 on t1.rec_lab_id = t3.rec_lab_id
+        where t1.rec_lab_type = 1 and t3.rec_lab_mark = 'todayrec'
+        order by t1.rec_sort desc
+    </select>
+
+    <select id="getCourPage" resultMap="courseResult">
+        select
+        t1.id,t1.rec_set_id,t1.rec_set_objid,t1.create_time,t1.rec_sort,t1.rec_lab_type,t2.course_title from
+        rec_settings t1 inner join course t2 on t1.rec_set_objid = t2.course_id inner join rec_lable t3 on t1.rec_lab_id = t3.rec_lab_id
+        where t1.rec_lab_type = 2 and t3.rec_lab_mark = 'todayrec'
+        order by t1.rec_sort desc
+    </select>
+
+    <select id="selectByRecSetId" resultMap="resultMap" parameterType="java.lang.String">
+        select id, rec_set_id, rec_set_objid, create_time, rec_sort, rec_lab_type, version, status from rec_settings where rec_set_id = #{recSetId}
+    </select>
+
+    <delete id="delcour" parameterType="String">
+       delete from rec_settings where rec_set_id = #{recSetId}
+    </delete>
+
+    <select id="selectAllTea" resultMap="resultMap">
+     select t1.user_id,t1.user_name,t1.user_type
+     from `user` t1 where t1.user_type = 1 and t1.user_id not in
+     (select s.rec_set_objid from rec_settings s inner join rec_lable l on s.rec_lab_id = l.rec_lab_id
+     where s.rec_lab_type = 1 and l.rec_lab_mark = 'todayrec')
+    </select>
+
+    <select id="selectAllCourse" resultMap="courseResult">
+        select t1.id,t1.course_id,t1.course_title,t1.course_type_id,t2.type_name
+        from course t1 inner join course_type t2 on t1.course_type_id = t2.course_type_id
+        where t1.course_id not in (select s.rec_set_objid from rec_settings s inner join rec_lable l on s.rec_lab_id = l.rec_lab_id
+        where s.rec_lab_type = 2 and l.rec_lab_mark = 'todayrec')
+    </select>
+
+    <insert id="insert" parameterType="cn.com.myproject.recset.entity.PO.RecSettings">
+        insert into rec_settings(rec_set_id,rec_set_objid,create_time,rec_sort,rec_lab_type,rec_lab_id,version,status) values(#{recSetId},#{recSetObjId},#{createTime},#{recSort},#{recLabType},#{recLabId},#{version},#{status})
+    </insert>
+
+    <update id="updateSort" parameterType="cn.com.myproject.recset.entity.PO.RecSettings">
+        update rec_settings set rec_sort = #{recSort} where rec_set_id = #{recSetId} and rec_lab_type = #{recLabType}
+    </update>
+
+    <select id="goodCourList" resultMap="courseResult">
+              select t1.id,t1.course_id,t1.course_title,t1.course_type_id,t2.type_name
+        from course t1 inner join course_type t2 on t1.course_type_id = t2.course_type_id
+        where t1.course_id not in (select s.rec_set_objid from rec_settings s inner join rec_lable l on s.rec_lab_id = l.rec_lab_id
+        where s.rec_lab_type = 5 and l.rec_lab_mark = 'ExcellentCourseRec')  and t2.type_val != 'jhdk'
+    </select>
+
+    <select id="selectGoodCour" resultMap="courseResult">
+               select
+        t1.id,t1.rec_set_id,t1.rec_set_objid,t1.create_time,t1.rec_sort,t1.rec_lab_type,t2.course_title from
+        rec_settings t1 inner join course t2 on t1.rec_set_objid = t2.course_id inner join rec_lable t3 on t1.rec_lab_id = t3.rec_lab_id
+        where t1.rec_lab_type = 5 and t3.rec_lab_mark = 'ExcellentCourseRec'
+        order by t1.rec_sort desc
+    </select>
+
+    <select id="hasRecByTag" resultMap="courseResult" parameterType="String">
+        select
+        t4.rec_lab_type,t1.course_id,t1.course_type_id,t1.course_title,t2.name,t3.type_name,t4.rec_sort,t4.rec_set_id
+        from rec_settings t4 inner join course t1 on t4.rec_set_objid = t1.course_id
+        inner join course_tag t2 on t1.course_tag_id = t2.course_tag_id
+        inner join course_type t3 on t1.course_type_id = t3.course_type_id
+        inner join rec_lable t5 on t4.rec_lab_id = t5.rec_lab_id
+        where 1=1 and t4.rec_lab_id = 'TodayCourse'
+        <if test="keyword != null and keyword != ''">
+            and t2.name = #{keyword}
+        </if>
+        order by t4.rec_sort desc
+    </select>
+
+    <select id="notRecByTag" resultMap="courseResult" parameterType="String">
+        select t1.course_id,t1.course_type_id,t1.course_title,t2.name,t3.type_name
+        from course t1 inner join course_tag t2 on t1.course_tag_id = t2.course_tag_id
+        inner join course_type t3 on t1.course_type_id = t3.course_type_id
+        where 1=1
+        <if test="keyword != null and keyword != ''">
+            and t2.name = #{keyword}
+        </if>
+        and t1.course_id not in (select t4.rec_set_objid from rec_settings t4 where t4.rec_lab_id ='TodayCourse')
+    </select>
+
+    <select id="select_tui_tcour" resultMap="apiResult">
+          select
+         (select count(course_order_id) from course_order t7 where  t1.course_id = t7.course_id and t6.user_id = t1.teacher_id and t7.pay_status = 1) orderNumber,
+         t1.course_id,t1.course_type_id,t1.course_title,
+         t1.cost_price,t1.course_cover,t1.course_begin_time,t6.real_name tname,t4.rec_sort,t4.rec_set_id,t8.type_val tyval,t1.course_img,t1.course_intro
+        from rec_settings t4 inner join course t1 on t4.rec_set_objid = t1.course_id inner join `user` t6 on t1.teacher_id = t6.user_id
+				inner join course_type t8 on t1.course_type_id = t8.course_type_id
+        where 1=1 and t4.rec_lab_id = 'todayrec' and t4.rec_lab_type = 2 order by t4.rec_sort desc
+    </select>
+    <select id="select_today_gcour" resultMap="apiResult">
+        select
+        (select count(course_order_id) from course_order t7 where  t1.course_id = t7.course_id and t6.user_id = t1.teacher_id and t7.pay_status = 1) orderNumber,
+        t1.course_id,t1.course_type_id,t1.course_title,
+        t1.cost_price,t1.course_cover,t1.course_begin_time,t6.real_name tname,t4.rec_sort,t4.rec_set_id,t8.type_val tyval,t1.course_img,t1.course_intro
+        from rec_settings t4 inner join course t1 on t4.rec_set_objid = t1.course_id inner join `user` t6 on t1.teacher_id = t6.user_id
+				inner join course_type t8 on t1.course_type_id = t8.course_type_id
+        where 1=1 and t4.rec_lab_id = 'TodayCourse'  order by t4.rec_sort desc
+    </select>
+    <select id="select_today_excellentcour" resultMap="apiResult">
+           select
+        (select count(course_order_id) from course_order t7 where  t1.course_id = t7.course_id and t6.user_id = t1.teacher_id and t7.pay_status = 1) orderNumber,
+        t1.course_id,t1.course_type_id,t1.course_title,
+        t1.cost_price,t1.course_cover,t1.course_begin_time,t6.real_name tname,t4.rec_sort,t4.rec_set_id,t8.type_val tyval,t1.course_img,t1.course_intro
+        from rec_settings t4 inner join course t1 on t4.rec_set_objid = t1.course_id inner join `user` t6 on t1.teacher_id = t6.user_id
+		inner join course_type t8 on t1.course_type_id = t8.course_type_id
+		where 1=1 and t4.rec_lab_id = 'ExcellentCourseRec'   and t8.type_val != 'jhdk' order by t4.rec_sort desc
+    </select>
+    <select id="select_recomm_teacher" resultMap="apiTeacher">
+        select a.*,
+		sum((select count(ct.type_val) from course_type ct where ct.type_val = 'wzkc' and ct.course_type_id = c.course_type_id)) as wzkcNum,
+		sum((select count(ct.type_val) from course_type ct where ct.type_val = 'ypkc' and ct.course_type_id = c.course_type_id)) as ypkcNum,
+		sum((select count(ct.type_val) from course_type ct where ct.type_val = 'spkc' and ct.course_type_id = c.course_type_id)) as spkcNum
+		from (select
+		t1.rec_set_objid,t1.rec_sort sort,t1.rec_lab_type,t2.user_id,t2.real_name,t2.photo,t2.rectangle_photo,t2.signature from
+		rec_settings t1 inner join `user` t2 on t1.rec_set_objid = t2.user_id inner join rec_lable t3 on t1.rec_lab_id = t3.rec_lab_id
+		where t1.rec_lab_type = 1 and t3.rec_lab_mark = 'todayrec' and t2.user_type =1) a
+		left join course c on c.teacher_id = a.rec_set_objid
+		group by a.user_id order by a.sort desc
+    </select>
+    <select id="select_today_goods" resultMap="apiResult">
+           select
+         (select count(course_order_id) from course_order t7 where  t1.course_id = t7.course_id and t6.user_id = t1.teacher_id and t7.pay_status = 1) orderNumber,
+         t1.course_id,t1.course_type_id,t1.course_title,
+         t1.cost_price,t1.course_cover,t1.course_begin_time,t6.real_name tname,t4.rec_sort,t4.rec_set_id,t8.type_val tyval,t1.course_img,t1.course_intro
+        from rec_settings t4 inner join course t1 on t4.rec_set_objid = t1.course_id inner join `user` t6 on t1.teacher_id = t6.user_id
+				inner join course_type t8 on t1.course_type_id = t8.course_type_id
+        where 1=1 and t4.rec_lab_id = 'todayrec' and t4.rec_lab_type = 3 order by t4.rec_sort desc
+    </select>
+    <select id="select_today_gcour_by_label" resultMap="apiResult" parameterType="String">
+         select
+        t9.course_tag_id,t9.name,(select count(course_order_id) from course_order t7 where  t1.course_id = t7.course_id and t6.user_id = t1.teacher_id and t7.pay_status = 1) orderNumber,
+        t1.course_id,t1.course_type_id,t1.course_title,
+        t1.cost_price,t1.course_cover,t1.course_begin_time,t6.real_name tname,t4.rec_sort,t4.rec_set_id,t8.type_val tyval,t1.course_img,t1.course_intro
+        from rec_settings t4 inner join course t1 on t4.rec_set_objid = t1.course_id inner join `user` t6 on t1.teacher_id = t6.user_id
+				inner join course_type t8 on t1.course_type_id = t8.course_type_id inner join course_tag t9 on t1.course_tag_id = t9.course_tag_id
+				inner join study_label t10 on t9.course_tag_id = t10.course_tag_id
+        where 1=1 and t4.rec_lab_id = 'TodayCourse'  and  t10.label_id = #{courseTagId} order by t4.rec_sort desc
+    </select>
+</mapper>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.CouponMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Coupon" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="coupon_id" property="couponId" jdbcType="VARCHAR"/>
+        <result column="coupon_name" property="couponName" jdbcType="VARCHAR"/>
+        <result column="coupon_desc" property="couponDesc" jdbcType="VARCHAR"/>
+        <result column="coupon_value" property="couponValue" jdbcType="DECIMAL"/>
+        <result column="coupon_type" property="couponType" jdbcType="SMALLINT"/>
+        <result column="coupon_img_url" property="couponImgUrl" jdbcType="VARCHAR"/>
+        <result column="limit_money" property="limitMoney" jdbcType="DECIMAL"/>
+        <result column="limit_money_desc" property="limitMoneyDesc" jdbcType="VARCHAR"/>
+        <result column="coupon_begin_time" property="couponBeginTime" jdbcType="BIGINT"/>
+        <result column="coupon_end_time" property="couponEndTime" jdbcType="BIGINT"/>
+        <result column="coupon_desc" property="couponDesc" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+        <result column="is_claim" property="isClaim" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="searchCouponById" resultType="Coupon">
+        select * from s_coupon where coupon_id =#{couponId}
+    </select>
+
+    <select id="searchCouponGoodsList" resultType="Goods">
+        SELECT
+        goods.`goods_name`,
+        goods.`goods_number`,
+        goods.`goods_type`
+        FROM
+        s_coupon_goods coupon_goods
+        LEFT JOIN s_goods goods
+        ON goods.`goods_id` = coupon_goods.`goods_id`
+        WHERE coupon_goods.`coupon_id` =#{couponId}
+    </select>
+
+    <select id="searchCouponGoods" resultType="Goods">
+        SELECT
+              s.`id`,
+              s.`goods_id`,
+              s.`goods_name`,
+              s.`goods_type`,
+              s.`goods_number`,
+             (SELECT MIN(spec.cost_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) cost_price,
+             (SELECT MIN(spec.user_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) mkt_price,
+             (SELECT MIN(spec.vip_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) price,
+              s.`unit`,
+              s.`intro`,
+              s.`expreeFee`,
+              s.`brand_id`,
+              s.`cat_id`,
+              s.`is_sold_out`,
+              s.`create_time`,
+              s.`creater`,
+              s.`version`,
+              s.`status`,
+              s.`seqno`,
+              s.`ext1`,
+              s.`ext2`
+        FROM
+          s_coupon_goods coupon_goods
+          LEFT JOIN s_goods s
+            ON s.`goods_id` = coupon_goods.`goods_id`
+        WHERE coupon_goods.`coupon_id` =#{couponId}
+    </select>
+
+    <insert id="insertCoupon" parameterType="Coupon">
+        insert into
+             s_coupon(coupon_id,
+                    coupon_name,
+                    coupon_desc,
+                    coupon_value,
+                    coupon_type,
+                    coupon_img_url,
+                    limit_money,
+                    limit_money_desc,
+                    coupon_begin_time,
+                    coupon_end_time,
+                    create_time,
+                    version,
+                    status,
+                    seqno)
+            values(#{couponId},
+                    #{couponName},
+                    #{couponDesc},
+                    #{couponValue},
+                    #{couponType},
+                    #{couponImgUrl},
+                    #{limitMoney},
+                    #{limitMoneyDesc},
+                    #{couponBeginTime},
+                    #{couponEndTime},
+                    #{createTime},
+                    #{version},
+                    #{status},
+                    #{seqno} )
+    </insert>
+
+    <delete id="deleteCoupon" parameterType="java.lang.String">
+        delete from s_coupon where coupon_id = #{couponId}
+    </delete>
+
+    <update id="updateCoupon" parameterType="Coupon">
+        update s_coupon
+        <set>
+            <if test="couponName != null and couponName !=''">
+                coupon_name = #{couponName},
+            </if>
+            <if test="couponValue != null">
+                coupon_value = #{couponValue},
+            </if>
+            <if test="couponType != null">
+                coupon_type =  #{couponType},
+            </if>
+            <if test="couponDesc != null and couponDesc !=''">
+                coupon_desc = #{couponDesc},
+            </if>
+            <if test="couponImgUrl !=null and couponImgUrl !=''">
+                coupon_img_url = #{couponImgUrl},
+            </if>
+            <if test="limitMoney != null">
+                limit_money =#{limitMoney},
+            </if>
+            <if test="limitMoneyDesc != null and limitMoneyDesc !=''">
+                limit_money_desc = #{limitMoneyDesc},
+            </if>
+            <if test="couponEndTime != null">
+                coupon_end_time =#{couponEndTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="seqno != null">
+                seqno = #{seqno},
+            </if>
+        </set>
+        where 1=1
+        <if test="couponId != null and couponId !=''">
+            and coupon_id = #{couponId}
+        </if>
+    </update>
+
+    <select id="searchCouponList" resultType="Coupon">
+        select * from s_coupon where 1=1
+        <if test="couponName != null and couponName != ''">
+            and coupon_name like CONCAT('%', #{couponName},'%')
+        </if>
+        order by seqno asc ,create_time desc
+    </select>
+
+    <select id="getCouponList" resultMap="resultMap">
+        select * from s_coupon where 1=1 and status =1
+        order by seqno asc ,create_time desc
+    </select>
+
+    <select id="searchUClist" resultMap="resultMap">
+        select c.* from s_coupon c
+        left join s_coupon_claim_user ccu on ccu.coupon_id = c.coupon_id
+        left join s_coupon_goods cg on cg.coupon_id = c.coupon_id
+        left join s_cart sc on sc.user_id = ccu.user_id and sc.goods_id = cg.goods_id and sc.checked = 1
+        where ccu.is_claim = 1 and c.is_use = 0
+        <![CDATA[ and FROM_UNIXTIME(c.coupon_begin_time/1000, '%Y-%m-%d %H:%i:%S') <= now()]]>
+        and FROM_UNIXTIME(c.coupon_end_time/1000, '%Y-%m-%d %H:%i:%S') >= now()
+        and ccu.user_id = #{userId}
+        <![CDATA[ and c.limit_money <= #{orderMoney}]]>
+    </select>
+    
+    <select id="searchNUCList" resultMap="resultMap">
+        select c.* from s_coupon c
+        left join s_coupon_claim_user ccu on ccu.coupon_id = c.coupon_id
+        left join s_coupon_goods cg on cg.coupon_id = c.coupon_id
+        left join s_cart sc on sc.user_id = ccu.user_id and sc.goods_id = cg.goods_id and sc.checked = 1
+        where ccu.user_id = #{userId}
+        <![CDATA[ and (FROM_UNIXTIME(c.coupon_begin_time/1000, '%Y-%m-%d %H:%i:%S') > now()
+        or FROM_UNIXTIME(c.coupon_end_time/1000, '%Y-%m-%d %H:%i:%S') < now())]]>
+    </select>
+    
+    <select id="searchCmById" resultType="java.lang.String">
+        select c.limit_money from s_coupon c where c.coupon_id = #{couponId}
+    </select>
+
+    <select id="searchUserCoupons" parameterType="java.lang.String" resultType="Coupon">
+        SELECT
+            coupon.`coupon_begin_time`,
+            coupon.`coupon_end_time`,
+            coupon.`coupon_name`,
+            coupon.`coupon_desc`,
+            coupon.`coupon_img_url`,
+            coupon.`coupon_name`,
+            coupon.`coupon_type`,
+            coupon.`coupon_value`,
+            coupon.`create_time`,
+            coupon.`is_use`,
+            coupon.`limit_money`,
+            coupon.`limit_money_desc`,
+            coupon.`seqno`,
+            coupon.`version`,
+            coupon.`status`,
+            user_claim.`coupon_id`,
+            user_claim.`is_claim`,
+            u.`user_id`,
+            u.`user_name`,
+            u.`real_name`,
+            u.`login_name`
+        FROM
+          s_coupon_claim_user user_claim ,s_coupon coupon ,user u
+        WHERE
+        user_claim.`coupon_id` = coupon.`coupon_id`
+        AND  user_claim.status = 1
+        AND coupon.`status` =1
+        AND user_claim.`user_id` = u.`user_id`
+        AND user_claim.user_id =#{userId}
+    </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.user.mapper.UserAddressMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="cn.com.myproject.user.entity.PO.UserAddress" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="add_id" property="addId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="countries" property="countries" jdbcType="VARCHAR" />
+        <result column="countries_id" property="countriesId" jdbcType="VARCHAR" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="province_id" property="provinceId" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+        <result column="area" property="area" jdbcType="VARCHAR" />
+        <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="isdefault" property="isDefault" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getAddressPage" resultMap="resultMap">
+        select id,add_id,user_id,user_name,countries,countries_id,province,province_id,city,city_id,area,area_id,address,phone,isdefault,create_time,version,status from user_address where user_id = #{userId}
+    </select>
+
+    <insert id="addAddress" parameterType="UserAddress">
+        insert into user_address(add_id,user_id,user_name,countries,countries_id,province,province_id,city,city_id,area,area_id,address,phone,isdefault,create_time,version,`status`) values(#{addId},#{userId},#{userName},#{countries},#{countriesId},#{province},#{provinceId},#{city},#{cityId},#{area},#{areaId},#{address},#{phone},#{isDefault},#{createTime},#{version},#{status})
+    </insert>
+
+    <update id="updateAddress" parameterType="UserAddress">
+        update user_address set user_name = #{userName},countries = #{countries},countries_id = #{countriesId},province = #{province}, province_id = #{provinceId},city = #{city},city_id = #{cityId},area=#{area},area_id=#{areaId},address = #{address},phone = #{phone},isdefault = #{isDefault} where add_id = #{addId}
+    </update>
+
+    <delete id="delAddress" parameterType="String">
+        delete from user_address where add_id = #{addId}
+    </delete>
+
+    <select id="selectById" parameterType="String" resultType="UserAddress">
+        select add_id,user_id,user_name,countries,countries_id,province,province_id,city,city_id,area,area_id,address,phone,isdefault from user_address where add_id =#{addId}
+    </select>
+
+    <select id="selectDefaultAdd" parameterType="String" resultType="UserAddress">
+       select * from user_address where isdefault = 1 and user_id = #{userId}
+    </select>
+
+    <update id="updateChecked" parameterType="String">
+        update user_address set isdefault = 0 where add_id = #{addId}
+    </update>
+</mapper>

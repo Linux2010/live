@@ -1,0 +1,18 @@
+html,body{width:100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con3{padding: 0.1rem 0;background-color: white;box-sizing: border-box;margin:0.2rem 0;}
+.con3 .con3Tit{font-size: 0.32rem;line-height: 0.8rem;text-align: center;color:#111;}
+.con3 .con3Item{width: 100%;padding: 0.2rem 0;border-bottom: 0.01rem solid #ccc;}
+.con3 .con3ItemLeft{width: 3rem;height: 2rem;vertical-align:middle;padding: 0 0.1rem 0 0.2rem;}
+.con3 .con3ItemRight{display: inline-flex;align-content:space-between;flex-wrap:wrap;width:3.9rem;vertical-align: middle;height: 2rem;}
+.con3 .con3ItemRight .coachName{display: inline-block;width:3.9rem;font-size: 0.28rem;color:#333;}
+.con3 .con3ItemTitle{height: 1rem;display: inline-block;}
+.con3 .con3ItemBody{width:100%;}
+.con3 .con3ItemTime{width:48%;line-height: 0.35rem;vertical-align: middle;display: inline-block;font-size: 0.24rem;overflow: hidden;}
+.con3 .con3ItemTime a{color:#ffa42f;}
+.con3 .con3ItemTime a b{font-size: 0.32rem;color:#ffa42f;}
+.con3 .con3ItemBody span{display: inline-block;background-color: #ffa42f;color:#fefefe;font-size: 0.3rem;padding: 0.05rem 0.24rem;border-radius: 0.2rem;margin: 0.08rem;}
+.con3 .con3Con{padding: 0 0.2rem;display: flex;justify-content: space-between;padding-bottom: 0.2rem;}

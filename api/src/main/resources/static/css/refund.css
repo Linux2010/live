@@ -1,0 +1,19 @@
+html,body{width:100%;height: 100%;background-color: #f5f5f5;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{width:100%;padding:0 0;box-sizing: border-box;background-color: white;margin:0.2rem 0;}
+.con2 .line1{width:100%;padding:0.2rem 0.2rem;box-sizing: border-box;border-bottom: 0.01rem solid #ccc;}
+.con2 .line1 img{width:0.4rem;vertical-align: middle;}
+.con2 .line1 .shop{font-size: 0.26rem;color:#333;vertical-align: middle;}
+.con2 .line1 .state{float: right;color:#ffa42f;}
+.con2 .line2{width:100%;padding:0.2rem;box-sizing: border-box;border-bottom: 0.01rem solid #ccc;}
+.con2 .line2 .img1{width:1.5rem;padding:0 0.2rem;vertical-align: middle;padding-left: 0;}
+.con2 .line2 .s1{display:inline-block;width:5.25rem;height: 1.5rem;vertical-align: middle;}
+.con2 .line2 .s1 p.name{}
+.con2 .line2 .s1 p.name .num{float: right;}
+.con2 .line2 .s1 p.type{display: flex;justify-content: space-between;line-height: 0.6rem;}
+.con2 .line3{width:100%;padding:0 0.2rem;box-sizing: border-box;line-height:0.8rem;}
+.con2 .line3 .num{display:inline-block;width:100%;text-align: right;}
+

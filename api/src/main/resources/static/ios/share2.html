@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>用户中心</title>
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <style>
+        html,body{width:100%;height: 100%}
+        body{position: relative;}
+        .body{width:100%;height:100%;box-sizing: border-box;padding-top: 2rem;background-color: white}
+        .body .photo{width:2rem;height:2rem;border-radius:50%;border:0.02rem solid #ffa42f;background: url("images/p1.png");background-size:2rem 3rem;background-position: right top;margin: 0 auto;}
+        .body .name{width:100%;text-align: center;line-height: 1rem;font-size: 0.4rem;}
+        .body .tele{width:100%;text-align: center;line-height: 1rem;font-size: 0.3rem;margin-top: 1rem;}
+        .body .tele span{width:2.1rem;text-align:right;display: inline-block;font-size: 0.35rem;vertical-align: middle;}
+        .body .tele input{outline: none;border: 0.01rem solid #ffa42f;vertical-align: middle;height: 0.6rem;padding: 0 0.2rem;}
+        .body .code{width:100%;text-align: center;line-height: 1rem;font-size: 0.3rem;margin-top: 0.2rem;}
+        .body .code span{width:2.1rem;text-align:right;display: inline-block;font-size: 0.35rem;vertical-align: middle;}
+        .body .code input{width:1.1rem;outline: none;border: 0.01rem solid #ffa42f;vertical-align: middle;height: 0.6rem;padding: 0 0.2rem;}
+        .body .code .send_code{display: inline-block; width:1.7rem;outline: none;border: 0.01rem solid #ffa42f;vertical-align: middle;height: 0.6rem;padding: 0 0.2rem; margin-left: 0.2rem;  font-size: 0.25rem;  line-height: 0.6rem;  background-color: darkgrey;  color: slategray;}
+        .body .code .send_code_Y{background-color: bisque;}
+        .body .sub{width:100%;margin-top:1rem;}
+        .body p{padding: 0.8rem 1rem;text-align: center;color:orangered;}
+        .body .sub span{display: block;width:4rem;line-height: 1rem;border-radius: 0.5rem;background-color: coral;color: white;text-align: center;margin: 0 auto;font-size: 0.4rem}
+        .body .sub .span_Y{background-color: #ffa42f;}
+        .m{display:none;width:60%;margin: 3rem 20% 0 20%;line-height: 2rem;text-align: center;font-size: 0.6rem;color:green;position: fixed;top:0;z-index: 50;    border: 0.05rem solid yellowgreen;  border-radius: 0.2rem;  background-color: white;}
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="photo"></div>
+    <div class="name" >{{name}}</div>
+    <div class="tele"><span>注册手机号：</span><input type="text" v-model="tele" :disabled="disabled"/></div>
+    <div class="code"><span>验证码：</span><input type="text" v-model="code" /><div class="send_code" v-on:click="time()" v-html="send_word" v-bind:class="{'send_code_Y':tele_T}"></div> </div>
+    <div class="sub" v-on:click="sub(code_T&tele_T)"><span v-bind:class="{'span_Y':code_T&tele_T}">提交</span></div>
+    <p>提交成功后，用户<span style="color:orange">{{name}}</span>将成为您的推荐人</p>
+</div>
+<div class="m">绑定成功</div>
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script>
+
+    var name = "郑三";
+    var v1 = new Vue({
+        el: '.body',
+        data: {
+            name: name,
+            tele:"",
+            disabled:false,
+            code:"",
+            send_word:"发送验证码",
+            time_T:true,
+            wait:60
+        },
+        computed:{
+            tele_T:function () {
+                var reg_tele=/^1\d{10}$/;
+                return reg_tele.test(this.tele);
+            },
+            code_T:function () {
+                return this.code!=="";
+            }
+        },
+        methods:{
+            sub:function (a) {
+                if (a){
+                    $(".m").css("display","block");
+                    var timeout = setTimeout(function () {
+                        $(".m").css("display","none");
+                    },2000);
+                }
+            },
+            time:function(o) {
+                this.time_T=false;
+                var reg_tele=/^1\d{10}$/;
+                if(this.tele_T){
+                    if (this.wait === 0) {
+                        this.disabled=false;
+                        this.time_T=true;
+                        this.send_word="发送验证码";
+                        this.wait = 60;
+                    } else {
+                        this.disabled=true;
+                        this.send_word="重新发送("+this.wait+")";
+                        this.wait--;
+                        setTimeout(function(){v1.time(o)},1000)
+                    }
+                }else {
+                    this.time_T=true;
+                }
+            }
+        }
+    })
+
+</script>
+</html>

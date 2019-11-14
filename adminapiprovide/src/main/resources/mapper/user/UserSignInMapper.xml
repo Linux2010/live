@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.user.mapper.UserSignInMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.myproject.user.entity.PO.UserSignIn" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sign_id" property="signId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="continue_days" property="continueDays" jdbcType="INTEGER" />
+    <result column="last_sign_time" property="lastSignTime" jdbcType="BIGINT" />
+    <result column="sign_time_record" property="signTimeRecord" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sign_id, user_id, continue_days, last_sign_time, sign_time_record, create_time, 
+    status, version
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_sign_in
+    where sign_id = #{signId}
+  </select>
+
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from user_sign_in
+    where
+    user_id = #{userId}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from user_sign_in
+    where sign_id = #{signId}
+  </delete>
+
+  <insert id="insert" parameterType="UserSignIn" >
+    insert into user_sign_in (id, sign_id, user_id, 
+      continue_days, last_sign_time, sign_time_record, 
+      create_time, status, version
+      )
+    values (#{id,jdbcType=INTEGER}, #{signId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{continueDays,jdbcType=INTEGER}, #{lastSignTime,jdbcType=BIGINT}, #{signTimeRecord,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}, #{version,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="UserSignIn" >
+    insert into user_sign_in
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="signId != null" >
+        sign_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="continueDays != null" >
+        continue_days,
+      </if>
+      <if test="lastSignTime != null" >
+        last_sign_time,
+      </if>
+      <if test="signTimeRecord != null" >
+        sign_time_record,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="signId != null" >
+        #{signId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="continueDays != null" >
+        #{continueDays,jdbcType=INTEGER},
+      </if>
+      <if test="lastSignTime != null" >
+        #{lastSignTime,jdbcType=BIGINT},
+      </if>
+      <if test="signTimeRecord != null" >
+        #{signTimeRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="UserSignIn" >
+    update user_sign_in
+    <set >
+      <if test="signId != null" >
+        sign_id = #{signId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="continueDays != null" >
+        continue_days = #{continueDays,jdbcType=INTEGER},
+      </if>
+      <if test="lastSignTime != null" >
+        last_sign_time = #{lastSignTime,jdbcType=BIGINT},
+      </if>
+      <if test="signTimeRecord != null" >
+        sign_time_record = #{signTimeRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sign_id = #{signId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="UserSignIn" >
+    update user_sign_in
+    set sign_id = #{signId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      continue_days = #{continueDays,jdbcType=INTEGER},
+      last_sign_time = #{lastSignTime,jdbcType=BIGINT},
+      sign_time_record = #{signTimeRecord,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT},
+      version = #{version,jdbcType=INTEGER}
+    where sign_id = #{signId,jdbcType=INTEGER}
+  </update>
+</mapper>

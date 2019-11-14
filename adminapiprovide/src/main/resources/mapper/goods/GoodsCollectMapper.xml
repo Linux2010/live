@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.GoodsCollectMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap id="resultMap" type="GoodsCollect">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="collect_id" property="collectId" jdbcType="VARCHAR"/>
+        <result column="is_collect" property="iscollect" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <!-- 根据用户和商品查询是否收藏商品-->
+    <select id="searcUserGoodsCollect" resultMap="resultMap" parameterType="java.lang.String">
+        select gc.collect_id, gc.goods_id,gc.user_id,gc.is_collect from s_goods_collect gc where gc.user_id = #{userId} and gc.goods_id=#{goodsId}
+    </select>
+<!--添加收藏-->
+    <insert  id="addCollect" parameterType="GoodsCollect">
+        insert INTO s_goods_collect(collect_id,user_id,goods_id,is_collect)values(#{collectId},
+        #{userId},#{goodsId},#{iscollect})
+      </insert >
+<!--更新收藏-->
+<update id="updateCollect" parameterType="GoodsCollect">
+    UPDATE s_goods_collect set is_collect=#{iscollect} where user_id=#{userId} AND goods_id=#{goodsIdList}
+</update>
+
+</mapper>

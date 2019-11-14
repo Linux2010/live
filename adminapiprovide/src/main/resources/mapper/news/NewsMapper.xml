@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.news.mapper.NewsMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="News" id="resultMap">
+
+        <result column="id" property="id"  jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+
+        <result column="business_id" property="businessId" jdbcType="VARCHAR" />
+
+        <result column="content" property="content" javaType="String" jdbcType="CLOB"/>
+
+        <result column="title"       property="title" jdbcType="VARCHAR"/>
+        <result column="photo"  property="photo" jdbcType="VARCHAR"/>
+        <result column="thumbnail_img" property="thumbnailImg"  jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectNewsById"  resultMap="resultMap" parameterType="java.lang.String">
+        select id, business_id, title, content,  create_time,photo,thumbnail_img from news_business  where business_id = #{businessId}
+    </select>
+
+
+
+    <select id="getPage"  resultMap="resultMap" useCache="false" parameterType="java.lang.String">
+        select id,business_id,title,create_time,content,photo from news_business where 1=1
+        <if test="title != null">
+            and title LIKE CONCAT('%',#{title},'%')
+        </if>
+        order by id desc
+    </select>
+
+    <select id="getAll"  resultMap="resultMap">
+        select id,business_id,title,content,create_time ,version, status ,photo,thumbnail_img from news_business  order by id desc
+    </select>
+
+    <insert id="addNews" parameterType="News">
+        insert into news_business( title, content,create_time,business_id, version, status ,photo,thumbnail_img)
+        values( #{title}, #{content},#{createTime}, #{businessId},#{version} ,#{status},#{photo},#{thumbnailImg})
+    </insert>
+
+
+    <delete id="delNews" parameterType="java.lang.String">
+        delete from news_business where business_id=#{businessId}
+    </delete>
+
+    <select id="findAll" resultType="News">
+        select business_id, id,title, contemt ,create_time
+         from news_business  order by id desc
+    </select>
+
+
+
+    <update id="updateNews" parameterType="News">
+        update news_business set content = #{content} where  business_id = #{businessId}
+    </update>
+
+    <update id="updateNewsTitle">
+        update news_business set title = #{title},photo=#{photo} where  business_id = #{businessId}
+    </update>
+</mapper>

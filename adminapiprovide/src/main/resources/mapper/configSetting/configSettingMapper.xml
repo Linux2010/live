@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.configSetting.mapper.ConfigSettingMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="ConfigSetting" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="config_id" property="configId" jdbcType="VARCHAR" />
+        <result column="config_name" property="config_name" jdbcType="VARCHAR" />
+        <result column="config_sign" property="config_sign" jdbcType="VARCHAR" />
+        <result column="config_value" property="config_value" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectConfigSettingById" resultMap="resultMap" parameterType="java.lang.String" >
+        select id, config_id, config_name, config_sign, config_value, create_time, remark, status, version from sys_config_setting where config_id = #{configId}
+    </select>
+
+    <select id="selectConfigSettingBySign" resultMap="resultMap" parameterType="java.lang.String" >
+        select id, config_id, config_name, config_sign, config_value, create_time, remark, status, version from sys_config_setting where config_sign = #{configSign}
+    </select>
+
+    <select id="selectConfigSettings"  resultMap="resultMap">
+        select id, config_id, config_name, config_sign, config_value, create_time, remark, status, version from sys_config_setting order by id desc
+    </select>
+    <select id="getPage"  resultMap="resultMap">
+        select id, config_id, config_name, config_sign, config_value, create_time, remark, status, version from sys_config_setting where 1=1
+        <if test="keyword != null"> and
+            (
+            config_name like CONCAT('%', #{keyword},'%')
+            )
+        </if>
+        order by id desc
+    </select>
+    <insert id="addConfigSetting" parameterType="ConfigSetting">
+        insert into sys_config_setting(config_id, config_name, config_sign, config_value, create_time, remark, status, version)
+        values(#{configId}, #{config_name}, #{config_sign},#{config_value}, #{createTime},#{remark}, #{status},#{version})
+    </insert>
+    <update id="updateConfigSetting" parameterType="ConfigSetting">
+        update sys_config_setting set config_name = #{config_name}, config_value = #{config_value},remark = #{remark} where config_id = #{configId}
+    </update>
+    <delete id="delConfigSettingById" parameterType="java.lang.String">
+        delete from sys_config_setting where config_id = #{configId}
+    </delete>
+</mapper>

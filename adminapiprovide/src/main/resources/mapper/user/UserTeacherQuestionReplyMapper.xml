@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.user.mapper.UserTeacherQuestionReplyMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="UserTeacherQuestionReply" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="user_teacher_question_reply_id" property="userTeacherQuestionReplyId" jdbcType="VARCHAR"/>
+        <result column="user_teacher_question_id" property="userTeacherQuestionId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="teacher_id" property="teacherId" jdbcType="VARCHAR"/>
+        <result column="reply" property="reply" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getUserTeacherQuestionReplyList" parameterType="UserTeacherQuestionReply" resultMap="resultMap">
+        select * from user_teacher_question_reply where 1=1
+        <if test="userId != null and userId !='' ">
+            and user_id=#{userId}
+        </if>
+        <if test="teacherId != null and teacherId !='' ">
+            and teacher_id =#{teacherId}
+        </if>
+        and status = 1
+    </select>
+
+    <select id="getUserTeacherQuestionReply" parameterType="UserTeacherQuestionReply" resultMap="resultMap">
+        select * from user_teacher_question_reply where 1=1
+        <if test="userId != null and userId !='' ">
+            and user_id=#{userId}
+        </if>
+        <if test="teacherId != null and teacherId !='' ">
+            and teacher_id =#{teacherId}
+        </if>
+        <if test="userTeacherQuestionId != null and userTeacherQuestionId != ''">
+            and user_teacher_question_id = #{userTeacherQuestionId}
+        </if>
+        <if test="userTeacherQuestionReplyId != null and userTeacherQuestionReplyId != ''">
+            and user_teacher_question_reply_id = #{userTeacherQuestionReplyId}
+        </if>
+        and status = 1
+    </select>
+
+    <insert id="insertUserTeacherQuestionReply" parameterType="UserTeacherQuestionReply">
+        insert into user_teacher_question_reply(
+        user_teacher_question_reply_id,
+        user_teacher_question_id,
+        teacher_id,
+        reply,
+        create_time,
+        status,
+        version)
+        values(#{userTeacherQuestionReplyId},
+                #{userTeacherQuestionId},
+                #{teacherId},
+                #{reply},
+                #{createTime},
+                #{status},
+                #{version})
+    </insert>
+    <update id="updateUserTeacherQuestionReply" parameterType="UserTeacherQuestionReply">
+        update user_teacher_question_reply
+        set reply=#{reply}
+        where  teacher_id=#{teacherId} and user_id=#{userId} and user_teacher_question_id=#{userTeacherQuestionId}
+    </update>
+</mapper>

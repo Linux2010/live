@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.StockMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Stock" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="stock_id" property="stockId" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id" property="goodsSpecValueId" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id1" property="goodsSpecValueId1" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id2" property="goodsSpecValueId2" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id3" property="goodsSpecValueId3" jdbcType="VARCHAR"/>
+        <result column="goods_spec_values_id4" property="goodsSpecValueId4" jdbcType="VARCHAR"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="use_num" property="useNum" jdbcType="INTEGER"/>
+        <result column="own_num" property="ownNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="searchStockById" resultType="Stock">
+        select * from s_stock where stock_id =#{stockId}
+    </select>
+    <select id="searchStockDetail" resultType="Stock" parameterType="Stock">
+        select * from s_stock where 1=1
+        <if test="goodsId != null and goodsId !=''">
+            AND  goods_id = #{goodsId}
+        </if>
+        <if test="goodsSpecValueId != null and goodsSpecValueId !=''">
+            AND goods_spec_values_id = #{goodsSpecValueId}
+        </if>
+        <if test="goodsSpecValueId1 != null and goodsSpecValueId1 != ''">
+            AND goods_spec_values_id1 = #{goodsSpecValueId1}
+        </if>
+        <if test="goodsSpecValueId2 != null and goodsSpecValueId2 != ''">
+            AND goods_spec_values_id2 = #{goodsSpecValueId2}
+        </if>
+        <if test="goodsSpecValueId3 != null and goodsSpecValueId3 != ''">
+            AND  goods_spec_values_id3 = #{goodsSpecValueId3}
+        </if>
+        <if test="goodsSpecValueId4 != null and goodsSpecValueId4 != ''">
+            AND goods_spec_values_id4 = #{goodsSpecValueId4}
+        </if>
+    </select>
+
+    <insert id="insertStock" parameterType="Stock">
+        insert into
+             s_stock(stock_id,
+                    goods_id,
+                    goods_spec_values_id,
+                    goods_spec_values_id1,
+                    goods_spec_values_id2,
+                    goods_spec_values_id3,
+                    goods_spec_values_id4,
+                    num,
+                    use_num,
+                    own_num,
+                    create_time,
+                    update_time,
+                    version,
+                    status)
+            values(#{stockId},
+                    #{goodsId},
+                    #{goodsSpecValueId},
+                    #{goodsSpecValueId1},
+                    #{goodsSpecValueId2},
+                    #{goodsSpecValueId3},
+                    #{goodsSpecValueId4},
+                    #{num},
+                    #{useNum},
+                    #{ownNum},
+                    #{createTime},
+                    #{updateTime},
+                    #{version},
+                    #{status}
+                     )
+    </insert>
+
+    <delete id="deleteStock" parameterType="java.lang.String">
+        delete from s_stock where stock_id = #{stockId}
+    </delete>
+
+    <update id="updateStock" parameterType="Stock">
+        update s_stock
+        <set>
+            <if test="num != null and num !=''">
+                num = #{num},
+            </if>
+            <if test="useNum != null and useNum !=''">
+                use_num = #{useNum},
+            </if>
+            <if test="ownNum != null and ownNum !=''">
+                own_num = #{ownNum},
+            </if>
+            <if test="updateTime != null and updateTime !=''">
+                update_time = #{updateTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where 1=1
+        <if test="stockId != null and stockId !=''">
+            and stock_id = #{stockId}
+        </if>
+    </update>
+
+    <select id="searchStockList" resultMap="resultMap">
+        select * from s_stock where 1=1
+        <if test="goodsId != null and goodsId != ''">
+            and goods_id  =#{goodsId}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.GoodsMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Goods" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_type" property="goodsType" jdbcType="SMALLINT"/>
+        <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR"/>
+        <result column="cost_price" property="costPrice" jdbcType="DECIMAL"/>
+        <result column="mkt_price" property="mktPrice" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="expreeFee" property="expreeFee" jdbcType="DECIMAL"/>
+        <result column="cat_id" property="catId" jdbcType="VARCHAR"/>
+        <result column="is_sold_out" property="isSoldOut" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+        <result column="ext" property="ext" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="cat_name" property="catName" jdbcType="VARCHAR"/>
+        <result column="mastImg" property="mastImg" jdbcType="VARCHAR"/>
+        <result column="specNum" property="specNum" jdbcType="INTEGER"/>
+        <result column="couponNum" property="couponNum" jdbcType="INTEGER"/>
+       <result column="comm_num" property="commNum" jdbcType="INTEGER"/>
+        <result column="goodsStockNum" property="goodsStockNum" jdbcType="INTEGER"/>
+        <collection property="imgs" ofType="GoodsImg"
+                    select="selectGoodsImgByGoodsId" column="{goodsId = goods_id}">
+        </collection>
+    </resultMap>
+    <!-- 查询商品图片-->
+    <select id="selectGoodsImgByGoodsId" parameterType="GoodsImg" resultType="GoodsImg">
+       select * from s_goods_img where goods_id = #{goodsId}
+    </select>
+    <!-- 查询商品-->
+    <select id="searchGoodsById"   parameterType="java.lang.String"   resultMap="resultMap">
+          SELECT
+              s.`id`,
+              s.`goods_id`,
+              s.`goods_name`,
+              s.`goods_type`,
+              s.`goods_number`,
+             (SELECT MIN(spec.cost_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) cost_price,
+             (SELECT MIN(spec.user_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) mkt_price,
+             (SELECT MIN(spec.vip_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) price,
+              s.`unit`,
+              s.`intro`,
+              s.`expreeFee`,
+              s.`brand_id`,
+              s.`cat_id`,
+              s.`is_sold_out`,
+              s.`create_time`,
+              s.`creater`,
+              s.`version`,
+              s.`status`,
+              s.`seqno`,
+              s.`ext1`,
+              s.`ext2`,
+             (SELECT SUM(own_num) FROM s_stock WHERE goods_id =#{goodsId})as   goodsStockNum,
+            (SELECT cat_name FROM s_goods_cat WHERE cat_id = s.`cat_id`)AS cat_name FROM s_goods s where s.goods_id =#{goodsId}
+    </select>
+    <!-- 添加商品图片-->
+    <insert id="insertGoodsImg"  parameterType="GoodsImg">
+        insert into
+              s_goods_img
+        (goods_img_id,goods_id,url,first,seqno)
+        values(#{goodsImgId},#{goodsId},#{url},#{first},#{seqno})
+    </insert>
+    <!-- 更新商品图片-->
+    <insert id="updateGoodsImg"  parameterType="GoodsImg">
+        update s_goods_img
+        <set>
+            <if test="url != null and url !=''">
+                url = #{url},
+            </if>
+            <if test="first != null">
+                first = #{first},
+            </if>
+            <if test="seqno != null">
+                seqno = #{seqno},
+            </if>
+        </set>
+        where 1=1
+        <if test="goodsImgId != null and goodsImgId !=''">
+           and  goods_img_id =#{goodsImgId}
+        </if>
+        <if test="goodsId != null and goodsId !=''">
+            and  goods_id =#{goodsId}
+        </if>
+    </insert>
+
+    <insert id="insertGoods" parameterType="Goods">
+        insert into
+        s_goods
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null and goodsId != ''">
+                goods_id,
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                goods_name,
+            </if>
+            <if test="goodsType != null">
+                goods_type,
+            </if>
+            <if test="goodsNumber != null">
+                goods_number ,
+            </if>
+            <if test="unit != null and unit !=''" >
+                unit,
+            </if>
+            <if test="intro != null and intro !=''" >
+                intro,
+            </if>
+            <if test="expreeFee != null" >
+                expreeFee,
+            </if>
+            <if test="catId != null and catId !=''" >
+                cat_id,
+            </if>
+            <if test="isSoldOut != null" >
+                is_sold_out,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="creater != null and creater !=''" >
+                creater,
+            </if>
+            <if test="version != null and version !=''" >
+                version,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="seqno != null">
+                seqno,
+            </if>
+            <if test="ext != null and ext !=''" >
+                ext,
+            </if>
+
+            <if test="ext1 != null and ext1 !=''" >
+                ext1,
+            </if>
+
+            <if test="ext2 != null and ext2 !=''" >
+                ext2,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null and goodsId != ''">
+               #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsType != null">
+               #{goodsType,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsNumber != null">
+                #{goodsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="unit != null and unit !=''" >
+                #{unit,jdbcType=VARCHAR},
+            </if>
+
+            <if test="intro != null and intro !=''" >
+                #{intro,jdbcType=VARCHAR},
+            </if>
+
+            <if test="expreeFee != null" >
+                #{expreeFee,jdbcType=DECIMAL},
+            </if>
+
+            <if test="catId != null and catId !=''" >
+                #{catId,jdbcType=VARCHAR},
+            </if>
+
+            <if test="isSoldOut != null" >
+                #{isSoldOut,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="creater != null and creater !=''" >
+                #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null and version !=''" >
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="seqno != null">
+                #{seqno,jdbcType=INTEGER},
+            </if>
+            <if test="ext != null and ext !=''" >
+                #{ext,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null and ext1 !=''" >
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null and ext2 !=''" >
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteGoods" parameterType="java.lang.String">
+        delete from s_goods where goods_id = #{goodsId}
+    </delete>
+    <update id="updateGoodsIntro" parameterType="Goods">
+        update s_goods
+        <set>
+            <if test="intro != null and intro !=''">
+                intro = #{intro},
+            </if>
+        </set>
+        where 1=1
+        <if test="goodsId != null and goodsId !=''">
+            and goods_id = #{goodsId}
+        </if>
+    </update>
+
+    <update id="updateGoods" parameterType="Goods">
+        update s_goods
+        <set>
+            <if test="goodsName != null and goodsName !=''">
+                goods_name = #{goodsName},
+            </if>
+            <if test="goodsType != null">
+                goods_type = #{goodsType},
+            </if>
+            <if test="goodsNumber != null and goodsNumber !=''">
+                goods_number = #{goodsNumber},
+            </if>
+            <if test="unit != null and unit !=''">
+                unit = #{unit},
+            </if>
+            <if test="expreeFee != null">
+                expreeFee = #{expreeFee},
+            </if>
+            <if test="catId != null and catId !=''">
+                cat_id = #{catId},
+            </if>
+            <if test="isSoldOut != null">
+                is_sold_out = #{isSoldOut},
+            </if>
+            <if test="seqno != null and seqno !=''">
+                seqno = #{seqno},
+            </if>
+            <if test="status != null and status !=''">
+                status = #{status},
+            </if>
+        </set>
+        where 1=1
+        <if test="goodsId != null and goodsId !=''">
+            and goods_id = #{goodsId}
+        </if>
+    </update>
+
+    <select id="searchGoodsList" resultType="Goods">
+        SELECT
+            s.`id`,
+            s.`goods_id`,
+            s.`goods_name`,
+            s.`goods_type`,
+            s.`goods_number`,
+            (SELECT MIN(spec.cost_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) cost_price,
+            (SELECT MIN(spec.user_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) mkt_price,
+            (SELECT MIN(spec.vip_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) price,
+            s.`unit`,
+            s.`intro`,
+            s.`expreeFee`,
+            s.`brand_id`,
+            s.`cat_id`,
+            s.`is_sold_out`,
+            s.`create_time`,
+            s.`creater`,
+            s.`version`,
+            s.`status`,
+            s.`seqno`,
+            s.`ext1`,
+            s.`ext2`,
+        (SELECT url FROM s_goods_img img WHERE img.`goods_id` = s.goods_id  AND img.first=1 order by seqno asc limit 1) AS mastImg,
+            (SELECT COUNT(*) FROM s_goods_spec WHERE goods_id = s.goods_id) AS specNum
+        FROM s_goods s WHERE 1=1
+        <if test="keyword != null and keyword != ''">
+            and (s.goods_name like CONCAT('%', #{keyword},'%')
+            or s.goods_number like CONCAT('%', #{keyword},'%')
+            or s.intro like CONCAT('%', #{keyword},'%')
+            )
+        </if>
+        order by s.seqno asc ,s.create_time desc
+    </select>
+
+    <!-- 查询优惠劵和各种条件下的商品列表 -->
+    <select id="searchGoodsListByCatId" resultType="Goods">
+        SELECT
+            s.`id`,
+            s.`goods_id`,
+            s.`goods_name`,
+            s.`goods_type`,
+            s.`goods_number`,
+            (SELECT MIN(spec.cost_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) cost_price,
+            (SELECT MIN(spec.user_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) mkt_price,
+            (SELECT MIN(spec.vip_price) FROM s_goods_spec spec  WHERE spec.`goods_id`=s.`goods_id`) price,
+            s.`unit`,
+            s.`intro`,
+            s.`expreeFee`,
+            s.`brand_id`,
+            s.`cat_id`,
+            s.`is_sold_out`,
+            s.`create_time`,
+            s.`creater`,
+            s.`version`,
+            s.`status`,
+            s.`seqno`,
+            s.`ext1`,
+            s.`ext2`,
+        (SELECT url FROM s_goods_img img WHERE img.`goods_id` = s.goods_id  AND img.first=1 order by seqno asc limit 1) AS mastImg,
+        (SELECT COUNT(*) FROM s_goods_spec WHERE goods_id = s.goods_id) AS specNum
+        <if test="couponId !=null and couponId !=''">
+            ,(SELECT COUNT(*) FROM s_coupon_goods WHERE goods_id = s.goods_id AND coupon_id=#{couponId}) AS couponNum
+        </if>
+
+        FROM s_goods s WHERE 1=1
+        <if test="keyword != null and keyword != ''">
+            and (s.goods_name like CONCAT('%', #{keyword},'%')
+            or s.goods_number like CONCAT('%', #{keyword},'%')
+            or s.intro like CONCAT('%', #{keyword},'%')
+            )
+        </if>
+        <if test="catId != null and catId != ''">
+            and cat_id =#{catId}
+        </if>
+        order by s.seqno asc ,s.create_time desc
+    </select>
+
+    <select id="checkGoodsIsExist" parameterType="Goods" resultType="java.lang.Integer">
+        select count(*) from  s_goods where 1=1
+        <if test="goodsName != null and goodsName != ''">
+            and goods_name = #{goodsName}
+        </if>
+        <if test="goodsNumber != null and goodsNumber != ''">
+            and  goods_number = #{goodsNumber}
+        </if>
+    </select>
+
+    <delete id="deleteGoodsSkuByGoodsId" parameterType="java.lang.String">
+        delete from s_goods_sku where goods_id = #{goodsId}
+    </delete>
+
+    <delete id="deleteGoodsSpecByGoodsId" parameterType="java.lang.String">
+        delete from s_goods_spec where goods_id = #{goodsId}
+    </delete>
+
+    <delete id="deleteStockByGoodsId" parameterType="java.lang.String">
+        delete from s_stock where goods_id = #{goodsId}
+    </delete>
+    <delete id="deleteStockLogByGoodsId" parameterType="java.lang.String">
+        delete from s_stock_log where goods_id = #{goodsId}
+    </delete>
+
+</mapper>

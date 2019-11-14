@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.user.mapper.UserRechargeWithrawMapper" >
+
+  <resultMap id="BaseResultMap" type="UserRechargeWithraw" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="rw_id" property="rwId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="SMALLINT" />
+    <result column="operate_type" property="operateType" jdbcType="SMALLINT" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="way" property="way" jdbcType="SMALLINT" />
+    <result column="account_number" property="accountNumber" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="relation_id" property="relationId" jdbcType="VARCHAR" />
+    <result column="relation_obj" property="relationObj" jdbcType="VARCHAR" />
+    <result column="op_status" property="opStatus" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, rw_id, user_id, account_type, operate_type, money, balance, description, way, 
+    account_number, name, phone, relation_id, relation_obj, op_status, create_time, status, 
+    version
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_recharge_withdraw_record
+    where rw_id = #{rwId}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from user_recharge_withdraw_record
+    where rw_id = #{rwId}
+  </delete>
+
+  <insert id="insert" parameterType="UserRechargeWithraw" >
+    insert into user_recharge_withdraw_record (id, rw_id, user_id, 
+      account_type, operate_type, money, 
+      balance, description, way, 
+      account_number, name, phone, 
+      relation_id, relation_obj, op_status, 
+      create_time, status, version
+      )
+    values (#{id,jdbcType=INTEGER}, #{rwId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=SMALLINT}, #{operateType,jdbcType=SMALLINT}, #{money,jdbcType=DECIMAL}, 
+      #{balance,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR}, #{way,jdbcType=SMALLINT}, 
+      #{accountNumber,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{relationId,jdbcType=VARCHAR}, #{relationObj,jdbcType=VARCHAR}, #{opStatus,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}, #{version,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="UserRechargeWithraw" >
+    insert into user_recharge_withdraw_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rwId != null" >
+        rw_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="accountType != null" >
+        account_type,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="way != null" >
+        way,
+      </if>
+      <if test="accountNumber != null" >
+        account_number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="relationId != null" >
+        relation_id,
+      </if>
+      <if test="relationObj != null" >
+        relation_obj,
+      </if>
+      <if test="opStatus != null" >
+        op_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rwId != null" >
+        #{rwId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=SMALLINT},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="way != null" >
+        #{way,jdbcType=SMALLINT},
+      </if>
+      <if test="accountNumber != null" >
+        #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="relationId != null" >
+        #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationObj != null" >
+        #{relationObj,jdbcType=VARCHAR},
+      </if>
+      <if test="opStatus != null" >
+        #{opStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="UserRechargeWithraw">
+    update user_recharge_withdraw_record
+    <set >
+      <if test="rwId != null" >
+        rw_id = #{rwId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        account_type = #{accountType,jdbcType=SMALLINT},
+      </if>
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="way != null" >
+        way = #{way,jdbcType=SMALLINT},
+      </if>
+      <if test="accountNumber != null" >
+        account_number = #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="relationId != null" >
+        relation_id = #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationObj != null" >
+        relation_obj = #{relationObj,jdbcType=VARCHAR},
+      </if>
+      <if test="opStatus != null" >
+        op_status = #{opStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="transactionId != null and transactionId !=''">
+        transaction_id = #{transactionId,jdbcType=INTEGER}
+      </if>
+    </set>
+    where rw_id = #{rwId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="UserRechargeWithraw" >
+    update user_recharge_withdraw_record
+    set rw_id = #{rwId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=SMALLINT},
+      operate_type = #{operateType,jdbcType=SMALLINT},
+      money = #{money,jdbcType=DECIMAL},
+      balance = #{balance,jdbcType=DECIMAL},
+      description = #{description,jdbcType=VARCHAR},
+      way = #{way,jdbcType=SMALLINT},
+      account_number = #{accountNumber,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      relation_id = #{relationId,jdbcType=VARCHAR},
+      relation_obj = #{relationObj,jdbcType=VARCHAR},
+      op_status = #{opStatus,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT},
+      version = #{version,jdbcType=INTEGER}
+    where rw_id = #{rwId}
+  </update>
+</mapper>

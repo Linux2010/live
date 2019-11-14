@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.shortVideo.mapper.ShortVideoMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="ShortVideo" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="video_id" property="videoId" jdbcType="VARCHAR" />
+        <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+        <result column="file_id" property="fileId" jdbcType="VARCHAR"/>
+        <result column="video_file" property="videoFile" jdbcType="VARCHAR" />
+        <result column="video_type" property="videoType" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="getPage" resultMap="resultMap">
+      select id, video_id, video_name, file_id, video_file, video_type, create_time, status, version from short_video where 1=1
+        <if test="keyword != null and keyword !=''"> and
+            (
+            video_name like CONCAT('%', #{keyword},'%')
+            )
+        </if>
+    </select>
+    <insert id="addVideo" parameterType="ShortVideo">
+      insert into short_video(id, video_id, video_name, file_id, video_file, video_type, create_time, status, version)values
+      (
+      #{id}, #{videoId}, #{videoName}, #{fileId}, #{videoFile}, #{videoType}, #{createTime}, #{status}, #{version}
+      )
+    </insert>
+    <select id="selectByStatus" resultMap="resultMap" parameterType="java.lang.Integer">
+      select * from short_video where status = #{status}
+    </select>
+    <select id="selectByType" resultMap="resultMap">
+      select * from short_video where video_type = #{videoType} and status = 1
+    </select>
+    <select id="selectById" resultMap="resultMap">
+      select * from short_video where video_id = #{videoId}
+    </select>
+    <update id="updateVideo" parameterType="ShortVideo">
+      update short_video set file_id = #{fileId}, video_file = #{videoFile} where video_id = #{videoId}
+    </update>
+    <delete id="deleteVideo" parameterType="java.lang.String">
+      delete  from short_video where video_id = #{videoId}
+    </delete>
+    <update id="updateStatus" parameterType="ShortVideo">
+      update short_video set status = (3-#{status}) where video_id = #{videoId}
+    </update>
+</mapper>

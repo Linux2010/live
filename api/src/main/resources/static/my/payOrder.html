@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+    <link href="css/ace.min.css" type="text/css" rel="stylesheet"/>
+    <link href="css/payOrder.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/picker.min.js"></script>
+
+</head>
+<body>
+<div class="con1">
+    <span style="width: 20%;display: inline-block;"><</span><span style="width: 60%;display: inline-block;margin: 0 auto;text-align: center;">支付订单</span>
+</div>
+<div class="con2">
+    <div class="line2">
+        <div class="moreL"><span>小计</span></div>
+        <div class="more"><span class="money">￥198.00</span></div>
+    </div>
+</div>
+<div class="type">
+    <div class="button2"><span>选择支付方式</span></div>
+    <ul>
+        <li><label>支付宝</label><input type="radio" name="type"/></li>
+        <li><label>微信</label><input type="radio" name="type"/></li>
+        <li><label>APPLE PAY</label><input type="radio" name="type"/></li>
+        <li><label>ANDROID PAY</label><input type="radio" name="type"/></li>
+        <li><label>银两支付</label><input type="radio" name="type"/></li>
+    </ul>
+</div>
+
+<a href="my/trueRecharge.html"> <div class="button">下一步</div></a>
+</body>
+<script>
+    $(".type li").click(function () {
+        $(this).children("input").prop("checked",true)
+    })
+    $(".seltype").click(function () {
+        $(".type").css("bottom","0")
+    })
+</script>
+</html>

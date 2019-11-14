@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/courseList.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiper-3.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/swiper-3.3.1.min.js" type="text/javascript"></script>
+    <script src="js/iscroll.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="search">
+        <div class="searchBox">
+            <input type="text"/>
+            <span>搜索</span>
+        </div>
+    </div>
+    <div class="allSort">
+        <span class="sort active">综合</span>
+        <span class="sort">销量</span>
+        <span class="sort priceSort">价格<img src="image/sort_price.png"></span>
+    </div>
+    <div class="con3">
+        <a >
+            <div class="con3Item">
+                <img class="con3ItemLeft" src="image/kechenging1.png">
+                <div class="con3ItemRight">
+                    <span class="con3ItemTitle">时间不在于你拥有多少，而在于你怎于你怎于你怎样使用</span>
+                    <div class="con3ItemBody">
+                        <div class="con3ItemTime con3ItemTimeMan">
+                            <p>发布人：艾克</p>
+                            <p>3月24日 10:00 发布</p>
+                        </div>
+                        <div class="con3ItemTime con3ItemTimeMoney" style="text-align:right;">
+                            <a><b>免费</b></a>
+                            <!--<p>已预约人数：20</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="con3">
+        <a >
+            <div class="con3Item">
+                <img class="con3ItemLeft" src="image/kechenging1.png">
+                <div class="con3ItemRight">
+                    <span class="con3ItemTitle">时间不在于你拥有多少，而在于你怎于你怎于你怎样使用</span>
+                    <div class="con3ItemBody">
+                        <div class="con3ItemTime con3ItemTimeMan">
+                            <p>发布人：艾克</p>
+                            <p>3月24日 10:00 发布</p>
+                        </div>
+                        <div class="con3ItemTime con3ItemTimeMoney" style="text-align:right;">
+                            <a><b>免费</b></a>
+                            <!--<p>已预约人数：20</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</body>
+<script>
+    var sort=$(".allSort .sort");
+    var priceSortState=0;
+    var index=0;
+    $(".priceSort").click(function () {
+        if(priceSortState===0){
+            $(this).children("img").attr("src","image/sort_price_down.png");priceSortState=1;index=3
+        }else{
+            $(this).children("img").attr("src","image/sort_price_up.png");priceSortState=0;index=2
+        }
+    })
+    sort.click(function () {
+        if($(this).index()===0||$(this).index()===1){
+            $(".priceSort").children("img").attr("src","image/sort_price.png");
+            index = $(this).index();
+        }
+        sort.removeClass("active");
+        $(this).addClass("active");
+        console.log(index)
+    })
+</script>
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.CouponGoodsMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="CouponGoods" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="coupon_goods_id" property="couponGoodsId" jdbcType="VARCHAR"/>
+        <result column="coupon_id" property="couponId" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="searchCouponGoodsById" resultType="CouponGoods">
+        select * from s_coupon_goods where coupon_goods_id =#{couponGoodsId}
+    </select>
+
+    <select id="searchCouponGoodsDetail" parameterType="CouponGoods" resultType="CouponGoods">
+        select * from s_coupon_goods where 1=1
+        <if test="couponId != null and couponId !=''">
+          and   coupon_id =#{couponId}
+        </if>
+        <if test="goodsId !=null and goodsId !=''">
+            and    goods_id =#{goodsId}
+        </if>
+    </select>
+
+    <insert id="insertCouponGoods" parameterType="CouponGoods">
+        insert into
+             s_coupon_goods(coupon_goods_id,
+                    coupon_id,
+                    goods_id)
+            values(#{couponGoodsId},
+                    #{couponId},
+                    #{goodsId})
+    </insert>
+
+    <delete id="deleteCouponGoods" parameterType="java.lang.String">
+        delete from s_coupon_goods where coupon_goods_id = #{couponGoodsId}
+    </delete>
+
+    <update id="updateCouponGoods" parameterType="CouponGoods">
+        update s_coupon_goods
+        <set>
+            <if test="couponId != null and couponId !=''">
+                coupon_id = #{couponId},
+            </if>
+            <if test="goodsId != null and goodsId !=''">
+                goods_id =#{goodsId},
+            </if>
+        </set>
+        where 1=1
+        <if test="couponGoodsId != null and couponGoodsId !=''">
+            and coupon_goods_id = #{couponGoodsId}
+        </if>
+    </update>
+
+    <select id="searchCouponGoodsList" resultType="CouponGoods">
+        select * from s_coupon_goods
+    </select>
+
+    <select id="getCouponGoodsList" resultMap="resultMap">
+        select * from s_coupon_goods
+    </select>
+</mapper>

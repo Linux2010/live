@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>用户中心</title>
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js" type="text/javascript"></script>
+    <style>
+        html,body{width:100%;height: 100%}
+        .body{width:100%;height:100%;}
+        .body .title{width:100%;text-align: center;line-height: 1rem;font-size: 0.4rem;background-color: #22272a;color: white;}
+        .body .box{display:inline-block;width:100%;padding:0.2rem;box-sizing: border-box;}
+        .body .box .good{width:2rem;display:inline-block;border:0.01rem solid red;padding:0.2rem;box-sizing: border-box;}
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="title" v-html="title">标题</div>
+    <div class="time"><span>发布于：</span><b>2017-08-17</b></div>
+    <div class="box">
+        <goods v-bind:attr="[g,index]" v-for="(g,index) in goods" v-on:a="b"></goods>
+    </div>
+</div>
+</body>
+<script>
+    Vue.component("goods",{
+        props:["attr"],
+        template:'' +
+        '<div class="good">' +
+            '<p>{{attr[0].name}}</p>' +
+            '<div>{{attr[0].price}}</div>' +
+            '<div v-on:click="a(attr[1])">at</div>' +
+        '</div>',
+        methods:{
+            a:function (x) {
+                console.log(x);
+                this.$emit('a')
+            }
+        }
+    })
+    var v1 = new Vue({
+        el:".body",
+        data:{
+            title:"物理竞赛",
+            goods:[
+                {
+                    name:"good1",
+                    price:"price1"
+                },
+                {
+                    name:"good2",
+                    price:"price2"
+                },
+                {
+                    name:"good3",
+                    price:"price3"
+                },
+                {
+                    name:"good4",
+                    price:"price5"
+                },
+                {
+                    name:"good6",
+                    price:"price7"
+                },
+                {
+                    name:"good7",
+                    price:"price5"
+                },
+            ]
+        },
+        methods:{
+            b:function () {
+                alert("b");
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,43 @@
+
+html,body{width:100%;padding: 0;margin: 0;background-color: #f5f5f5;}
+html{position: relative;height: 100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{width:100%;margin:0.2rem 0;border-top:0.01rem solid #ccc;}
+.con2 .con2Item{width:100%;background-color: white;border-bottom:0.01rem solid #ccc;box-sizing: border-box;padding: 0 0.2rem;line-height: 0.9rem;}
+.con2 .con2Name{display:inline-block;font-size: 0.3rem;color: #666;vertical-align: middle;}
+.con2 .con2Name1{font-size: 0.3rem;color: #333;vertical-align: middle;width: 4.8rem;border:none;padding:0;margin:0;}
+.con2 .button{width:100%;padding: 0 0.2rem;box-sizing: border-box;margin-top: 0.5rem;}
+.con2 .button span{width:100%;background-color: #ffa42f;color: white;font-size: 0.32rem;text-align: center;display: inline-block;border-radius: 0.2rem;line-height: 0.7rem;}
+
+.con3{width:100%;margin:0.2rem 0;background-color: white;padding-top:0.2rem;}
+.con3 .line1{width:100%;padding:0 0.2rem;box-sizing: border-box;line-height: 0.8rem;}
+.con3 .line1 .span{display:inline-block;width:49%;}
+.con3 .line2{width:100%;padding:0 0.2rem;box-sizing: border-box;line-height: 0.8rem;}
+.con3 .line3{width:100%;padding:0 0.2rem;box-sizing:border-box;line-height: 0.9rem;border-top:0.01rem solid #ccc}
+.con3 .line3 .line3L{display:inline-block;width:49%}
+.con3 .line3 .line3L input{vertical-align: middle}
+.con3 .line3 .line3L label{vertical-align: middle}
+.con3 .line3 .line3R{display:inline-block;width:49%;text-align: right}
+.con3 .line3 .line3R img{width: 0.3rem;vertical-align: middle}
+.con3 .line3 .line3R label{vertical-align: middle;margin-right: 0.3rem;}
+
+.addAdress{width:90%;margin:0.3rem 5%;text-align: center;line-height: 0.7rem;color:white;background-color: #ffa42f;border-radius: 0.2rem;position: fixed;bottom:0;}
+
+.delAdress{width:100%;height: 100%;background-color: rgba(0,0,0,0.5);position: fixed;top:0;z-index: 10;padding:0.2rem;box-sizing: border-box;}
+.delAdress .delBody{width:60%;margin:4rem auto;background-color: white;border-radius: 0.2rem;}
+.delAdress .delBody p{width:100%;text-align: center;line-height: 1rem;font-size: 0.26rem;}
+.delAdress .delBody h1{width:100%;text-align: center;line-height: 0.5rem;font-size: 0.32rem;padding-top:0.2rem;}
+.delAdress .delBody div{width:100%;border-top:0.01rem solid #ccc;}
+.delAdress .delBody div span{display:inline-block;width:49.6%;border-right: 0.01rem solid #ccc;text-align: center;line-height: 0.8rem;}
+
+.con4{width:100%;}
+.con4 .line4{width:100%;padding:0.2rem;box-sizing: border-box;margin:0.2rem 0;background-color: white;font-size: 0.3rem;color:#333;}
+.con4 .line4 .mes{width:6rem;vertical-align: middle;display: inline-block;line-height: 0.7rem;}
+.con4 .line4 .mes span{display: inline-block;width:49%;}
+.con4 .line4 .mes .tel{display: inline-block;width:49%;}
+.con4 .line4 .mesR{width:1rem;vertical-align: middle;display: inline-block;text-align: right;padding:0.2rem;box-sizing: border-box;}
+
+

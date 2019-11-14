@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.rechargeMember.mapper.RechargeMemberMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="RechargeMember" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="rechargeMember_id" property="rechargeMemberId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="recharge_time" property="rechargeTime" jdbcType="BIGINT"/>
+        <result column="recharge_type" property="rechargeType" jdbcType="INTEGER"/>
+        <result column="expiration_date" property="expirationDate" jdbcType="BIGINT"/>
+        <result column="pay_type" property="payType" jdbcType="INTEGER"/>
+        <result column="pay_status" property="payStatus" jdbcType="INTEGER"/>
+        <result column="recharge_money" property="rechargeMoney" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="resultMap">
+        select id, rechargeMember_id, user_id, order_no, recharge_time, recharge_type, expiration_date, pay_type, pay_status,recharge_money,
+        create_time, status , version from recharge_member
+    </select>
+    <select id="selectByUserId" resultMap="resultMap" parameterType="java.lang.String">
+        select id, rechargeMember_id, user_id, order_no, recharge_time, recharge_type, expiration_date, pay_type, pay_status,recharge_money,
+        create_time, status , version from recharge_member where  user_id = #{userId}
+    </select>
+    <select id="selectByRechargeMemberId" resultMap="resultMap" parameterType="java.lang.String">
+        select id, rechargeMember_id, user_id, order_no, recharge_time, recharge_type, expiration_date, pay_type, pay_status, recharge_money,
+        create_time, status , version from recharge_member
+        where rechargeMember_id = #{rechargeMemberId}
+    </select>
+    <select id="selectNewByUserId" resultMap="resultMap" parameterType="java.lang.String">
+        select * from recharge_member where create_time = (select max( create_time) from recharge_member) and user_id = #{userId}
+    </select>
+    <insert id="addRechargeMember" parameterType="RechargeMember">
+      insert into recharge_member
+      (id, rechargeMember_id, user_id, order_no, recharge_time, recharge_type, expiration_date, pay_type, pay_status, recharge_money,
+      create_time, status , version
+      )
+      values(
+      #{id}, #{rechargeMemberId}, #{userId}, #{orderNo}, #{rechargeTime}, #{rechargeType}, #{expirationDate}, #{payType}, #{payStatus}, #{rechargeMoney},
+      #{createTime}, #{status}, #{version}
+      )
+    </insert>
+    <update id="updateRechargeMember" parameterType="java.lang.String">
+      update recharge_member set pay_status = 1 where rechargeMember_id = #{rechargeMemberId}
+    </update>
+    <delete id="delByRechargeMemberId" parameterType="java.lang.String">
+        delete recharge_member where rechargeMember_id = #{rechargeMemberId}
+    </delete>
+
+    <update id="setPayFinishRechargeMemberByOrderOn"  >
+        update recharge_member
+        <set>
+            <if test="transactionId != null and transactionId !=''">
+                transaction_id =#{transactionId},
+            </if>
+            pay_status = '1'
+        </set>
+        where order_no = #{orderNo} and pay_status != '1'
+    </update>
+    <select id="selectByOrderOn" parameterType="java.lang.String" resultMap="resultMap">
+      select * from recharge_member where order_no = #{orderNo}
+    </select>
+</mapper>

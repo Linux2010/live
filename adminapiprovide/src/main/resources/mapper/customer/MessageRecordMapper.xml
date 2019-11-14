@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.customer.mapper.MessageRecordMapper" >
+  <resultMap id="BaseResultMap" type="MessageRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="message_id" property="messageId" jdbcType="VARCHAR" />
+    <result column="send_user_id" property="sendUserId" jdbcType="VARCHAR" />
+    <result column="receive_user_id" property="receiveUserId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="classify" property="classify" jdbcType="SMALLINT" />
+    <result column="message_type" property="messageType" jdbcType="SMALLINT" />
+    <result column="relation_id" property="relationId" jdbcType="VARCHAR" />
+    <result column="relation_type" property="relationType" jdbcType="SMALLINT" />
+    <result column="message_status" property="messageStatus" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+
+    <result column="oper_type" property="operType" jdbcType="VARCHAR" />
+    <result column="oper_id" property="operId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, message_id, send_user_id, receive_user_id, title,content, message_type, relation_id,intro,url,classify,
+    relation_type, message_status, create_time, status, version,oper_type,oper_id
+  </sql>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from c_message_record
+    where message_id = #{messageId}
+  </select>
+
+
+  <select id="getPage" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from c_message_record
+    where 1=1
+  </select>
+
+  <select id="getListByRelationId" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from c_message_record
+    where relation_id = #{relationId}
+  </select>
+
+
+  <select id="getMessageCount" resultType="Integer" parameterType="MessageRecord">
+    select count(1) from c_message_record
+    where 1=1
+    <if test="relationType != null" >
+      AND relation_type = #{relationType}
+    </if>
+    <if test="sendUserId != null" >
+      AND send_user_id = #{sendUserId}
+    </if>
+    <if test="receiveUserId != null" >
+      AND receive_user_id = #{receiveUserId}
+    </if>
+    <if test="relationId != null" >
+      AND relation_id = #{relationId}
+    </if>
+    <if test="classify != null" >
+      AND classify = #{classify}
+    </if>
+    <if test="messageStatus != null" >
+      AND message_status = #{messageStatus}
+    </if>
+      GROUP BY relation_id,classify
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from c_message_record
+    where message_id = #{messageId}
+  </delete>
+
+  <insert id="insert" parameterType="MessageRecord" >
+    insert into c_message_record (message_id, send_user_id,
+      receive_user_id,title, content, message_type,
+      relation_id, relation_type, message_status, 
+      create_time, status, version,intro,url,classify,oper_id,oper_type
+      )
+    values (#{messageId,jdbcType=VARCHAR}, #{sendUserId,jdbcType=VARCHAR},
+      #{receiveUserId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{messageType,jdbcType=SMALLINT},
+      #{relationId,jdbcType=VARCHAR}, #{relationType,jdbcType=SMALLINT}, #{messageStatus,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}, #{version,jdbcType=INTEGER},#{intro},#{url},#{classify},#{operId},#{operType}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="MessageRecord" >
+    insert into c_message_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="sendUserId != null" >
+        send_user_id,
+      </if>
+      <if test="receiveUserId != null" >
+        receive_user_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="messageType != null" >
+        message_type,
+      </if>
+      <if test="relationId != null" >
+        relation_id,
+      </if>
+      <if test="relationType != null" >
+        relation_type,
+      </if>
+      <if test="messageStatus != null" >
+        message_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="classify != null" >
+        classify,
+      </if>
+      <if test="operType != null" >
+        oper_type,
+      </if>
+      <if test="operId != null" >
+        oper_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="messageId != null" >
+        #{messageId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserId != null" >
+        #{sendUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null" >
+        #{receiveUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=SMALLINT},
+      </if>
+      <if test="relationId != null" >
+        #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationType != null" >
+        #{relationType,jdbcType=SMALLINT},
+      </if>
+      <if test="messageStatus != null" >
+        #{messageStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="intro != null" >
+        #{intro},
+      </if>
+      <if test="url != null" >
+        #{url},
+      </if>
+      <if test="classify != null" >
+        #{classify},
+      </if>
+      <if test="operType != null" >
+        #{operType},
+      </if>
+      <if test="operId != null" >
+        #{operId},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="MessageRecord" >
+    update c_message_record
+    <set >
+      <if test="messageId != null" >
+        message_id = #{messageId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserId != null" >
+        send_user_id = #{sendUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null" >
+        receive_user_id = #{receiveUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        message_type = #{messageType,jdbcType=SMALLINT},
+      </if>
+      <if test="relationId != null" >
+        relation_id = #{relationId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationType != null" >
+        relation_type = #{relationType,jdbcType=SMALLINT},
+      </if>
+      <if test="messageStatus != null" >
+        message_status = #{messageStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro},
+      </if>
+      <if test="url != null" >
+        url = #{url},
+      </if>
+      <if test="classify != null" >
+        classify = #{classify},
+      </if>
+    </set>
+    where message_id = #{messageId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="MessageRecord" >
+    update c_message_record
+    set message_id = #{messageId,jdbcType=VARCHAR},
+      send_user_id = #{sendUserId,jdbcType=VARCHAR},
+      receive_user_id = #{receiveUserId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      message_type = #{messageType,jdbcType=SMALLINT},
+      relation_id = #{relationId,jdbcType=VARCHAR},
+      relation_type = #{relationType,jdbcType=SMALLINT},
+      message_status = #{messageStatus,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT},
+      version = #{version,jdbcType=INTEGER}
+    where message_id = #{messageId}
+  </update>
+
+
+  <select id="getMessageByGP" resultMap="BaseResultMap" parameterType="Map" >
+    SELECT <include refid="Base_Column_List" /> FROM(
+        SELECT <include refid="Base_Column_List" /> FROM c_message_record WHERE status = 1
+          <if test="map.relationType != null" >
+           AND relation_type = #{map.relationType}
+          </if>
+          <if test="map.classify != null" >
+            AND classify = #{map.classify}
+          </if>
+          <if test="map.relationId != null" >
+            AND relation_id = #{map.relationId}
+          </if>
+        ORDER BY create_time DESC
+    )AS a GROUP BY relation_id
+  </select>
+
+  <select id="getPageByMap" resultMap="BaseResultMap" parameterType="Map">
+    select
+    <include refid="Base_Column_List" />
+    from c_message_record
+    where status = 1
+    <if test="map.relationType != null" >
+      AND relation_type = #{map.relationType}
+    </if>
+    <if test="map.sendUserId != null" >
+      AND send_user_id = #{map.sendUserId}
+    </if>
+    <if test="map.receiveUserId != null" >
+      AND receive_user_id = #{map.receiveUserId}
+    </if>
+    <if test="map.messageType != null" >
+      AND message_type = #{map.messageType}
+    </if>
+    <if test="map.classify != null" >
+      AND classify = #{map.classify}
+    </if>
+    <if test="map.relationId != null" >
+      AND relation_id = #{map.relationId}
+    </if>
+    <if test="map.userId != null" >
+      AND (send_user_id = #{map.userId} OR receive_user_id = #{map.userId})
+    </if>
+      ORDER BY create_time DESC
+  </select>
+
+  <update id="updateByTCU" parameterType="Map" >
+    update c_message_record Set message_status = '1'
+    where classify = #{map.classify} AND relation_id = #{map.relationId} AND create_time <![CDATA[<=]]> #{map.createTime}
+    <if test="map.messageIds != null" >
+      AND message_id IN #{messageIds}
+    </if>
+  </update>
+
+  <select id="wxbecomelowerlevelnotice" parameterType="String" resultMap="BaseResultMap">
+      SELECT
+     <include refid="Base_Column_List" />
+      FROM
+          c_message_record
+      WHERE
+          classify = 2
+      AND receive_user_id = #{receiveUserId}
+      AND c_message_record.relation_id = #{receiveUserId}
+      AND c_message_record.message_status = 0
+  </select>
+</mapper>

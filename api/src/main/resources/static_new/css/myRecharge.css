@@ -1,0 +1,33 @@
+html,body{width:100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{width:100%;padding:0.4rem;box-sizing: border-box;background-color: white}
+.con2 .line1{border-bottom: 0.01rem solid #ccc;line-height: 0.8rem;}
+.con2 .line1 .curtype{display:inline-block;font-size: 0.3rem;color:#222;width:2rem;}
+.con2 .line1 .seltype{display:inline-block;font-size: 0.3rem;color:#ffa42f;}
+.con2 .line1 .withdrawNum{display:inline-block;font-size: 0.3rem;color:#ffa42f;}
+.con2 .line2{line-height: 0.8rem;}
+.con2 .line2 p{}
+.con2 .line2 .money{width:100%;}
+.con2 .line2 .money input{border:0;outline: 0;line-height: 0.6rem;vertical-align: middle;}
+.con2 .allmoney{padding: 0.2rem 0;border-top: 0.01rem solid #ccc;}
+
+.button{width:90%;margin:3rem 5% 0;background-color: #ffa42f;color:white;font-size: 0.32rem;border-radius: 0.2rem;line-height: 0.7rem;text-align: center}
+
+.con3{width:100%;text-align: center}
+.con3 .p1{font-size: 0.26rem;color:#222;margin-top:0.8rem;margin-bottom: 0.2rem;}
+.con3 .p2{font-size: 0.5rem;color:#222;margin-bottom: 0.5rem;}
+.con3 .p3{font-size: 0.5rem;color:#222;margin:1.5rem 0 1rem;}
+.con3 .moneyTo{line-height: 0.95rem;background-color: white;font-size: 0.26rem;padding:0 0.3rem;box-sizing: border-box;}
+.con3 .moneyTo .s1{display:inline-block;width: 49%;text-align: left}
+.con3 .moneyTo .s2{display:inline-block;width:49%;text-align: right}
+
+.type{width:100%;line-height: 1rem;background-color: white;height: 6.5rem;position: fixed;bottom: -6rem;}
+.type .button2{font-size: 0.28rem;color:#ffa42f;display: flex;justify-content: space-between;padding:0 0.2rem;box-sizing: border-box;border-bottom: 0.01rem solid #ccc;}
+.type .button2 span{color:#ffa42f}
+.type ul{width:100%;margin:0;padding: 0}
+.type li{width:100%;padding:0 0.4rem;border-bottom:0.01rem solid #ccc;box-sizing: border-box}
+.type li input{float: right;margin:0.35rem 0;}
+.type li label{}

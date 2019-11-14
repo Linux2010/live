@@ -1,0 +1,37 @@
+html,body{width:100%;height: 100%;background-color: #f5f5f5;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{background-color: #ccc;font-size: 0.34rem;line-height: 0.45rem;position: fixed;top:0.85rem;width:100%;z-index: 1;}
+.con2 .con2Select{margin:0 auto;display: flex;justify-content: space-around;width:100%;}
+.con2 .con2Select span{border-bottom:0.03rem solid transparent;text-align: center;padding: 0.2rem 0;color:#333;width:50%;}
+.con2 .con2Select span.active{background-color:#ffa42f;}
+
+.con3{padding:0.34rem;padding-bottom: 0;margin-top:1rem;}
+.con3 .con3Con{text-align: center;}
+.con3 .con3Con .span1{text-align: center;display: inline-block;width:1rem;border-bottom-left-radius: 0.1rem;border:0.01rem solid #ffa42f;border-right:0;border-top-left-radius: 0.1rem;background-color: #ffa42f;vertical-align:middle;font-size:0.3rem;color:white;line-height:0.775rem}
+.con3 .con3Con .span2{text-align: center;display: inline-block;width:2rem;border-bottom-right-radius: 0.1rem;border-top-right-radius: 0.1rem;background-color: #ccc;vertical-align:middle;color:white;font-size:0.3rem;line-height:0.78rem;border:0.01rem;border-right: 0;}
+.con3 .con3Con .input1{text-align: center;display: inline-block;width:4.5rem;border-bottom-left-radius: 0;border-top-left-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+.con3 .con3Con .input2{text-align: center;display: inline-block;width:3.5rem;border-bottom-right-radius: 0;border-top-right-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+.con3 .con3Con .inputcodeimg{background-color: #ffa42f;}
+.con3 .con3Con input{width:5.5rem;height: 0.75rem;border-radius: 0.1rem;margin:0.2rem auto 0.2rem 0;text-align: center;font-size: 0.28rem;border:0.01rem solid #ccc;}
+.con3 .con3Con label{display:inline-block;width:1.2rem;height: 0.75rem;text-align: right;line-height: 0.75rem;margin:0.2rem 0.05rem 0.2rem 0;font-size: 0.3rem;}
+.con3 input[type=button]{width:82%;background-color: #ccc;border-color: transparent;margin:0.4rem auto;color: white;font-size: 0.32rem;}
+.con3 input[type=button].submit{background-color: #ffa42f}
+
+.con3 .con3Con .pwd{width:5.5rem;line-height: 0.75rem;border-radius: 0.1rem;margin:0.2rem auto;}
+
+.con4{padding:0.34rem;padding-bottom: 0;margin-top:1rem;}
+.con4 .con4Con{text-align: center;}
+.con4 .con4Con .span1{text-align: center;display: inline-block;width:1rem;border-bottom-left-radius: 0.1rem;border:0.01rem solid #ffa42f;border-right:0;border-top-left-radius: 0.1rem;background-color: #ffa42f;vertical-align:middle;font-size:0.3rem;color:white;line-height:0.775rem}
+.con4 .con4Con .span2{text-align: center;display: inline-block;width:2rem;border-bottom-right-radius: 0.1rem;border-top-right-radius: 0.1rem;background-color: #ccc;vertical-align:middle;color:white;font-size:0.3rem;line-height:0.78rem;border:0.01rem;border-right: 0;}
+.con4 .con4Con .input1{text-align: center;display: inline-block;width:4.5rem;border-bottom-left-radius: 0;border-top-left-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+.con4 .con4Con .input2{text-align: center;display: inline-block;width:3.5rem;border-bottom-right-radius: 0;border-top-right-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+.con4 .con4Con .inputcodeimg{background-color: #ffa42f;}
+.con4 .con4Con input{width:5.0rem;height: 0.75rem;border-radius: 0.1rem;margin:0.2rem auto 0.2rem 0;text-align: center;font-size: 0.28rem;border:0.01rem solid #ccc;}
+.con4 .con4Con label{display:inline-block;width:1.5rem;height: 0.75rem;text-align: right;line-height: 0.75rem;margin:0.2rem 0.1rem 0.2rem 0;font-size: 0.3rem;}
+.con4 input[type=button]{width:100%;background-color: #ccc;border-color: transparent;margin:0.4rem auto;color: white;font-size: 0.32rem;}
+.con4 input[type=button].submit{background-color: #ffa42f}
+
+.con4 .con4Con .pwd{width:5.5rem;line-height: 0.75rem;border-radius: 0.1rem;margin:0.2rem auto;}

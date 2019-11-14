@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.SpecMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Spec" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="spec_id" property="specId" jdbcType="VARCHAR"/>
+        <result column="spec_name" property="specName" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+        <collection property="specValuesList" column="{specId =spec_id }" select="searchSpecValuesBySpecId" ofType="SpecValues"/>
+    </resultMap>
+
+    <select id="searchSpecValuesBySpecId" resultType="SpecValues" parameterType="SpecValues">
+        select * from s_spec_values where spec_id =#{specId}
+    </select>
+
+    <select id="searchSpecById" resultType="Spec">
+        select * from s_spec where spec_id =#{specId}
+    </select>
+
+    <insert id="insertSpec" parameterType="Spec">
+        insert into
+             s_spec(spec_id,
+                    spec_name,
+                    remark,
+                    status,
+                    create_time,
+                    version,
+                    seqno)
+            values(#{specId},
+                    #{specName},
+                    #{remark},
+                    #{status},
+                    #{createTime},
+                    #{version},
+                    #{seqno} )
+    </insert>
+
+    <delete id="deleteSpec" parameterType="java.lang.String">
+        delete from s_spec where spec_id = #{specId}
+    </delete>
+
+    <update id="updateSpec" parameterType="Spec">
+        update s_spec
+        <set>
+            <if test="specName != null and specName !=''">
+                spec_name = #{specName},
+            </if>
+            <if test="status != null and status !=''">
+                status = #{status},
+            </if>
+            <if test="remark != null and remark !=''">
+                remark = #{remark},
+            </if>
+            <if test="seqno != null and seqno !=''">
+                seqno = #{seqno},
+            </if>
+        </set>
+        where 1=1
+        <if test="specId != null and specId !=''">
+            and spec_id = #{specId}
+        </if>
+    </update>
+
+    <select id="searchSpecList" resultType="Spec">
+        select * from s_spec where 1=1
+        <if test="specName != null and specName != ''">
+            and spec_name like CONCAT('%', #{specName},'%')
+        </if>
+        order by seqno asc ,create_time desc
+    </select>
+
+    <select id="getSpecList" resultMap="resultMap">
+        select * from s_spec where 1=1
+        order by seqno asc ,create_time desc
+    </select>
+
+    <!--根据商品Id查询商品规格-->
+    <select id="selectSpecsByGoodsId" parameterType="java.lang.String"  resultMap="resultMap" >
+        SELECT spec.* FROM s_goods_sku sku,s_spec spec WHERE sku.`spec_id` = spec.`spec_id`
+        AND sku.goods_id =#{goodsId} GROUP BY sku.`spec_id`
+    </select>
+</mapper>

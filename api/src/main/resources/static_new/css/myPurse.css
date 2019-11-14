@@ -1,0 +1,17 @@
+
+html,body{width:100%;padding: 0;margin: 0;background-color: #f5f5f5;}
+html{position: relative;height: 100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{}
+.con2 img{width:4.64rem;height:4.47rem;margin:1rem auto; display: block;}
+
+
+.con3{padding: 0.1rem 0.2rem;}
+.con3 p{line-height: 0.64rem;color: #ffa42f;text-align: center;font-size: 0.32rem;}
+.con3 .money{line-height: 0.8rem;background-color: #eee;border:0.01rem solid #ccc;color:#222;text-align: center;font-size: 0.32rem;border-radius: 0.2rem;margin: 0.3rem;}
+
+
+

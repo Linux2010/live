@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue</title>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <child :level="3">
+        hello world
+    </child>
+</div>
+
+<script type="text/x-template" id="anchored-heading-template">
+    <div>
+        <h1 v-if="level === 1">
+            <slot></slot>
+        </h1>
+        <h2 v-if="level === 2">
+            <slot></slot>
+        </h2>
+        <h3 v-if="level === 3">
+            <slot></slot>
+            <slot></slot>
+            <slot></slot>
+            <slot></slot>
+        </h3>
+        <h4 v-if="level === 4">
+            <slot></slot>
+        </h4>
+        <h5 v-if="level === 5">
+            <slot></slot>
+        </h5>
+        <h6 v-if="level === 6">
+            <slot></slot>
+        </h6>
+    </div>
+</script>
+
+<script type="text/javascript">
+    Vue.component('child', {
+        template: '#anchored-heading-template',
+        props: {
+            level: {
+                type: Number,
+                required: true
+            }
+        }
+    });
+    new Vue({
+        el: "#app"
+    })
+</script>
+</body>
+</html>

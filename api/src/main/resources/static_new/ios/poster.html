@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>用户中心</title>
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js"></script>
+    <style>
+        html,body{width:100%;}
+        .body{width:100%;height:100%;padding-bottom: 0.5rem;}
+        .body .title{width:100%;text-align: center;line-height: 1rem;font-size: 0.4rem;overflow: hidden;}
+        .body .p{width:100%;box-sizing: border-box;padding: 0.2rem 0.8rem;line-height: 0.5rem;text-indent: 2em;font-size: 0.28rem;}
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="title"><b v-html="title"></b></div>
+    <div class="p" style="text-indent: 0">自教头学院直播成立以来，教头学院直播一直采取精品化内容战略。随着电竞赛事的发展，教头学院直播汇聚了众多世界冠军级战队和主播，引入国内外赛事的直播版权，深耕独家IP赛事；此外，教头学院直播还通过明星主播化等方式展开泛娱乐直播，启动全明星主播战略，许多娱乐明星的直播处女秀均是在教头学院直播完成。</div>
+    <div class="p" style="text-indent: 0">教头学院直播也是目前国内首家全网启用HTML5直播技术的平台。用户不再需要安装插件，打开教头学院直播即可享受“远离卡顿发烫，1秒即开看直播”的畅快体验。这一技术的革新与优化，不仅让国内的直播行业迎来了一个崭新的时代。</div>
+    <div class="p" style="text-indent: 0">教头学院直播之所以获得金瑞奖的肯定，得益于过去一年内在直播业务的大胆创新。不仅在内容生产方面拥有多项产品技术创新，更是在移动端斩获诸多产品发明。优秀的用户体验，丰富的高质量内容，获得了用户与行业的双重认可。</div>
+    <div class="p" style="text-indent: 0">教头学院直播将成立主播经纪团队，设立一个具有权威性及较高专业水准的经纪部门，专门负责制定适合每个签约主播的科学的个性化的发展规划。其次，探索多样化的培养方式，通过推出合适的自制直播节目或引进专业的节目供应商加以培植，提高主播在镜头前的表现力，进而营造主播的个人/团队品牌效应。此外，还会对主播加以全方位的包装，为有潜力的主播提供上升通道，与知名影视音乐企业合作，打通影视、综艺、音乐、娱乐等渠道。</div>
+    <div class="p" style="text-indent: 0">作为目前国内直播领域第一梯队中资深的直播平台，教头学院直播的体验和服务创新还体现在内容的构建上。除了游戏电竞直播外，还深耕泛娱乐领域多年。教头学院直播携手全球首档一站式互动养成直播剧《你行你上》，打破影视剧拍摄的传统模式，更是开创了全球第一个户外直播节目《荒野狂人》。</div>
+    <div class="p" style="text-indent: 0">在技术创新方面，教头学院直播2016年正式全网启用HTML5直播技术。用户不再需要安装插件，打开教头学院直播即可享受“远离卡顿发烫，1秒即开看直播”的畅快体验。据了解，教头学院直播是国内首家启用HTML5技术的直播平台。这一技术的革新与优化，不仅让国内的直播行业迎来了一个崭新的时代，也是对外证明了中国的技术达到了世界领先的水平。</div>
+</div>
+</body>
+<script>
+    var v1=new Vue({
+        el:".body",
+        data:{
+            title:"今日海报",
+            p:{
+
+            }
+        }
+    })
+</script>
+</html>

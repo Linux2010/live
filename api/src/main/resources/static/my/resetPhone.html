@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/getpwd.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="con1">
+    <span style="width: 20%;display: inline-block;"><</span><span style="width: 60%;display: inline-block;margin: 0 auto;text-align: center;">换绑手机号</span>
+</div>
+<div class="con3">
+    <div class="con3Con">
+        <span class="span1" id="sel_city">+86</span><input class="input1" type="text" v-model="telVal" :disabled="telDisabled" placeholder="请输入新手机号">
+    </div>
+    <div class="con3Con">
+        <input class="input2" type="text" v-model="codeVal" placeholder="输入验证码"><span class="span2" v-html="codeImgVal" v-bind:class="{inputcodeimg:telStates&codeImgValStates}" v-on:click="getCode($event)"></span>
+    </div>
+    <div class="con3Con">
+        <input type="button" v-model="registerVal" v-bind:class="{submit:telStates&codeStates}" v-on:click="sub()">
+    </div>
+</div>
+</body>
+<script>
+    var v1=new Vue({
+        el:'.con3',
+        data:{
+            telVal:'',
+            telDisabled:false,
+            codeVal:'',
+            codeImgVal:'获取验证码',
+            codeImgValStates:true,
+            usernameVal:'',
+            passwordVal:'',
+            truePasswordVal:'',
+            registerVal:'下一步',
+            wait:60,
+            message:'qwle'
+        },
+        computed:{
+            telStates:function () {
+                return this.telVal!=="";
+            },
+            codeStates:function () {
+                return this.codeVal!=="";
+            },
+            usernameStates:function () {
+                return this.usernameVal!=="";
+            },
+            passwordValStates:function () {
+                return this.passwordVal!=="";
+            },
+            truePasswordValStates:function () {
+                return this.truePasswordVal!==""&&(this.passwordVal===this.truePasswordVal);
+            }
+        },
+        methods:{
+            getCode:function (e) {
+                var a = e.currentTarget;
+                if(this.wait===60&&this.telStates){
+                    console.log("ajax");
+                    this.codeImgValStates=false;
+                    this.telDisabled=true;
+                    time(a);
+                }
+                function time(a) {
+                    if (v1.wait === 0) {
+                        v1.codeImgValStates=true;          //toyellow
+                        v1.telDisabled=false;              //toyellow
+                        v1.codeImgVal="发送验证码";
+                        v1.wait = 60;
+                    } else {
+                        v1.codeImgVal="重新发送("+v1.wait+")";
+                        v1.wait--;
+                        setTimeout(function(){time(a)},1000)
+                    }
+                }//time
+            },
+            sub:function () {
+                window.location.href="zhuce/getpwd2.html"
+            }
+        }
+    })
+</script>
+<script>
+    var con2Select = $(".con2 .con2Select span");
+    con2Select.click(function () {
+        con2Select.removeClass("active");
+        $(this).addClass("active")
+    })
+</script>
+</html>

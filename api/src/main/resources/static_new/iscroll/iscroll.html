@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="css/iscroll.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/iscroll.js"></script>
+    <title>上拉加载更多</title>
+</head>
+<body>
+<header>这是头部</header>
+<div id="wrapper">
+    <div class="scroller">
+        <div class="fresh"><i class="pull_icon"></i><span>上拉加载...</span></div>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+        </ul>
+        <div class="more"><i class="pull_icon"></i><span>上拉加载...</span></div>
+    </div>
+</div>
+<footer>这是底部</footer>
+<script>
+    var freshH=$(".fresh").height();
+    var moreState=0;
+    var freshState=0;
+    var myscroll = new iScroll("wrapper",{
+        topOffset:freshH,
+        onScrollMove:function(){
+            if(this.y>=0){
+                this.minScrollY=0;
+                freshState=1;
+                freshElement();
+            }else if(0>this.y>-freshH){
+                freshState=0;
+                freshElement();
+            }else{
+                console.log("没这种情况")
+            }
+            //////////////////////////////////////////////////////////////////////fresh-more////////////////////////////////////////////////////////////////////////////////////
+            if (this.y<(this.maxScrollY)) {
+                moreState=1;
+                moreElement();
+            }else{
+                moreState=0;
+                moreElement();
+            }
+        },
+        onScrollEnd:function(){
+            if(freshState===1){
+                freshState=2;
+                pullDownAction();
+                freshElement();
+            }
+            ////////////////////////////////////////////////////////////////////////fresh-more//////////////////////////////////////////////////////////////////////////////////
+            if (moreState===1) {
+                moreState=2;
+                moreElement();
+                pullUpAction();
+            }
+        },
+        onRefresh:function(){
+//            moreState=0;
+//            freshState=0;
+//            moreElement();
+//            freshElement();
+        }
+
+    });
+    /////////////////////////////////////////////////////////////////////////////////getData(x)////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////////pullUpAction()/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function pullUpAction(){
+        setTimeout(function(){
+            getDataMore(1);
+            function getDataMore(x) {
+                $.ajax({
+                    url:'json/ay.json',
+                    type:'get',
+                    dataType:'json',
+                    success:function(data){
+                        for (var i = 0; i < 5; i++) {
+                            $('.scroller ul').append(data);
+                        }
+                        moreState=3;
+                        moreElement();
+                        myscroll.refresh();
+                    },
+                    error:function(data){
+                        moreState=4;
+                        moreElement();
+                        myscroll.refresh();
+                    }
+                })
+            }
+        }, 1000)
+    }
+    function pullDownAction(){
+        setTimeout(function(){
+            getDataFresh(1);
+            function getDataFresh(x) {
+                $.ajax({
+                    url:'json/ay.json',
+                    type:'get',
+                    dataType:'json',
+                    success:function(data){
+                        for (var i = 0; i < 5; i++) {
+                            $('.scroller ul').append(data);
+                        }
+                        freshState=3;
+                        freshElement();
+                        setTimeout(function () {
+                            myscroll.refresh();
+                        },1000)
+                    },
+                    error:function(data){
+                        freshState=4;
+                        freshElement();
+                        myscroll.refresh();
+                    }
+                })
+            }
+        }, 1000)
+    }
+    function moreElement() {
+        switch (moreState){
+            case 0:
+                $('.more .pull_icon').removeClass('flip loading');
+                $('.more span').text('上拉加载...');
+                break;
+            case 1:
+                $('.more .pull_icon').addClass('flip');
+                $('.more .pull_icon').removeClass('loading');
+                $('.more span').text('释放加载...');
+                break;
+            case 2:
+                $('.more .pull_icon').addClass('loading');
+                $('.more span').text('加载中...');
+                break;
+            case 3:
+                $('.more .pull_icon').addClass('loading');
+                $('.more  span').text('加载成功');
+                break;
+            default:
+                $('.more .pull_icon').addClass('loading');
+                $('.more span').text('加载失败！！');
+                break;
+        }
+    }
+    function freshElement() {
+        switch (freshState){
+            case 0:
+                $('.fresh .pull_icon').show();
+                $('.fresh .pull_icon').removeClass('flip loading');
+                $('.fresh span').text('下拉刷新...');
+                break;
+            case 1:
+                $('.fresh .pull_icon').addClass('flip');
+                $('.fresh .pull_icon').removeClass('loading');
+                $('.fresh span').text('释放刷新...');
+                break;
+            case 2:
+                $('.fresh .pull_icon').addClass('loading');
+                $('.fresh span').text('刷新中...');
+                break;
+            case 3:
+                $('.fresh .pull_icon').hide();
+                $('.fresh span').text('刷新成功');
+                break;
+            default:
+                $('.fresh .pull_icon').addClass('loading');
+                $('.fresh span').text('刷新失败！！');
+                break;
+        }
+    }
+
+</script>
+</body>
+</html>

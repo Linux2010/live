@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.live.mapper.GiftCollectionStatisticsMapper">
+  <!--  <cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="GiftCollectionStatistics" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="gift_collection_statistics_id" property="giftCollectionStatisticsId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="SMALLINT" />
+        <result column="gift_all_number" property="giftAllNumber" jdbcType="INTEGER" />
+        <result column="gift_all_worth" property="giftAllWorth" jdbcType="DECIMAL" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time"  property="updateTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="imRoomId" property="imRoomId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getGiftCollectionStatisticsByUserId" parameterType="GiftCollectionStatistics" resultMap="resultMap">
+
+        select * from gift_collection_statistics where 1=1
+        <if test=" userId != null and userId !=''">
+            and user_id =#{userId}
+        </if>
+        <if test=" type != null">
+            and  type =#{type}
+        </if>
+        <if test=" imRoomId != null and imRoomId !=''">
+            and  imRoomId =#{imRoomId}
+        </if>
+    </select>
+
+    <update id="updateGiftCollectionStatistics" parameterType="GiftCollectionStatistics">
+
+        update  gift_collection_statistics
+        <set>
+            <if test="type != null" >
+                type =#{type},
+            </if>
+            <if test="giftAllNumber != null" >
+                gift_all_number= #{giftAllNumber},
+            </if>
+            <if test="giftAllWorth != null" >
+                gift_all_worth =#{giftAllWorth},
+            </if>
+            <if test="updateTime != null" >
+                update_time=#{updateTime},
+            </if>
+            <if test="status != null" >
+                status =#{status},
+            </if>
+            <if test="version != null" >
+                version  =#{version},
+            </if>
+        </set>
+        where 1=1
+        <if test="userId != null" >
+           and  user_id =#{userId}
+        </if>
+        <if test="imRoomId != null and imRoomId !=''">
+            and  imRoomId  = #{imRoomId,jdbcType=VARCHAR}
+        </if>
+    </update>
+
+    <insert id="insertGiftCollectionStatistics" parameterType="GiftCollectionStatistics">
+        insert into gift_collection_statistics
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="giftCollectionStatisticsId != null" >
+                gift_collection_statistics_id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="giftAllNumber != null" >
+                gift_all_number,
+            </if>
+            <if test="giftAllWorth != null" >
+                gift_all_worth,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="version != null" >
+                version,
+            </if>
+            <if test="imRoomId != null and imRoomId !=''">
+                imRoomId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="giftCollectionStatisticsId != null" >
+                #{giftCollectionStatisticsId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="giftAllNumber != null" >
+                #{giftAllNumber,jdbcType=INTEGER},
+            </if>
+            <if test="giftAllWorth != null" >
+                #{giftAllWorth,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null" >
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="imRoomId != null and imRoomId !=''">
+                #{imRoomId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!-- 用户赠送礼物总榜单 top10-->
+    <select id="giftTotalTopTenList" resultMap="resultMap">
+        SELECT
+          s.user_id,
+          s.gift_all_number,
+          s.gift_all_worth,
+          IFNULL(u.user_name," ") AS user_name,
+          u.photo,
+          s.imRoomId
+        FROM
+          gift_collection_statistics s ,user u
+        WHERE s.user_id = u.user_id
+        and s.imRoomId = #{imRoomId}
+        AND  s.TYPE = '0'
+        ORDER BY s.gift_all_worth DESC
+        LIMIT 10
+    </select>
+
+    <!-- 用户赠送礼物日榜单 top10-->
+    <select id="giftEveryDayTopTenList" resultMap="resultMap">
+      SELECT
+          SUM(o.gift_number) gift_all_number,
+          SUM(o.gift_all_worth) gift_all_worth,
+          u.`user_id`,
+          IFNULL(u.user_name," ") AS user_name,
+          u.photo,
+          o.imRoomId
+        FROM
+          gift_brush_order o ,user u
+        WHERE o.user_id = u.user_id
+        and o.imRoomId = #{imRoomId}
+        AND  FROM_UNIXTIME(
+            o.`create_time` / 1000,
+            '%Y-%m-%d'
+          ) = DATE_FORMAT(now(), '%Y-%m-%d')
+        GROUP BY o.user_id
+        ORDER BY SUM(o.gift_all_worth) DESC
+        LIMIT 10
+
+    </select>
+
+</mapper>

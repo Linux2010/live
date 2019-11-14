@@ -1,0 +1,22 @@
+html,body{width:100%;height: 100%;background-color: #f5f5f5;}
+body{overflow: hidden;}
+
+.con1{background-color: #22272a;font-size: 0.34rem;line-height: 0.45rem;position: fixed;top:0;width:100%;z-index: 1;}
+.con1 .con1Select{margin:0 auto;display: flex;justify-content: space-around;width:100%;}
+.con1 .con1Select span{border-bottom:0.03rem solid transparent;text-align: center;padding: 0.2rem 0;color:white;}
+.con1 .con1Select span.active{border-color:#ffa42f;color:#ffa422}
+
+.con{width:100%;margin-top:0.9rem;}
+.con .line{width:100%;padding:0.2rem;box-sizing: border-box;}
+.con .line .img{width:100%;}
+
+/*///////////////////////////////////////////////////////////*/
+.con2{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con2 span{color:white;}
+
+.con3{width:100%;}
+.con3 .line1{width:100%;padding:0.2rem;box-sizing: border-box;}
+.con3 .line1 textarea{width:100%;padding:0.1rem;box-sizing: border-box;border:0.01rem solid #ccc;}
+.con3 .p{width:100%;font-size: 0.3rem;color:#666;padding:0.3rem;box-sizing: border-box;}
+
+.sub{width:90%;margin:1rem 5%;background-color: #ffa42f;text-align: center;line-height: 0.8rem;font-size: 0.3rem;color:white;border-radius: 0.1rem;}

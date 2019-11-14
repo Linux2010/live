@@ -1,0 +1,15 @@
+
+html,body{width:100%;height:100%;padding: 0;margin: 0;}
+body{background-color: #f9f9f9;position: relative;}
+
+.signBox{width:100%;height: 100%;background:url("../image/sign_bg.png") no-repeat;background-size: auto 100%;text-align: center;}
+.signBox .title1{font-size:0.55rem;padding-top: 0.9rem;color:white}
+.signBox .title2{font-size:0.3rem;line-height: 0.5rem;color:white;}
+.signBox .date{width:5.4rem;padding-top:0.5rem;}
+.signBox .button{width:2.9rem;margin-top:0.8rem;}
+.signBox .line1{font-size:0.28rem;line-height: 0.4rem;color:white;text-align: left;padding:0 0.5rem;margin-top:1rem;}
+.signBox .line2{font-size:0.24rem;line-height: 0.35rem;color:white;text-align: left;padding:0 0.5rem;text-indent: 2em;}
+
+.success{position:absolute;top:0;width:100%;height: 100%;background: rgba(0,0,0,0.5);text-align: center}
+.success img{width:5rem;margin:4rem 0;}
+.success .word{position:absolute;top:6.7rem;text-align: center;font-size: 0.45rem;color:#353a3f;width:100%;}

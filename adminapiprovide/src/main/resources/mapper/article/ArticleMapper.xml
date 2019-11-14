@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.article.mapper.ArticleMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="Article" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content"  javaType="String" jdbcType="CLOB" />
+        <result column="show_content" property="showContent" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR" />
+        <result column="create_user" property="create_user" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modify_time" jdbcType="BIGINT"/>
+        <result column="modify_user" property="modify_user" jdbcType="VARCHAR"/>
+        <result column="thumbnail_img" property="thumbnailImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectArticleById"  resultMap="resultMap" parameterType="java.lang.String">
+        select id, article_id, title, content, show_content, img, thumbnail_img, create_time, create_user, modify_time, modify_user, status, version from run_article where article_id = #{articleId}
+    </select>
+    <select id="getPage"  resultMap="resultMap">
+        select id, article_id, title, content, show_content, img, thumbnail_img, create_time, create_user, modify_time, modify_user, status, version from run_article where 1=1
+        <if test="keyword != null and keyword !=''"> and
+            (
+            title like CONCAT('%', #{keyword},'%')
+            )
+        </if>
+        order by id desc
+    </select>
+    <select id="allArticle"  resultMap="resultMap">
+        select id, article_id, title, content, show_content, img, thumbnail_img, create_time, create_user, modify_time, modify_user, status, version from run_article
+    </select>
+     <insert id="addArticle" parameterType="Article">
+         insert into run_article(article_id, title, img, thumbnail_img, create_time, status, version)
+         values(#{articleId}, #{title},#{img}, #{thumbnailImg}, #{createTime},#{status},#{version})
+    </insert>
+    <update id="updateContent" parameterType="Article">
+        update run_article set content = #{content}, show_content = #{showContent} where article_id = #{articleId}
+    </update>
+    <update id="updateArticle" parameterType="Article">
+      update run_article set title = #{title}, img = #{img}, thumbnail_img = #{thumbnailImg} where article_id = #{articleId}
+    </update>
+    <delete id="delArticleById" parameterType="java.lang.String">
+      delete from run_article where article_id = #{articleId}
+    </delete>
+    <select id="selectByStatus" resultMap="resultMap" parameterType="java.lang.Integer">
+        select id, article_id, title, content, show_content, img, thumbnail_img, create_time, create_user, modify_time, modify_user, status, version from run_article where status=#{status}
+    </select>
+    <select id="selectCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from run_article where status = #{status}
+    </select>
+    <update id="updateStatus" parameterType="Article">
+        update run_article set status = (3-#{status}) where article_id = #{articleId}
+    </update>
+</mapper>

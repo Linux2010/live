@@ -1,0 +1,20 @@
+html,body{width:100%;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2 .line2{display:flex;width:100%;line-height:1rem;padding:0.2rem;box-sizing: border-box;background-color: white;border:0.01rem solid #ccc;border-left: 0;border-right: 0;border-top:0;font-size: 0.3rem;}
+.con2 .line2 .moreL{display: inline-block;width:50%;vertical-align: middle;}
+.con2 .line2 .moreL .nothing{display: inline-block;padding:0.05rem;border: 0.01rem solid #ffa42f;border-radius: 0.2rem;margin-left: 0.1rem;color:#ffa42f;line-height: 0.3rem;}
+.con2 .line2 .more{width:50%;vertical-align: middle;display: inline-block;text-align: right;}
+.con2 .line2 .more .money{color:#ffa42f;}
+
+.type{width:100%;line-height: 1rem;background-color: white;height: 6.2rem;margin:0.5rem 0;}
+.type .button2{font-size: 0.28rem;color:#ffa42f;display: flex;justify-content: space-between;padding:0 0.2rem;box-sizing: border-box;border-bottom: 0.01rem solid #ccc;}
+.type .button2 span{color:#333;font-size: 0.3rem;}
+.type ul{width:100%;margin:0;padding: 0}
+.type li{width:100%;padding:0 0.4rem;border-bottom:0.01rem solid #ccc;box-sizing: border-box}
+.type li input{float: right;margin:0.35rem 0;}
+.type li label{}
+
+.button{width:90%;margin:2rem 5% 0;background-color: #ffa42f;color:white;font-size: 0.32rem;border-radius: 0.2rem;line-height: 0.7rem;text-align: center}

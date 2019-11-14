@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goods.mapper.StockLogMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="StockLog" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="stock_log_id" property="stockLogId" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="stock_id" property="stockId" jdbcType="VARCHAR"/>
+        <result column="start_num" property="startNum" jdbcType="INTEGER"/>
+        <result column="handle_num" property="handleNum" jdbcType="INTEGER"/>
+        <result column="end_num" property="endNum" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="searchStockLogById" resultType="StockLog">
+        select * from s_stock_log where stock_log_id =#{stockLogId}
+    </select>
+    <select id="searchStockLogDetail" resultType="StockLog" parameterType="StockLog">
+        select * from s_stock_log where  1=1
+        <if test="goodsId !=null and goodsId !=''">
+            and goods_id = #{goodsId}
+        </if>
+        <if test="stockId !=null and stockId !=''">
+            and stock_id = #{stockId}
+        </if>
+    </select>
+
+    <insert id="insertStockLog" parameterType="StockLog">
+        insert into s_stock_log(stock_log_id,
+                    goods_id,
+                    stock_id,
+                    start_num,
+                    handle_num,
+                    end_num,
+                    type)
+            values(#{stockLogId},
+                    #{goodsId},
+                    #{stockId},
+                    #{startNum},
+                    #{handleNum},
+                    #{endNum},
+                    #{type} )
+    </insert>
+
+    <delete id="deleteStockLog" parameterType="java.lang.String">
+        delete from s_stock_log where stock_log_id = #{stockLogId}
+    </delete>
+
+    <update id="updateStockLog" parameterType="Spec">
+        update s_stock_log
+        <set>
+            <if test="startNum != null and startNum !=''">
+                start_num = #{startNum},
+            </if>
+            <if test="handleNum != null and handleNum !=''">
+                handle_num = #{handleNum},
+            </if>
+            <if test="endNum != null and endNum !=''">
+                end_num = #{endNum},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+        </set>
+        where 1=1
+        <if test="stockLogId != null and stockLogId !=''">
+            and stock_log_id = #{stockLogId}
+        </if>
+    </update>
+
+    <select id="searchStockLogList" resultMap="resultMap">
+        select * from s_stock_log where 1=1
+        <if test="goodsId != null and goodsId != ''">
+            and goods_id  =#{goodsId}
+        </if>
+    </select>
+</mapper>

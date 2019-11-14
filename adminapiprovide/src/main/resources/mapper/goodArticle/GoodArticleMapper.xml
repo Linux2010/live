@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.goodArticle.mapper.GoodArticleMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="GoodArticle" id="resultMap">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+
+        <result column="goodArticle_id" property="goodArticleId" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" javaType="String" jdbcType="CLOB" />
+        <result column="cover" property="cover" jdbcType="VARCHAR" />
+        <result column="seqno" property="seqno" jdbcType="INTEGER"/>
+        <result column="contentUrl" property="contentUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getPage" resultMap="resultMap">
+        select id, goodArticle_id, title, content, cover, seqno, create_time, status, version from run_goodArticle where 1=1
+         <if test="map.keyword != null"> and
+            title like CONCAT('%', #{map.keyword},'%')
+         </if>
+        <if test="map.status != null and map.status != ''">
+            and status = #{map.status}
+        </if>
+         order by id desc
+    </select>
+    <select id="selectById" resultType="GoodArticle" parameterType="java.lang.String">
+        select id, goodArticle_id, title, content, cover, seqno, create_time, status, version,contentUrl from run_goodArticle  where goodArticle_id = #{goodArticleId}
+    </select>
+    <insert id="addGoodArticle" parameterType="GoodArticle">
+        insert into run_goodArticle(goodArticle_id, title, content, cover, seqno, create_time, status, version) values(
+        #{goodArticleId}, #{title}, #{content}, #{cover}, #{seqno}, #{createTime}, #{status}, #{version}
+        )
+    </insert>
+    <update id="updateGoodArticle" parameterType="GoodArticle">
+      update run_goodArticle set title = #{title},cover = #{cover}, seqno = #{seqno} where goodArticle_id = #{goodArticleId}
+    </update>
+    <update id="updateContent" parameterType="GoodArticle">
+        update run_goodArticle set content = #{content} where goodArticle_id = #{goodArticleId}
+    </update>
+    <update id="updateRecommend" parameterType="GoodArticle">
+        update run_goodArticle set status = #{status} where goodArticle_id = #{goodArticleId}
+    </update>
+    <delete id="delGoodArticle" parameterType="java.lang.String">
+      delete from run_goodArticle where goodArticle_id = #{goodArticleId}
+    </delete>
+    <select id="select_good_article" resultMap="resultMap">
+         select id, goodArticle_id, title, content, cover, seqno, create_time, status, version from run_goodArticle
+         where status = 1 order by run_goodArticle.seqno desc
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

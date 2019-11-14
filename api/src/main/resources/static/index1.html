@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>教头学院</title>
+    <base target="_self" href="http://localhost:63342/parent/api/static/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiper-3.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/swiper-3.3.1.min.js" type="text/javascript"></script>
+    <style>
+        html, body {
+            position: relative;
+
+        }
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 3rem;
+            margin-top: 0.82rem;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+    <style>
+        html{overflow: hidden;height: 100%;}
+        body{width: 100%;height: 100%;overflow: hidden;}
+        .v{margin-left: -0.2rem;margin-top: 0.25rem;vertical-align: middle;width: 0.2rem;}
+
+        .friend{width:100%;height:2.88rem;background: url("image/banner1.png");background-size: 100% auto;margin-top:0.8rem;}
+        .friend img{width:1.5rem;height:0.5rem;margin: auto;display: block;}
+        .logoTop{border-radius: 50%;vertical-align: middle}
+        .top .logoRight{float: right;margin-right: 0.2rem;}
+        .buyVip{position:fixed;top:2rem;right:0;width:1.82rem;height: 1.4rem;padding:0.15rem 0.2rem;box-sizing: border-box;background-color: #ffa42f;border-radius: 0.3rem;}
+        .buyVip span{width:100%;font-size: 0.24rem;color: white;display: inline-block;}
+        .buyVip div{width:1rem;font-size: 0.2rem;color: white;line-height: 0.4rem;border-radius:0.1rem;text-align:center;margin:auto;margin-top: 0.15rem;background-color: #f62c2c;}
+    </style>
+</head>
+<body>
+<!--top-->
+    <!--<div class="top">-->
+        <!--<img class="logoTop" src="image/logo.png"/>-->
+        <!--<div class="searchTop"><img class="searchTopImg" src="image/logo.png"><span class="searchTopLable">每天进步一小步</span> </div>-->
+    <!--</div>-->
+    <!--轮播-->
+    <!--<div class="swiper-container">-->
+        <!--<div class="swiper-wrapper">-->
+            <!--<div class="swiper-slide"><img src="image/banner1.png" style="width: 100%;"></div>-->
+            <!--<div class="swiper-slide"><img src="image/banner1.png" style="width: 100%;"></div>-->
+            <!--<div class="swiper-slide"><img src="image/banner1.png" style="width: 100%;"></div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; Add Pagination &ndash;&gt;-->
+        <!--<div class="swiper-pagination"></div>-->
+    <!--</div>-->
+<div class="top">
+    <img class="logoTop" src="image/logo.png"/><img src="image/v.png" class="v"/>
+    <div class="searchTop" style="width:2rem;background-color: #222;color: white;">张小三</div>
+    <a href="my/myTeam.html"> <img class="logoTop logoRight" src="image/team.png"/></a>
+</div>
+<div class="friend">
+    <img src="image/bannerWord.png" style="width:4.3rem;height: auto;padding-top: 0.3rem;">
+    <a href="common/share3.html"> <img src="image/friend.png" style="margin-top: 0.2rem;"></a>
+</div>
+<div class="bImg" style="position: fixed;bottom: 0;width:100%">
+    <a href="common/login.html"> <img src="image/zhuce.png" style="width: 4.38rem;height: 2.46rem;margin: auto;display: block"></a>
+</div>
+<div class="buyVip">
+    <span style="text-align: left;">成为VIP</span>
+    <span style="text-align: right;">优惠多多</span>
+    <div onclick="vip_click()">立即申请</div>
+</div>
+<div class=""></div>
+    <div class="con1">
+        <div style="display: flex;justify-content:space-between;padding-bottom: 0.2rem;">
+            <div class="study">
+                <img src="image/audio.png"><span>学习·视频课程</span>
+            </div>
+            <div class="study">
+                <img src="image/live.png"><span>学习·直播授课</span>
+            </div>
+        </div>
+        <div style="display: flex;justify-content:space-between;">
+            <div class="study">
+                <img src="image/read.png"><span>学习·文字阅读</span>
+            </div>
+            <div class="study">
+                <img src="image/vioce.png"><span>学习·音频收听</span>
+            </div>
+        </div>
+    </div>
+    <div style="background: url('image/g.png') no-repeat;background-size: 100% auto;text-align: center;font-size: 0.3rem;color: #222;height: 0.7rem;line-height: 0.7rem;">名师教头直面授课</div>
+    <div class="con2">
+        <div class="con2Tit">
+            <span>精品推荐</span>
+        </div>
+        <div class="con2Con">
+            <div class="flexCell">
+                <img src="image/jingpin0.png">
+                <div >[商业模式]最新商业模式</div>
+            </div>
+            <div class="flexCell">
+                <img src="image/jingpin1.png">
+                <div >[商业模式]最新商业模式</div>
+            </div>
+            <div class="flexCell">
+                <img src="image/jingpin2.png">
+                <div >[商业模式]最新商业模式</div>
+            </div>
+        </div>
+    </div>
+    <div class="con3">
+        <div class="con3Tit">
+            <span>课程进行中</span><span style="float: right;">更多 》</span>
+        </div>
+        <div class="con3Con">
+            <div class="flexCell">
+                <img src="image/kechenging0.png">
+                <div >[商业模式]最新商业模式</div>
+            </div>
+            <div class="flexCell">
+                <img src="image/kechenging1.png">
+                <div >[商业模式]最新商业模式</div>
+            </div>
+        </div>
+        <div class="con3Con">
+            <div class="flexCell">
+                <img src="image/kechenging2.png">
+                <div >[商业模式]最新商业模式</div>
+            </div>
+            <div class="flexCell">
+                <img src="image/kechenging3.png">
+                <div >[商业模式]最新商业模式</div>
+            </div>
+        </div>
+    </div>
+    <!--<div style="height: 1rem;width: 100%"></div>-->
+    <!--<div class="bottom">-->
+        <!--<div class="b">-->
+            <!--<img src="image/home-norm2.png">-->
+            <!--<span>首页</span>-->
+        <!--</div>-->
+        <!--<div class="b">-->
+            <!--<img src="image/study_norm2.png">-->
+            <!--<span>学习</span>-->
+        <!--</div>-->
+        <!--<div class="b">-->
+            <!--<img src="image/store_norm2.png">-->
+            <!--<span>商城</span>-->
+        <!--</div>-->
+        <!--<div class="b">-->
+            <!--<img src="image/my_norm1.png">-->
+            <!--<span>我的</span>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<!--////////////////////////  vip   ////////////////////////////////-->
+<div class="mask" style="display: none;">
+    <div class="vip">
+        <div class="vipTit">VIP充值</div>
+        <div class="vipCon" style="border: 0;font-size: 0.3rem;color: #ffa42f;line-height: 0.8rem;text-align: right;"><a href="common/memberPower.html" style="color: #ffa42f;"> 会员权益</a></div>
+        <div class="vipCon"><span>开通服务：</span><span style="float: right;">会员服务</span></div>
+        <div class="vipCon">
+            <span>开通服务：</span>
+            <span style="padding-left: 0.5rem;">
+                <input type="radio" name="vip"/><label>月付</label>
+                <input type="radio" name="vip"/><label>年付</label>
+                <input type="radio" name="vip"/><label>永久</label>
+            </span>
+        </div>
+        <div class="vipCon"><span>开通服务：</span><span style="float: right;">￥100/年</span></div>
+        <div class="button"><span onclick="now_buy_vip()">立即购买</span></div>
+    </div>
+</div>
+</body>
+<script>
+    $(function () {
+        var buyVip = $(".buyVip");
+        var vipHeight = buyVip["0"].clientHeight;
+        var vipWidth = buyVip["0"].clientWidth;
+        var bodyHeight = $("body")["0"].clientHeight;
+        var bodyWidth = $("body")["0"].clientWidth;
+        var vipTop;
+        var vipLeft;
+        var max_vipTop = bodyHeight-vipHeight;
+        var max_vipLeft = bodyWidth-vipWidth;
+        var startX,startY;
+        buyVip[0].addEventListener("touchstart",function (e) {
+            vipTop = buyVip["0"].offsetTop;
+            vipLeft = buyVip["0"].offsetLeft;
+            startX = e.changedTouches["0"].screenX;
+            startY = e.changedTouches["0"].screenY;
+        })
+        buyVip[0].addEventListener("touchmove",function (e) {
+            var x = e.changedTouches["0"].screenX-startX+vipLeft;
+            var y = e.changedTouches["0"].screenY-startY+vipTop;
+            if(x>max_vipLeft){x=max_vipLeft;}else if(x<0){x=0;}
+            if(y>max_vipTop){y=max_vipTop;}else if(y<0){y=0;}
+            buyVip.css({"left":x+"px","top":y+"px"})
+        })
+    });
+    function vip_click() {
+        $(".mask").css("display","block")
+    }
+    function now_buy_vip() {
+        $(".mask").css("display","none")
+    }
+//    var swiper = new Swiper('.swiper-container', {
+//        pagination: '.swiper-pagination',
+//        paginationClickable: true,
+//        loop: true,
+//        autoplay:1500
+//    });
+</script>
+</html>

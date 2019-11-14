@@ -1,0 +1,34 @@
+
+html,body{width:100%;padding: 0;margin: 0;}
+html{position: relative;height: 100%;}
+body{background-color: #f9f9f9;}
+
+.con1{background-color: #22272a;padding:0.2rem;font-size: 0.34rem;line-height: 0.45rem;}
+.con1 span{color:white;}
+
+.con2{}
+.con2 .p1{text-align: center;font-size: 0.34rem;padding: 1.5rem 0 0.8rem;}
+
+.con3{}
+.con3 .con3Con{display: flex;justify-content: space-around}
+.con3 .con3Con input{width:6.2rem;height: 0.75rem;border:0.02rem solid #ccc;border-radius: 0.1rem;margin:0.2rem auto;text-align: center}
+.con3 .con3Con .span1{text-align: center;display: inline-block;width:1rem;border-bottom-left-radius: 0.1rem;border:0.01rem solid #ffa42f;border-right:0;border-top-left-radius: 0.1rem;background-color: #ffa42f;vertical-align:middle;font-size:0.3rem;color:white;line-height:0.775rem}
+.con3 .con3Con .span2{text-align: center;display: inline-block;width:2rem;border-bottom-right-radius: 0.1rem;border-top-right-radius: 0.1rem;background-color: #ccc;vertical-align:middle;color:white;font-size:0.3rem;line-height:0.78rem;border:0.01rem;border-right: 0;}
+.con3 .con3Con .input1{text-align: center;display: inline-block;width:5.15rem;border-bottom-left-radius: 0;border-top-left-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+.con3 .con3Con .input2{text-align: center;display: inline-block;width:3.5rem;border-bottom-right-radius: 0;border-top-right-radius: 0;line-height: 0.77rem;vertical-align: middle;border:0.01rem solid #ccc}
+
+
+.con4{padding: 0.1rem 0.7rem;padding-bottom: 0.4rem;border-left: 0;border-right: 0;}
+.con4 span{font-size: 0.28rem;color: #999;}
+
+
+
+
+/*////////////////////////////////////////////////////////////*/
+.con5{width:100%;padding:0 0.3rem;box-sizing: border-box;margin:0.5rem 0;}
+.con5 .line{width:100%;height: 0.01rem;background-color: #ccc;}
+.con5 .l{width:2.5rem;margin:auto;text-align: center;background-color: #f5f5f5;font-size: 0.26rem;margin-top:-0.2rem}
+.con6{display: flex;justify-content: space-around;padding:0 0.2rem;box-sizing: border-box}
+.con6 .cell{width:1.3rem;text-align: center}
+.con6 .cell img{width:0.95rem;}
+.con6 .cell p{width: 100%;text-align: center}

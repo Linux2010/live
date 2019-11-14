@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0, user-scalable=no" />
+    <title>支付结果</title>
+    <base target="_self" href="http://192.168.1.108:90/ws_project/jiaotouxueyuan/">
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/myGraduation.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/conform.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/vue.js" type="text/javascript" ></script>
+</head>
+<body>
+<div class="body">
+    <div class="line1">
+        <img class="img1" src="image/kechenging1.png"/>
+    </div>
+    <div class="line2">课程名称：学科竞赛管理系统</div>
+    <div class="line3">
+        <div class="over" v-bind:class="{noOver:over}">
+            <p class="p1">为星界新的学期</p>
+            <p class="p1">学院特开设迎新小分部</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+            <p class="p1">学院特开设迎新小分部</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+            <p class="p1">学院特开设迎新小分部</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+            <p class="p1">学院特开设迎新小分部</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+            <p class="p1">欢迎新的学弟学妹们</p>
+        </div>
+        <span class="s1" v-on:click="more()" v-if="!over">展开显示更多<a style="display: inline-block;vertical-align: middle;padding-left: 0.1rem;">︾</a></span>
+    </div>
+    <div class="line4">
+        <span class="s2">设为我的毕业课程</span>
+    </div>
+</div>
+</body>
+<script>
+    var v1 = new Vue({
+        el:".body",
+        data:{
+            over:false,
+        },
+        methods:{
+            more:function () {
+                this.over=!this.over;
+            }
+        }
+    })
+</script>
+</html>

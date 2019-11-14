@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.shop.mapper.OrderDetailMapper">
+
+    <resultMap type="OrderDetail" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="order_detail_id" property="orderDetailId" jdbcType="VARCHAR" />
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+        <result column="goods_spec_id" property="goodsSpecId" jdbcType="VARCHAR" />
+        <result column="goods_spec_val" property="goodsSpecVal" jdbcType="VARCHAR" />
+        <result column="goods_type" property="goodsType" jdbcType="INTEGER" />
+        <result column="goods_money" property="goodsMoney" jdbcType="DOUBLE" />
+        <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="odvMap" type="cn.com.myproject.shop.entity.VO.OrderDetailVO">
+        <result column="orderId" property="orderId" jdbcType="VARCHAR"/>
+        <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goodsImg" property="goodsImg" jdbcType="VARCHAR"/>
+        <result column="goodsSpecVal" property="goodsSpecVal" jdbcType="VARCHAR"/>
+        <result column="goodsJz" property="goodsJz" jdbcType="VARCHAR"/>
+        <result column="goodsNum" property="goodsNum" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="searchMGList" resultMap="odvMap">
+        select od.order_id as orderId,g.goods_name as goodsName,gi.url as goodsImg,
+        od.goods_spec_val as goodsSpecVal,od.goods_money as goodsJz,od.goods_num as goodsNum
+        from s_order_detail od
+        left join s_goods g on g.goods_id = od.goods_id
+        left join s_goods_img gi on gi.goods_id = od.goods_id and gi.first = 1
+        where od.order_id = #{orderId}
+    </select>
+
+    <insert id="insertOrderDetail" parameterType="OrderDetail">
+        insert into s_order_detail(order_detail_id,order_id,goods_id,goods_spec_id,
+        goods_spec_val,goods_type,goods_money,user_id,create_time)
+        values(#{orderDetailId},#{orderId},#{goodsId},#{goodsSpecId},#{goodsSpecVal},
+        #{goodsType},#{goodsMoney},#{userId},#{createTime})
+    </insert>
+
+</mapper>

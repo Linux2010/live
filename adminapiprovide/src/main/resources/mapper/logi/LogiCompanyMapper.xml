@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.logi.mapper.LogiCompanyMapper">
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <resultMap type="cn.com.myproject.logi.entity.PO.LogiCompany" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result column="logi_id" property="logiId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="searchLogiList" resultMap="resultMap">
+        select logi_id,`name` from logi_company order by create_time desc
+    </select>
+
+    <select id="getLogiList" resultMap="resultMap">
+        select id,logi_id,`name`,`code`,create_time,version,`status` from logi_company order by logi_id desc
+    </select>
+
+    <select id="selectById" parameterType="String" resultType="cn.com.myproject.logi.entity.PO.LogiCompany">
+        select id,logi_id,`name`,`code`,create_time,version,`status` from logi_company where logi_id = #{logiId}
+    </select>
+
+    <insert id="addlogi" parameterType="cn.com.myproject.logi.entity.PO.LogiCompany">
+        insert into logi_company(logi_id,`name`,`code`,create_time,version,`status`) values(#{logiId},#{name},#{code},#{createTime},#{version},#{status})
+    </insert>
+
+    <update id="updatelogi" parameterType="cn.com.myproject.logi.entity.PO.LogiCompany">
+        update logi_company set `name` = #{name},`code`= #{code} where logi_id = #{logiId}
+    </update>
+
+    <delete id="dellogi" parameterType="String">
+        delete from logi_company where logi_id = #{logiId}
+    </delete>
+
+    <select id="logiList" resultMap="resultMap">
+        select id,logi_id,`name`,`code`,create_time,version,`status` from logi_company order by logi_id desc
+    </select>
+    
+    <select id="selectComByCode" parameterType="String" resultType="cn.com.myproject.logi.entity.PO.LogiCompany">
+        select * from logi_company where code = #{code}
+    </select>
+</mapper>
